@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Api</name>
+    </assembly>
+    <members>
+        <member name="T:Api.Controllers.RolesController">
+            <summary>
+            Usuarios Controller
+            </summary>
+        </member>
+        <member name="M:Api.Controllers.RolesController.Get">
+             <summary>
+            Roles Get
+             </summary>
+             <returns>lista de productos</returns>
+        </member>
+        <member name="M:Api.Controllers.RolesController.GetById(System.Int32)">
+            <summary>
+            Obtener rol por el Id
+            </summary>
+            <param name="Id"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="M:Api.Controllers.RolesController.Add(Api.Dtos.Roles.RolesDto)">
+            <summary>
+            Agregar un nuevo usuario
+            </summary>
+            <param name="dto"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="M:Api.Controllers.RolesController.Update(Api.Dtos.Roles.RolesDto)">
+            <summary>
+            Actualizar rol
+            </summary>
+            <param name="dto"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="M:Api.Controllers.RolesController.Delete(System.Int32)">
+            <summary>
+            Eliminar rol por Id
+            </summary>
+            <param name="Id"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="T:Api.Controllers.UsuariosController">
+            <summary>
+            Usuarios Controller
+            </summary>
+        </member>
+        <member name="M:Api.Controllers.UsuariosController.Get">
+             <summary>
+            Usuarios Get
+             </summary>
+             <returns>lista de productos</returns>
+        </member>
+        <member name="M:Api.Controllers.UsuariosController.GetById(System.Int32)">
+            <summary>
+            Obtener usuario por el Id
+            </summary>
+            <param name="Id"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="M:Api.Controllers.UsuariosController.Add(Api.Dtos.Usuarios.UsuarioDto)">
+            <summary>
+            Agregar un nuevo usuario
+            </summary>
+            <param name="dto"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="M:Api.Controllers.UsuariosController.Update(Api.Dtos.Usuarios.UsuarioDto)">
+            <summary>
+            Actualizar usuario
+            </summary>
+            <param name="dto"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="M:Api.Controllers.UsuariosController.Delete(System.Int32)">
+            <summary>
+            Eliminar usuario por Id
+            </summary>
+            <param name="Id"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+    </members>
+</doc>

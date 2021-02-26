@@ -9,9 +9,9 @@ namespace Web.Models
         public string DescripcionVar { get; set; }
         public string DireccionVar { get; set; }
         public string ModeloVar { get; set; }
-        public DateTime FechaAltaDate { get; set; } = DateTime.Now;
-        public DateTime FechaModDate { get; set; } = Convert.ToDateTime("1900-01-01");
+        public DateTime FechaAltaDate { get; set; }
+        public DateTime FechaModDate { get; set; } 
         public int UsuarioIdInt { get; set; }
-        public int UsuarioIdModInt { get; set; } = 0;
+        public int UsuarioIdModInt { get; set; } 
     }
 }

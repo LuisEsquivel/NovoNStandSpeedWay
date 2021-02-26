@@ -102,6 +102,8 @@ namespace Api.Controllers
                 }
 
                 var fa = mapper.Map<FormaAdquisicion>(dto);
+                fa.FechaModDate = Convert.ToDateTime("1900-01-01");
+                fa.UsuarioIdModInt = 0;
 
                 if (!repository.Add(fa))
                 {

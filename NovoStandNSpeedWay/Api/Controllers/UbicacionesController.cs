@@ -85,8 +85,10 @@ namespace Api.Controllers
                 }
 
                 var ubicacion = mapper.Map<Ubicacione>(dto);
+                Convert.ToDateTime("1900-01-01");
+                ubicacion.UsuarioIdModInt = 0;
 
-                if (!repository.Add(ubicacion))
+            if (!repository.Add(ubicacion))
                 {
                     return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal guardar el registro: {dto.DescripcionVar}"));
                 }

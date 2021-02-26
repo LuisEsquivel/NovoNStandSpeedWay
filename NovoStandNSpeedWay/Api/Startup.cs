@@ -146,6 +146,24 @@ namespace Api
 
             });
 
+
+
+            services.AddSwaggerGen(options =>
+            {
+
+                options.SwaggerDoc("ApiCentroDeCostos", new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Title = "Api NovoNStandSpeedWay",
+                    Version = "v1",
+
+                });
+
+
+                var PathFileCommentsDocumentation = Path.Combine(AppContext.BaseDirectory, "ApiDocumentation.xml");
+                options.IncludeXmlComments(PathFileCommentsDocumentation);
+
+            });
+
             /*End Documentation*/
 
 
@@ -188,7 +206,7 @@ namespace Api
                 options.SwaggerEndpoint("/swagger/ApiLectores/swagger.json", "Api Lectores");
                 options.SwaggerEndpoint("/swagger/ApiUbicaciones/swagger.json", "Api Ubicaciones");
                 options.SwaggerEndpoint("/swagger/ApiFormaAdquisicion/swagger.json", "Api Forma Adquisición");
-
+                options.SwaggerEndpoint("/swagger/ApiCentroDeCostos/swagger.json", "Api Centro De Costos");
                 options.RoutePrefix = "";
             });
             /*End Documentation*/

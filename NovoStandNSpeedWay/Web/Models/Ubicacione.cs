@@ -13,10 +13,10 @@ namespace Web.Models
 
         public string UbicacionIdVar { get; set; }
         public string DescripcionVar { get; set; }
-        public DateTime FechaAltaDate { get; set; } = DateTime.Now;
-        public DateTime FechaModDate { get; set; } = Convert.ToDateTime ("1900-01-01");
+        public DateTime FechaAltaDate { get; set; }
+        public DateTime FechaModDate { get; set; } 
         public int UsuarioIdInt { get; set; }
-        public int UsuarioIdModInt { get; set; } = 0;
+        public int UsuarioIdModInt { get; set; } 
         public bool? ActivoBit { get; set; }
 
         public virtual ICollection<Activo> Activos { get; set; }

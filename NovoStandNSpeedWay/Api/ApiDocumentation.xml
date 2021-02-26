@@ -4,6 +4,45 @@
         <name>Api</name>
     </assembly>
     <members>
+        <member name="T:Api.Controllers.CentroDeCostosController">
+            <summary>
+            Centro De Costos Controller
+            </summary>
+        </member>
+        <member name="M:Api.Controllers.CentroDeCostosController.Get">
+             <summary>
+            Centro De Costos Get
+             </summary>
+             <returns>lista de roles</returns>
+        </member>
+        <member name="M:Api.Controllers.CentroDeCostosController.GetById(System.Int32)">
+            <summary>
+            Obtener rol por el Id
+            </summary>
+            <param name="Id"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="M:Api.Controllers.CentroDeCostosController.Add(Api.Dtos.CentroDeCostos.CentroCostoDto)">
+            <summary>
+            Agregar un nuevo centro de costos
+            </summary>
+            <param name="dto"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="M:Api.Controllers.CentroDeCostosController.Update(Api.Dtos.CentroDeCostos.CentroCostoUpdateDto)">
+            <summary>
+            Actualizar centro de costos
+            </summary>
+            <param name="dto"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="M:Api.Controllers.CentroDeCostosController.Delete(System.String)">
+            <summary>
+            Eliminar centro de costos por Id
+            </summary>
+            <param name="Id"></param>
+            <returns>StatusCode 200</returns>
+        </member>
         <member name="T:Api.Controllers.FormaAdquisicionController">
             <summary>
             FormaAdquisición Controller

@@ -102,6 +102,8 @@ namespace Api.Controllers
                 }
 
                 var lector = mapper.Map<Lectore>(dto);
+                lector.FechaModDate = Convert.ToDateTime("1900-01-01");
+                lector.UsuarioIdModInt = 0;
 
                 if (!repository.Add(lector))
                 {

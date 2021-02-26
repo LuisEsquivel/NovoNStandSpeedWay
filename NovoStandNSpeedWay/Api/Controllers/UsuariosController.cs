@@ -101,16 +101,18 @@ namespace Api.Controllers
                     return BadRequest(this.response.ResponseValues(StatusCodes.Status406NotAcceptable, null, "El registro Ya Existe!!"));
                 }
 
-                var producto = mapper.Map<Usuario>(dto);
+                var usuario = mapper.Map<Usuario>(dto);
+                usuario.FechaModDate = Convert.ToDateTime ("1900-01-01");
+                usuario.UsuarioIdModInt = 0;
 
-                if (!repository.Add(producto))
+                if (!repository.Add(usuario))
                 {
                     return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal guardar el registro: {dto.NombreVar}"));
                 }
 
                 return Ok(
                              response.ResponseValues(this.Response.StatusCode,
-                                                     mapper.Map<UsuarioDto>(repository.GetById(producto.UsuarioIdInt))
+                                                     mapper.Map<UsuarioDto>(repository.GetById(usuario.UsuarioIdInt))
                                                    )
                           );
             }

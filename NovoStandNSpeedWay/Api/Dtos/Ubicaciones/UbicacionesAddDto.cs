@@ -12,8 +12,6 @@ namespace Api.Dtos.Ubicaciones
         public string DescripcionVar { get; set; }
         public DateTime FechaAltaDate { get; set; }
         public int UsuarioIdInt { get; set; }
-        public DateTime FechaModDate { get; set; }
-        public int UsuarioIdModInt { get; set; }
         public bool? ActivoBit { get; set; }
 
     }

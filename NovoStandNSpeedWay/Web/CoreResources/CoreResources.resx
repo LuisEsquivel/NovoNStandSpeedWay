@@ -124,7 +124,7 @@
     <value>roles</value>
   </data>
   <data name="UrlBase" xml:space="preserve">
-    <value>http://localhost:81/</value>
+    <value>http://192.168.100.20:81/</value>
   </data>
   <data name="UsuariosController" xml:space="preserve">
     <value>usuarios</value>

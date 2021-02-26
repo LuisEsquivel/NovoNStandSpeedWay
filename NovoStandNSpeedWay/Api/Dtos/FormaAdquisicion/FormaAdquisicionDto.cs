@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Api.Dtos.Roles
+#nullable disable
+
+namespace Api.Dtos.FormaAdquisicion
 {
-    public class RolesAddDto
+    public partial class FormaAdquisicionDto
     {
+  
+
+        public int FormaAdquisicionIdInt { get; set; }
         public string DescripcionVar { get; set; }
         public DateTime FechaAltaDate { get; set; }
-        public DateTime FechaModDate { get; set; } = DateTime.Now;
+        public DateTime FechaModDate { get; set; }
         public int UsuarioIdInt { get; set; }
-        public int UsuarioIdModInt { get; set; } = 0;
+        public int UsuarioIdModInt { get; set; }
         public bool? ActivoBit { get; set; }
+
 
     }
 }

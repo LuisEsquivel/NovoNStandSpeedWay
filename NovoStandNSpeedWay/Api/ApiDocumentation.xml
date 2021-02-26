@@ -4,6 +4,45 @@
         <name>Api</name>
     </assembly>
     <members>
+        <member name="T:Api.Controllers.FormaAdquisicionController">
+            <summary>
+            FormaAdquisición Controller
+            </summary>
+        </member>
+        <member name="M:Api.Controllers.FormaAdquisicionController.Get">
+             <summary>
+            Forma Adquisición Get
+             </summary>
+             <returns>lista de forma de adquisición</returns>
+        </member>
+        <member name="M:Api.Controllers.FormaAdquisicionController.GetById(System.Int32)">
+            <summary>
+            Obtener forma de adquisición por el Id
+            </summary>
+            <param name="Id"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="M:Api.Controllers.FormaAdquisicionController.Add(Api.Dtos.FormaAdquisicion.FormaAdquisicionAddDto)">
+            <summary>
+            Agregar nueva forma de adquisición
+            /// </summary>
+            <param name="dto"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="M:Api.Controllers.FormaAdquisicionController.Update(Api.Dtos.FormaAdquisicion.FormaAdquisicionUpdateDto)">
+            <summary>
+            Actualizar forma de adquisición
+            </summary>
+            <param name="dto"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="M:Api.Controllers.FormaAdquisicionController.Delete(System.Int32)">
+            <summary>
+            Eliminar rol por Id
+            </summary>
+            <param name="Id"></param>
+            <returns>StatusCode 200</returns>
+        </member>
         <member name="T:Api.Controllers.LectoresController">
             <summary>
             Lectores Controller

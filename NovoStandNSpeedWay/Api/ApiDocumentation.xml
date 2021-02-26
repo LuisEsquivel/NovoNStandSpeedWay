@@ -4,6 +4,45 @@
         <name>Api</name>
     </assembly>
     <members>
+        <member name="T:Api.Controllers.LectoresController">
+            <summary>
+            Lectores Controller
+            </summary>
+        </member>
+        <member name="M:Api.Controllers.LectoresController.Get">
+             <summary>
+            Lectores Get
+             </summary>
+             <returns>lista de lectores</returns>
+        </member>
+        <member name="M:Api.Controllers.LectoresController.GetById(System.Int32)">
+            <summary>
+            Obtener lector por el Id
+            </summary>
+            <param name="Id"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="M:Api.Controllers.LectoresController.Add(Api.Dtos.Lectores.LectoresAddDto)">
+            <summary>
+            Agregar un nuevo lector
+            </summary>
+            <param name="dto"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="M:Api.Controllers.LectoresController.Update(Api.Dtos.Lectores.LectoresUpdateDto)">
+            <summary>
+            Actualizar lector
+            </summary>
+            <param name="dto"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="M:Api.Controllers.LectoresController.Delete(System.Int32)">
+            <summary>
+            Eliminar lector por Id
+            </summary>
+            <param name="Id"></param>
+            <returns>StatusCode 200</returns>
+        </member>
         <member name="T:Api.Controllers.RolesController">
             <summary>
             Usuarios Controller
@@ -13,7 +52,7 @@
              <summary>
             Roles Get
              </summary>
-             <returns>lista de productos</returns>
+             <returns>lista de roles</returns>
         </member>
         <member name="M:Api.Controllers.RolesController.GetById(System.Int32)">
             <summary>
@@ -22,14 +61,14 @@
             <param name="Id"></param>
             <returns>StatusCode 200</returns>
         </member>
-        <member name="M:Api.Controllers.RolesController.Add(Api.Dtos.Roles.RolesDto)">
+        <member name="M:Api.Controllers.RolesController.Add(Api.Dtos.Roles.RolesAddDto)">
             <summary>
-            Agregar un nuevo usuario
+            Agregar un nuevo rol
             </summary>
             <param name="dto"></param>
             <returns>StatusCode 200</returns>
         </member>
-        <member name="M:Api.Controllers.RolesController.Update(Api.Dtos.Roles.RolesDto)">
+        <member name="M:Api.Controllers.RolesController.Update(Api.Dtos.Roles.RolesUpdateDto)">
             <summary>
             Actualizar rol
             </summary>
@@ -43,6 +82,38 @@
             <param name="Id"></param>
             <returns>StatusCode 200</returns>
         </member>
+        <member name="T:Api.Controllers.UbicacionesController">
+            <summary>
+            Ubicaciones Controller
+            </summary>
+        </member>
+        <member name="M:Api.Controllers.UbicacionesController.Get">
+             <summary>
+            Ubicaciones Get
+             </summary>
+             <returns>lista de Ubicaciones</returns>
+        </member>
+        <member name="M:Api.Controllers.UbicacionesController.Add(Api.Dtos.Ubicaciones.UbicacionesAddDto)">
+            <summary>
+            Agregar una ubicación
+            </summary>
+            <param name="dto"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="M:Api.Controllers.UbicacionesController.Update(Api.Dtos.Ubicaciones.UbicacionesUpdateDto)">
+            <summary>
+            Actualizar ubicación
+            </summary>
+            <param name="dto"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="M:Api.Controllers.UbicacionesController.Delete(System.Object)">
+            <summary>
+            Eliminar ubicación por Id
+            </summary>
+            <param name="Id"></param>
+            <returns>StatusCode 200</returns>
+        </member>
         <member name="T:Api.Controllers.UsuariosController">
             <summary>
             Usuarios Controller
@@ -52,7 +123,7 @@
              <summary>
             Usuarios Get
              </summary>
-             <returns>lista de productos</returns>
+             <returns>lista de usuarios</returns>
         </member>
         <member name="M:Api.Controllers.UsuariosController.GetById(System.Int32)">
             <summary>
@@ -61,14 +132,14 @@
             <param name="Id"></param>
             <returns>StatusCode 200</returns>
         </member>
-        <member name="M:Api.Controllers.UsuariosController.Add(Api.Dtos.Usuarios.UsuarioDto)">
+        <member name="M:Api.Controllers.UsuariosController.Add(Api.Dtos.Usuarios.UsuarioAddDto)">
             <summary>
             Agregar un nuevo usuario
             </summary>
             <param name="dto"></param>
             <returns>StatusCode 200</returns>
         </member>
-        <member name="M:Api.Controllers.UsuariosController.Update(Api.Dtos.Usuarios.UsuarioDto)">
+        <member name="M:Api.Controllers.UsuariosController.Update(Api.Dtos.Usuarios.UsuarioUpdateDto)">
             <summary>
             Actualizar usuario
             </summary>

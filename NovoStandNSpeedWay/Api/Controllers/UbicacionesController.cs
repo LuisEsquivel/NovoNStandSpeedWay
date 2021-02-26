@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Api.Dtos.Usuarios;
+using Api.Dtos.Ubicaciones;
 using Api.Helpers;
 using Api.Interface;
 using Api.Models;
@@ -13,33 +13,34 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
-   
-        /// <summary>
-        /// Usuarios Controller
-        /// </summary>
-        [Route("api/usuarios/")]
-        [ApiController]
-        [ApiExplorerSettings(GroupName = "ApiUsuarios")]
-    public class UsuariosController : Controller
+
+    /// <summary>
+    /// Ubicaciones Controller
+    /// </summary>
+    [Route("api/ubicaciones/")]
+    [ApiController]
+    [ApiExplorerSettings(GroupName = "ApiUbicaciones")]
+    public class UbicacionesController : ControllerBase
     {
 
-        private IGenericRepository<Usuario> repository;
+
+            private IGenericRepository<Ubicacione> repository;
             private IMapper mapper;
             private Response response;
 
 
-            public UsuariosController(ApplicationDbContext context, IMapper _mapper)
+            public UbicacionesController(ApplicationDbContext context, IMapper _mapper)
             {
                 this.mapper = _mapper;
-                this.repository = new GenericRepository<Usuario>(context);
+                this.repository = new GenericRepository<Ubicacione>(context);
                 this.response = new Response();
             }
 
 
             /// <summary>
-            ///Usuarios Get
+            ///Ubicaciones Get
             /// </summary>
-            /// <returns>lista de usuarios</returns>
+            /// <returns>lista de Ubicaciones</returns>
             [HttpGet("get")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             public IActionResult Get()
@@ -47,11 +48,11 @@ namespace Api.Controllers
 
                 var list = repository.GetAll();
 
-                var listDto = new List<UsuarioDto>();
+                var listDto = new List<UbicacionesDto>();
 
                 foreach (var row in list)
                 {
-                    listDto.Add(mapper.Map<UsuarioDto>(row));
+                    listDto.Add(mapper.Map<UbicacionesDto>(row));
                 }
 
                 return Ok(response.ResponseValues(this.Response.StatusCode, listDto));
@@ -60,27 +61,9 @@ namespace Api.Controllers
 
 
 
+      
             /// <summary>
-            /// Obtener usuario por el Id
-            /// </summary>
-            /// <param name="Id"></param>
-            /// <returns>StatusCode 200</returns>
-            [HttpGet("GetById/{Id:int}")]
-            [ProducesResponseType(StatusCodes.Status200OK)]
-            public IActionResult GetById(int Id)
-            {
-                var row = this.repository.GetById(Id);
-                var listDto = new List<UsuarioDto>();
-                listDto.Add(mapper.Map<UsuarioDto>(row));
-                return Ok(this.response.ResponseValues(this.Response.StatusCode, listDto));
-            }
-
-
-
-
-
-            /// <summary>
-            /// Agregar un nuevo usuario
+            /// Agregar una ubicación
             /// </summary>
             /// <param name="dto"></param>
             /// <returns>StatusCode 200</returns>
@@ -88,7 +71,7 @@ namespace Api.Controllers
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status404NotFound)]
             [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-            public IActionResult Add([FromBody] UsuarioAddDto dto)
+            public IActionResult Add([FromBody] UbicacionesAddDto dto)
             {
                 if (dto == null)
                 {
@@ -96,21 +79,21 @@ namespace Api.Controllers
                 }
 
 
-                if (repository.Exist(x => x.NombreVar == dto.NombreVar))
+                if (repository.Exist(x => x.DescripcionVar == dto.DescripcionVar))
                 {
                     return BadRequest(this.response.ResponseValues(StatusCodes.Status406NotAcceptable, null, "El registro Ya Existe!!"));
                 }
 
-                var producto = mapper.Map<Usuario>(dto);
+                var ubicacion = mapper.Map<Ubicacione>(dto);
 
-                if (!repository.Add(producto))
+                if (!repository.Add(ubicacion))
                 {
-                    return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal guardar el registro: {dto.NombreVar}"));
+                    return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal guardar el registro: {dto.DescripcionVar}"));
                 }
 
                 return Ok(
                              response.ResponseValues(this.Response.StatusCode,
-                                                     mapper.Map<UsuarioDto>(repository.GetById(producto.UsuarioIdInt))
+                                                     mapper.Map<UbicacionesAddDto>(repository.GetById(ubicacion.UbicacionIdVar))
                                                    )
                           );
             }
@@ -118,7 +101,7 @@ namespace Api.Controllers
 
 
             /// <summary>
-            /// Actualizar usuario
+            /// Actualizar ubicación
             /// </summary>
             /// <param name="dto"></param>
             /// <returns>StatusCode 200</returns>
@@ -126,30 +109,30 @@ namespace Api.Controllers
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status404NotFound)]
             [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-            public IActionResult Update([FromBody] UsuarioUpdateDto dto)
+            public IActionResult Update([FromBody] UbicacionesUpdateDto dto)
             {
                 if (dto == null)
                 {
                     return BadRequest(StatusCodes.Status406NotAcceptable);
                 }
 
-                if (repository.Exist(x => x.NombreVar == dto.NombreVar && x.UsuarioIdInt != dto.UsuarioIdInt))
+                if (repository.Exist(x => x.DescripcionVar == dto.DescripcionVar && x.UbicacionIdVar != dto.UbicacionIdVar))
                 {
                     return BadRequest(this.response.ResponseValues(StatusCodes.Status406NotAcceptable, null, "El Registro Ya Existe!!"));
                 }
 
-                var producto = mapper.Map<Usuario>(dto);
-                var update = repository.GetByValues(x => x.UsuarioIdInt == dto.UsuarioIdInt).FirstOrDefault();
+                var ubicacion = mapper.Map<Ubicacione>(dto);
+                var update = repository.GetByValues(x => x.UbicacionIdVar == dto.UbicacionIdVar).FirstOrDefault();
 
-                if (!repository.Update(producto, producto.UsuarioIdInt))
+                if (!repository.Update(ubicacion, ubicacion.UbicacionIdVar))
                 {
-                    return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal al actualizar el registro: {dto.NombreVar}"));
+                    return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal al actualizar el registro: {dto.DescripcionVar}"));
                 }
 
 
                 return Ok(
                            response.ResponseValues(this.Response.StatusCode,
-                                                   mapper.Map<UsuarioDto>(repository.GetById(producto))
+                                                   mapper.Map<UbicacionesUpdateDto>(repository.GetById(ubicacion))
                                                  )
                         );
 
@@ -158,34 +141,34 @@ namespace Api.Controllers
 
 
             /// <summary>
-            /// Eliminar usuario por Id
+            /// Eliminar ubicación por Id
             /// </summary>
             /// <param name="Id"></param>
             /// <returns>StatusCode 200</returns>
-            [HttpDelete("Delete/{Id:int}")]
+            [HttpDelete("Delete/{Id}")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status404NotFound)]
             [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-            public IActionResult Delete(int Id)
+            public IActionResult Delete(object Id)
             {
-                if (Id <= 0)
+                if (Id != null)
                 {
                     return BadRequest(this.response.ResponseValues(StatusCodes.Status406NotAcceptable, null, $"El parámetro (Id) es obligatorio"));
                 }
 
 
-                if (repository.Exist(x => x.UsuarioIdInt == Id))
+                if (repository.Exist(x => x.UbicacionIdVar == Id.ToString()))
                 {
                     return BadRequest(this.response.ResponseValues(StatusCodes.Status406NotAcceptable, null, $"El registro con Id: {Id} No existe"));
                 }
 
                 var row = repository.GetById(Id);
 
-                var comoseentero = mapper.Map<Usuario>(row);
+                var ubicacion = mapper.Map<Role>(row);
 
-                if (!repository.Delete(comoseentero))
+                if (!repository.Delete(ubicacion))
                 {
-                    return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal al eliminar el registro: {comoseentero.NombreVar}"));
+                    return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal al eliminar el registro: {ubicacion.DescripcionVar}"));
 
                 }
 
@@ -194,6 +177,4 @@ namespace Api.Controllers
             }
 
         }
-
-
     }

@@ -51,9 +51,9 @@ namespace Api.Repository
             return Save();
         }
 
-        public bool Update(T obj, int id = 0)
+        public bool Update(T obj, object id = null)
         {
-            if (id > 0)
+            if (id != null)
             {
                 var exist = table.Find(id);
                 if (exist != null) { _context.Entry(exist).State = EntityState.Detached; }

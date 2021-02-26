@@ -12,7 +12,7 @@ namespace Api.Interface
         IEnumerable<T> GetByValues(Func<T, bool> values);
         bool Exist(Func<T, bool> values);
         bool Add(T obj);
-        bool Update(T obj, int id = 0);
+        bool Update(T obj, object id);
         bool Delete(object id);
         bool Save();
 

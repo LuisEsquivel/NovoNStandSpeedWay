@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Api.Dtos.Usuarios;
+using Api.Dtos.Lectores;
 using Api.Helpers;
 using Api.Interface;
 using Api.Models;
@@ -13,33 +13,33 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
-   
-        /// <summary>
-        /// Usuarios Controller
-        /// </summary>
-        [Route("api/usuarios/")]
-        [ApiController]
-        [ApiExplorerSettings(GroupName = "ApiUsuarios")]
-    public class UsuariosController : Controller
+    /// <summary>
+    /// Lectores Controller
+    /// </summary>
+    [Route("api/lectores/")]
+    [ApiController]
+    [ApiExplorerSettings(GroupName = "ApiLectores")]
+    public class LectoresController : ControllerBase
     {
+        
 
-        private IGenericRepository<Usuario> repository;
+            private IGenericRepository<Lectore> repository;
             private IMapper mapper;
             private Response response;
 
 
-            public UsuariosController(ApplicationDbContext context, IMapper _mapper)
+            public LectoresController(ApplicationDbContext context, IMapper _mapper)
             {
                 this.mapper = _mapper;
-                this.repository = new GenericRepository<Usuario>(context);
+                this.repository = new GenericRepository<Lectore>(context);
                 this.response = new Response();
             }
 
 
             /// <summary>
-            ///Usuarios Get
+            ///Lectores Get
             /// </summary>
-            /// <returns>lista de usuarios</returns>
+            /// <returns>lista de lectores</returns>
             [HttpGet("get")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             public IActionResult Get()
@@ -47,11 +47,11 @@ namespace Api.Controllers
 
                 var list = repository.GetAll();
 
-                var listDto = new List<UsuarioDto>();
+                var listDto = new List<LectoresDto>();
 
                 foreach (var row in list)
                 {
-                    listDto.Add(mapper.Map<UsuarioDto>(row));
+                    listDto.Add(mapper.Map<LectoresDto>(row));
                 }
 
                 return Ok(response.ResponseValues(this.Response.StatusCode, listDto));
@@ -61,7 +61,7 @@ namespace Api.Controllers
 
 
             /// <summary>
-            /// Obtener usuario por el Id
+            /// Obtener lector por el Id
             /// </summary>
             /// <param name="Id"></param>
             /// <returns>StatusCode 200</returns>
@@ -70,8 +70,8 @@ namespace Api.Controllers
             public IActionResult GetById(int Id)
             {
                 var row = this.repository.GetById(Id);
-                var listDto = new List<UsuarioDto>();
-                listDto.Add(mapper.Map<UsuarioDto>(row));
+                var listDto = new List<LectoresDto>();
+                listDto.Add(mapper.Map<LectoresDto>(row));
                 return Ok(this.response.ResponseValues(this.Response.StatusCode, listDto));
             }
 
@@ -80,7 +80,7 @@ namespace Api.Controllers
 
 
             /// <summary>
-            /// Agregar un nuevo usuario
+            /// Agregar un nuevo lector
             /// </summary>
             /// <param name="dto"></param>
             /// <returns>StatusCode 200</returns>
@@ -88,7 +88,7 @@ namespace Api.Controllers
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status404NotFound)]
             [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-            public IActionResult Add([FromBody] UsuarioAddDto dto)
+            public IActionResult Add([FromBody] LectoresAddDto dto)
             {
                 if (dto == null)
                 {
@@ -96,21 +96,21 @@ namespace Api.Controllers
                 }
 
 
-                if (repository.Exist(x => x.NombreVar == dto.NombreVar))
+                if (repository.Exist(x => x.DescripcionVar == dto.DescripcionVar))
                 {
                     return BadRequest(this.response.ResponseValues(StatusCodes.Status406NotAcceptable, null, "El registro Ya Existe!!"));
                 }
 
-                var producto = mapper.Map<Usuario>(dto);
+                var lector = mapper.Map<Lectore>(dto);
 
-                if (!repository.Add(producto))
+                if (!repository.Add(lector))
                 {
-                    return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal guardar el registro: {dto.NombreVar}"));
+                    return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal guardar el registro: {dto.DescripcionVar}"));
                 }
 
                 return Ok(
                              response.ResponseValues(this.Response.StatusCode,
-                                                     mapper.Map<UsuarioDto>(repository.GetById(producto.UsuarioIdInt))
+                                                     mapper.Map<LectoresDto>(repository.GetById(lector.LectorIdInt))
                                                    )
                           );
             }
@@ -118,7 +118,7 @@ namespace Api.Controllers
 
 
             /// <summary>
-            /// Actualizar usuario
+            /// Actualizar lector
             /// </summary>
             /// <param name="dto"></param>
             /// <returns>StatusCode 200</returns>
@@ -126,30 +126,30 @@ namespace Api.Controllers
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status404NotFound)]
             [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-            public IActionResult Update([FromBody] UsuarioUpdateDto dto)
+            public IActionResult Update([FromBody] LectoresUpdateDto dto)
             {
                 if (dto == null)
                 {
                     return BadRequest(StatusCodes.Status406NotAcceptable);
                 }
 
-                if (repository.Exist(x => x.NombreVar == dto.NombreVar && x.UsuarioIdInt != dto.UsuarioIdInt))
+                if (repository.Exist(x => x.DescripcionVar == dto.DescripcionVar && x.LectorIdInt != dto.LectorIdInt))
                 {
                     return BadRequest(this.response.ResponseValues(StatusCodes.Status406NotAcceptable, null, "El Registro Ya Existe!!"));
                 }
 
-                var producto = mapper.Map<Usuario>(dto);
-                var update = repository.GetByValues(x => x.UsuarioIdInt == dto.UsuarioIdInt).FirstOrDefault();
+                var lector = mapper.Map<Lectore>(dto);
+                var update = repository.GetByValues(x => x.LectorIdInt == dto.LectorIdInt).FirstOrDefault();
 
-                if (!repository.Update(producto, producto.UsuarioIdInt))
+                if (!repository.Update(lector, lector.LectorIdInt))
                 {
-                    return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal al actualizar el registro: {dto.NombreVar}"));
+                    return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal al actualizar el registro: {dto.DescripcionVar}"));
                 }
 
 
                 return Ok(
                            response.ResponseValues(this.Response.StatusCode,
-                                                   mapper.Map<UsuarioDto>(repository.GetById(producto))
+                                                   mapper.Map<LectoresDto>(repository.GetById(lector))
                                                  )
                         );
 
@@ -158,7 +158,7 @@ namespace Api.Controllers
 
 
             /// <summary>
-            /// Eliminar usuario por Id
+            /// Eliminar lector por Id
             /// </summary>
             /// <param name="Id"></param>
             /// <returns>StatusCode 200</returns>
@@ -174,18 +174,18 @@ namespace Api.Controllers
                 }
 
 
-                if (repository.Exist(x => x.UsuarioIdInt == Id))
+                if (repository.Exist(x => x.LectorIdInt == Id))
                 {
                     return BadRequest(this.response.ResponseValues(StatusCodes.Status406NotAcceptable, null, $"El registro con Id: {Id} No existe"));
                 }
 
                 var row = repository.GetById(Id);
 
-                var comoseentero = mapper.Map<Usuario>(row);
+                var lector = mapper.Map<Lectore>(row);
 
-                if (!repository.Delete(comoseentero))
+                if (!repository.Delete(lector))
                 {
-                    return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal al eliminar el registro: {comoseentero.NombreVar}"));
+                    return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal al eliminar el registro: {lector.DescripcionVar}"));
 
                 }
 
@@ -194,6 +194,4 @@ namespace Api.Controllers
             }
 
         }
-
-
     }

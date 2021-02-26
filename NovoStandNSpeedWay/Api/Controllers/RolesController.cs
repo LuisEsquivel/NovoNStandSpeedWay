@@ -39,7 +39,7 @@ namespace Api.Controllers
             /// <summary>
             ///Roles Get
             /// </summary>
-            /// <returns>lista de productos</returns>
+            /// <returns>lista de roles</returns>
             [HttpGet("get")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             public IActionResult Get()
@@ -80,7 +80,7 @@ namespace Api.Controllers
 
 
             /// <summary>
-            /// Agregar un nuevo usuario
+            /// Agregar un nuevo rol
             /// </summary>
             /// <param name="dto"></param>
             /// <returns>StatusCode 200</returns>
@@ -88,7 +88,7 @@ namespace Api.Controllers
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status404NotFound)]
             [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-            public IActionResult Add([FromBody] RolesDto dto)
+            public IActionResult Add([FromBody] RolesAddDto dto)
             {
                 if (dto == null)
                 {
@@ -126,7 +126,7 @@ namespace Api.Controllers
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status404NotFound)]
             [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-            public IActionResult Update([FromBody] RolesDto dto)
+            public IActionResult Update([FromBody] RolesUpdateDto dto)
             {
                 if (dto == null)
                 {

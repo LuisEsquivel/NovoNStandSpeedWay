@@ -48,34 +48,35 @@
 
                     <div class="col-sm-12 text-center" id="DivIsActive">
                         <input hidden type="text" id="IsActive" name="IsActive" value="true" />
-                        <label for="IsActiveBit">
-                            <input type="checkbox" id="IsActiveBit" name="IsActiveBit" />
+                        <label for="ActivoBit">
+                            <input type="checkbox" id="ActivoBit" name="ActivoBit" />
                             <span>Activo</span>
+                        </label>
+                    </div>
+
+                    <div class="col-sm-12 text-center">
+                        <input hidden type="text" id="EsAdmin" name="EsAdmin" value="false" />
+                        <label for="EsAdminBit">
+                            <input type="checkbox" id="EsAdminBit" name="EsAdminBit" />
+                            <span>Admin</span>
                         </label>
                     </div>
 
 
                     <div class="form-row">
                         <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 mt-3">
-                            <label for="Descripcion">Nombre</label>
+                            <label for="NombreVar">Nombre</label>
                             <input type="text" class="form-control" id="NombreVar" name="NombreVar" placeholder="Nombre" required maxlength="100" />
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 mt-3">
-                            <label for="UsuarioVar">Usuario</label>
-                            <input type="text" class="form-control" id="UsuarioVar" name="UsuarioVar" placeholder="Usuario" required maxlength="100" />
+                            <label>Rol</label>
+                            <select class="form-control" id="RolIdInt" name="RolIdInt"></select>
                         </div>
                     </div>
 
-
-                    <div class="form-row">
-                        <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 mt-3">
-                            <label for="PasswordVar">Contraseña</label>
-                            <input type="password" class="form-control" id="PasswordVar" name="PasswordVar" placeholder="Contraseña" required maxlength="100" />
-                        </div>
-                    </div>
 
                 </div>
 

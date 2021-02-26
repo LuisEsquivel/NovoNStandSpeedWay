@@ -9,192 +9,215 @@ using Web.Services;
 
 namespace Web.Controllers
 {
- 
-        public class UsuariosController : Controller
+    public class UsuariosController : Controller
+    {
+        public ApiServices apiServices;
+        public Services.Services services;
+        public HomeController hc;
+
+        public UsuariosController()
         {
-            public ApiServices apiServices;
-            public Services.Services services;
-            public HomeController hc;
+            apiServices = new ApiServices();
+            services = new Services.Services();
+            hc = new HomeController();
+        }
 
-            public UsuariosController()
+
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+
+        public object Get()
+        {
+            object o;
+
+            try
             {
-                apiServices = new ApiServices();
-                services = new Services.Services();
-                hc = new HomeController();
-            }
+                var usuarios = services.Get<Usuario>("usuarios");
+                var roles = services.Get<Role>("roles");
 
-
-            public ActionResult Index()
-            {
-                return View();
-            }
-
-
-            public object Get()
-            {
-                object o;
-
-                try
-                {
-                    o = services.Get<Usuario>("usuarios").Select(
-
-                        x => new
+                o = (from u in usuarios
+                        join r in roles on u.RolIdInt equals r.RolIdInt
+                        select new
                         {
-                            x.UsuarioIdInt,
-                            x.NombreVar,
-                            IsActiveBit =  x.ActivoBit != false ? "SI" : "NO",
-                            FechaAlta = Convert.ToDateTime(x.FechaAltaDate).ToShortDateString()
-                        }
-
-                        ).ToList();
-                }
-                catch (Exception)
-                {
-                    return null;
-                }
-
-                return o;
+                            u.UsuarioIdInt,
+                            u.NombreVar,
+                            r.DescripcionVar,
+                            IsActiveBit = u.ActivoBit != false ? "SI" : "NO",
+                            FechaAlta = Convert.ToDateTime(u.FechaAltaDate).ToShortDateString()
+                        }).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
             }
 
+            return o;
+        }
 
-            public JsonResult List()
+
+        public JsonResult Listar()
+        {
+            object list;
+
+            try
             {
-                object o;
+                var usuarios = services.Get<Usuario>("usuarios");
+                var roles = services.Get<Role>("roles");
 
-                try
-                {
-                    o = services.Get<Usuario>("usuarios").Select(
-
-                        x => new
+                list = (from u in usuarios
+                        join r in roles on u.RolIdInt equals r.RolIdInt
+                        select new
                         {
-                            x.UsuarioIdInt,
-                            x.NombreVar,
-                            IsActiveBit = x.ActivoBit != false ? "SI" : "NO",
-                            FechaAlta = Convert.ToDateTime(x.FechaAltaDate).ToShortDateString()
-                        }
-
-                        ).ToList();
-                }
-                catch (Exception)
-                {
-                    return null;
-                }
-
-                return Json(o, JsonRequestBehavior.AllowGet);
+                            u.UsuarioIdInt,
+                            u.NombreVar,
+                            r.DescripcionVar,
+                            IsActiveBit = u.ActivoBit != false ? "SI" : "NO",
+                            FechaAlta = Convert.ToDateTime(u.FechaAltaDate).ToShortDateString()
+                        }).ToList();
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
 
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
 
 
-            [HttpPost]
-            public JsonResult GetByID(int id)
+
+        [HttpPost]
+        public JsonResult GetByID(int id)
+        {
+            object o;
+
+            try
             {
-                object o;
-
-                try
-                {
-                    o = services.Get<Usuario>("usuarios").Select(
-
-                        x => new
-                        {
-                            x.UsuarioIdInt,
-                            x.NombreVar,
-                            FechaAlta = Convert.ToDateTime(x.FechaAltaDate).ToShortDateString()
-                        }
-
-                        ).Where(x => x.UsuarioIdInt == id).ToList();
-                }
-                catch (Exception)
-                {
-                    return null;
-                }
-
-                return Json(o, JsonRequestBehavior.AllowGet);
+                var usuarios = services.Get<Usuario>("usuarios");
+                o = (from u in usuarios
+                     where u.UsuarioIdInt == id
+                     select new
+                     {
+                         u.UsuarioIdInt,
+                         u.NombreVar,
+                         u.RolIdInt,
+                         u.ActivoBit, 
+                         u.EsAdminBit
+                     }).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
             }
 
+            return Json(o, JsonRequestBehavior.AllowGet);
+        }
 
 
-            [HttpPost]
-            public JsonResult Add(Usuario o, string IsActive)
+
+        [HttpPost]
+        public JsonResult Add(Usuario o, string IsActive, string EsAdmin)
+        {
+            o.ActivoBit = IsActive != null ? Convert.ToBoolean(IsActive) : false;
+            o.EsAdminBit = EsAdmin != null ? Convert.ToBoolean(EsAdmin) : false;
+            Usuario result = null;
+
+
+
+            try
             {
-                o.ActivoBit = IsActive != null ? Convert.ToBoolean(IsActive) : false;
-                Usuario result = null;
-
-
-
-                try
+                if (o.UsuarioIdInt == 0)
                 {
-                    if (o.UsuarioIdInt == 0)
+
+                    var existe = services.Get<Usuario>("usuarios").
+                                 Where(
+                                 x => x.NombreVar == o.NombreVar
+                                 ).FirstOrDefault();
+
+                    if (existe != null)
                     {
+                        var message = "Ya Existe un registro con estos campos: "
+                                     + Environment.NewLine
+                                     + nameof(existe.NombreVar).ToString()
+                                     + Environment.NewLine
+                                     + "Verifique";
 
-                        var existe = services.Get<Usuario>("usuarios").
-                                     Where(
-                                     x => x.NombreVar == o.NombreVar
-                                     ).FirstOrDefault();
+                        return Json(new { message });
 
-                        if (existe != null)
-                        {
-                            var message = "Ya Existe un registro con estos campos: "
-                                         + Environment.NewLine
-                                         + nameof(existe.NombreVar).ToString()
-                                         + Environment.NewLine
-                                         + "Verifique";
-
-                            return Json(new { message });
-
-                        }
+                    }
 
                     // ADD
-                    o.UsuarioIdInt = 1;
-
-
-
                     result = apiServices.Save<Usuario>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.UsuariosController, "Add", o);
 
-                    }
-
-                    else
-                    {
-
-                        //UPDATE
-                        var existe = services.Get<Usuario>("usuarios").
-                                    Where(
-                                    x => x.NombreVar == o.NombreVar
-                                    &&
-                                    x.UsuarioIdInt != o.UsuarioIdInt
-                                    ).FirstOrDefault();
-
-                        if (existe != null)
-                        {
-                            var message = "Ya Existe un registro con estos campos: "
-                                         + Environment.NewLine
-                                         + nameof(existe.NombreVar).ToString()
-                                         + Environment.NewLine
-                                         + "Verifique";
-
-                            return Json(new { message });
-
-                        }
-
-
-                        result = apiServices.Save<Usuario>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.UsuariosController, "Update", o);
-
-
-                    }
-
                 }
-                catch (Exception)
+
+                else
                 {
-                    return null;
+
+                    //UPDATE
+                    var existe = services.Get<Usuario>("usuarios").
+                                Where(
+                                x => x.NombreVar == o.NombreVar
+                                &&
+                                x.UsuarioIdInt != o.UsuarioIdInt
+                                ).FirstOrDefault();
+
+                    if (existe != null)
+                    {
+                        var message = "Ya Existe un registro con estos campos: "
+                                     + Environment.NewLine
+                                     + nameof(existe.NombreVar).ToString()
+                                     + Environment.NewLine
+                                     + "Verifique";
+
+                        return Json(new { message });
+
+                    }
+
+
+                    result = apiServices.Save<Usuario>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.UsuariosController, "Update", o);
+
+
                 }
 
-                if (result == null) return null;
-
-
-                return Json(new { message = Get() });
+            }
+            catch (Exception)
+            {
+                return null;
             }
 
-        } 
+            if (result == null) return null;
+
+
+            return Json(new { message = Get() });
+        }
+
+        #region DROPDOWN
+        public JsonResult listarRoles()
+        {
+            object list;
+            try
+            {
+                list = services.Get<Role>("roles").Where(p => p.ActivoBit == true).Select(
+                    x => new
+                    {
+                        IID = x.RolIdInt,
+                        NOMBRE = x.DescripcionVar
+                    }).OrderBy(p => p.NOMBRE).ToList();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
     }
+}
 
  
    

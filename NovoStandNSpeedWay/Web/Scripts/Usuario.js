@@ -1,7 +1,10 @@
 ﻿
 //navegadores modernos
 document.addEventListener("DOMContentLoaded", function (event) {
-    window.list("/Usuarios/List", ["Id", "Nombre", "Activo", "Fecha Alta"], 0, null);
+    window.list("/Usuarios/Listar", ["Id", "Nombre", "Rol", "Activo", "Fecha Alta"], 0, null);
+    $.get("/Usuarios/listarRoles", function (data) {
+        llenarCombo(data, document.getElementById("RolIdInt"), true)
+    });
 });
 
 
@@ -17,19 +20,19 @@ function ReturnData(url) {
 
 
 function GetTraining(id) {
-    window.list("/Usuarios/List", ["Id", "Nombre", "Activo", "Fecha Alta"], 0, null);
+    window.list("/Usuarios/List", ["Id", "Nombre", "Rol", "Activo", "Fecha Alta"], 0, null);
 }
 
 
 
 function Add() {
     var form = document.getElementById("form");
-    window.add("/Usuarios/Add", form, ["Id", "Nombre", "Activo", "Fecha Alta"])
+    window.add("/Usuarios/Add", form, ["Id", "Nombre", "Rol", "Activo", "Fecha Alta"])
 }
 
 
 function ChangeInfoStatus(id) {
-    window.ChangeStatus("/TipoDeSeguimiento/ChangeStatus", id, ["Id", "Nombre", "Activo", "Fecha Alta"]);
+    window.ChangeStatus("/TipoDeSeguimiento/ChangeStatus", id, ["Id", "Nombre", "Rol", "Activo", "Fecha Alta"]);
 }
 
 
@@ -62,3 +65,20 @@ $(document).keyup(function (e) {
 
     }
 });
+
+//METODO GENERICO PARA LLENAR LOS COMBOBOX
+function llenarCombo(data, control, primerElemento) {
+    var contenido = "";
+
+    if (primerElemento == true) {
+        contenido += "<option value=''>---SELECCIONE---</option>"
+    }
+
+    for (var i = 0; i < data.length; i++) {
+        contenido += "<option value='" + data[i].IID + "'>";
+        contenido += data[i].NOMBRE;
+        contenido += "</option>";
+    }
+
+    control.innerHTML = contenido;
+}

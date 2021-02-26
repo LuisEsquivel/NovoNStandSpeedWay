@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Api.Dtos.CentroDeCostos;
+using Api.Dtos.EpcProductosRel;
 using Api.Helpers;
 using Api.Interface;
 using Api.Models;
@@ -14,33 +14,33 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers
 {
 
-
         /// <summary>
-        /// Centro De Costos Controller
+        /// EpcProductosRel Controller
         /// </summary>
-        [Route("api/centrodecostos/")]
+        [Route("api/epc/")]
         [ApiController]
-        [ApiExplorerSettings(GroupName = "ApiCentroDeCostos")]
-    public class CentroDeCostosController : ControllerBase
+        [ApiExplorerSettings(GroupName = "ApiEpcProductosRel")]
+   
+    public class EpcProductosRelController : ControllerBase
     {
 
-        private IGenericRepository<CentroCosto> repository;
+            private IGenericRepository<EpcProductosRel> repository;
             private IMapper mapper;
             private Response response;
 
 
-            public CentroDeCostosController(ApplicationDbContext context, IMapper _mapper)
+            public EpcProductosRelController(ApplicationDbContext context, IMapper _mapper)
             {
                 this.mapper = _mapper;
-                this.repository = new GenericRepository<CentroCosto>(context);
+                this.repository = new GenericRepository<EpcProductosRel>(context);
                 this.response = new Response();
             }
 
 
             /// <summary>
-            ///Centro De Costos Get
+            ///EpcProductosRel Get
             /// </summary>
-            /// <returns>lista de roles</returns>
+            /// <returns>lista de epc productos rel</returns>
             [HttpGet("get")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             public IActionResult Get()
@@ -48,11 +48,11 @@ namespace Api.Controllers
 
                 var list = repository.GetAll();
 
-                var listDto = new List<CentroCostoDto>();
+                var listDto = new List<EpcProductosRelDto>();
 
                 foreach (var row in list)
                 {
-                    listDto.Add(mapper.Map<CentroCostoDto>(row));
+                    listDto.Add(mapper.Map<EpcProductosRelDto>(row));
                 }
 
                 return Ok(response.ResponseValues(this.Response.StatusCode, listDto));
@@ -62,7 +62,7 @@ namespace Api.Controllers
 
 
             /// <summary>
-            /// Obtener rol por el Id
+            /// Obtener epc por el Id
             /// </summary>
             /// <param name="Id"></param>
             /// <returns>StatusCode 200</returns>
@@ -71,8 +71,8 @@ namespace Api.Controllers
             public IActionResult GetById(int Id)
             {
                 var row = this.repository.GetById(Id);
-                var listDto = new List<CentroCostoDto>();
-                listDto.Add(mapper.Map<CentroCostoDto>(row));
+                var listDto = new List<EpcProductosRelDto>();
+                listDto.Add(mapper.Map<EpcProductosRelDto>(row));
                 return Ok(this.response.ResponseValues(this.Response.StatusCode, listDto));
             }
 
@@ -81,7 +81,7 @@ namespace Api.Controllers
 
 
             /// <summary>
-            /// Agregar un nuevo centro de costos
+            /// Agregar un nuevo epc producto rel
             /// </summary>
             /// <param name="dto"></param>
             /// <returns>StatusCode 200</returns>
@@ -89,7 +89,7 @@ namespace Api.Controllers
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status404NotFound)]
             [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-            public IActionResult Add([FromBody] CentroCostoDto dto)
+            public IActionResult Add([FromBody] EpcProductosRelAddDto dto)
             {
                 if (dto == null)
                 {
@@ -97,24 +97,21 @@ namespace Api.Controllers
                 }
 
 
-                if (repository.Exist(x => x.DescripcionVar == dto.DescripcionVar))
-                {
-                    return BadRequest(this.response.ResponseValues(StatusCodes.Status406NotAcceptable, null, "El registro Ya Existe!!"));
-                }
+            if (repository.Exist(x => x.EpcVar == dto.EpcVar && x.ProductoIdVar  == dto.ProductoIdVar))
+            {
+                return BadRequest(this.response.ResponseValues(StatusCodes.Status406NotAcceptable, null, "El registro Ya Existe!!"));
+            }
 
-                var o = mapper.Map<CentroCosto>(dto);
-                o.FechaAltaDate  = DateTime.Now;
-                o.FechaModDate = Convert.ToDateTime("1900-01-01");
-                o.UsuarioIdModInt = 0;
+            var o = mapper.Map<EpcProductosRel>(dto);
 
                 if (!repository.Add(o))
                 {
-                    return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal guardar el registro: {dto.DescripcionVar}"));
+                    return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal guardar el registro: {dto.EpcVar}"));
                 }
 
                 return Ok(
                              response.ResponseValues(this.Response.StatusCode,
-                                                     mapper.Map<CentroCostoDto>(repository.GetById(o.CentroCostosIdVar))
+                                                     mapper.Map<EpcProductosRelDto>(repository.GetById(o.EpcVar))
                                                    )
                           );
             }
@@ -122,7 +119,7 @@ namespace Api.Controllers
 
 
             /// <summary>
-            /// Actualizar centro de costos
+            /// Actualizar epc 
             /// </summary>
             /// <param name="dto"></param>
             /// <returns>StatusCode 200</returns>
@@ -130,35 +127,31 @@ namespace Api.Controllers
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status404NotFound)]
             [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-            public IActionResult Update([FromBody] CentroCostoUpdateDto dto)
+            public IActionResult Update([FromBody] EpcProductosRelUpdateDto  dto)
             {
                 if (dto == null)
                 {
                     return BadRequest(StatusCodes.Status406NotAcceptable);
                 }
 
-                if (repository.Exist(x => x.DescripcionVar == dto.DescripcionVar && x.CentroCostosIdVar  != dto.CentroCostosIdVar))
+            if (repository.Exist(x => x.EpcVar  == dto.EpcVar && x.ProductoIdVar  != dto.ProductoIdVar))
+            {
+                return BadRequest(this.response.ResponseValues(StatusCodes.Status406NotAcceptable, null, "El Registro Ya Existe!!"));
+            }
+
+                var o = mapper.Map<EpcProductosRel>(dto);
+                var update = repository.GetByValues(x => x.ProductoIdVar  == dto.ProductoIdVar  && x.EpcVar  == dto.EpcVar).FirstOrDefault();
+
+
+                if (!repository.Update(o, o.ProductoIdVar))
                 {
-                    return BadRequest(this.response.ResponseValues(StatusCodes.Status406NotAcceptable, null, "El Registro Ya Existe!!"));
-                }
-
-                var o = mapper.Map<CentroCosto>(dto);
-                var update = repository.GetByValues(x => x.CentroCostosIdVar == dto.CentroCostosIdVar).FirstOrDefault();
-                o.FechaModDate = DateTime.Now;
-                o.FechaAltaDate = update.FechaAltaDate;
-                o.UsuarioIdInt = update.UsuarioIdInt;
-
-
-
-                if (!repository.Update( o, o.CentroCostosIdVar))
-                {
-                    return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal al actualizar el registro: {dto.DescripcionVar}"));
+                    return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal al actualizar el registro: {dto.EpcVar}"));
                 }
 
 
                 return Ok(
                            response.ResponseValues(this.Response.StatusCode,
-                                                   mapper.Map<CentroCostoDto>(repository.GetById(o.CentroCostosIdVar))
+                                                   mapper.Map<EpcProductosRelDto>(repository.GetById(o.ProductoIdVar))
                                                  )
                         );
 
@@ -167,34 +160,32 @@ namespace Api.Controllers
 
 
             /// <summary>
-            /// Eliminar centro de costos por Id
+            /// Eliminar epc por Id
             /// </summary>
-            /// <param name="Id"></param>
+            /// <param name="dto"></param>
             /// <returns>StatusCode 200</returns>
-            [HttpDelete("Delete/{Id}")]
+            [HttpDelete("Delete/{Id:int}")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status404NotFound)]
             [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-            public IActionResult Delete(string Id)
+            public IActionResult Delete(EpcProductosRelDto dto)
             {
-                if (Id != null)
+                if (dto == null)
                 {
                     return BadRequest(this.response.ResponseValues(StatusCodes.Status406NotAcceptable, null, $"El parámetro (Id) es obligatorio"));
                 }
 
 
-                if (repository.Exist(x => x.CentroCostosIdVar == Id))
+                if (repository.Exist(x => x.ProductoIdVar == dto.ProductoIdVar  && x.EpcVar == dto.EpcVar ))
                 {
-                    return BadRequest(this.response.ResponseValues(StatusCodes.Status406NotAcceptable, null, $"El registro con Id: {Id} No existe"));
+                    return BadRequest(this.response.ResponseValues(StatusCodes.Status406NotAcceptable, null, $"El registro con Id: {dto.EpcVar} No existe"));
                 }
 
-                var row = repository.GetById(Id);
-
-                var o = mapper.Map<CentroCosto>(row);
+                var o = mapper.Map<EpcProductosRel>(dto);
 
                 if (!repository.Delete(o))
                 {
-                    return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal al eliminar el registro: {o.DescripcionVar}"));
+                    return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal al eliminar el registro: {o.EpcVar}"));
 
                 }
 
@@ -203,5 +194,4 @@ namespace Api.Controllers
             }
 
         }
-
     }

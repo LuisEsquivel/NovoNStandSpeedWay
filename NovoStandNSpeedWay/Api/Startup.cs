@@ -58,6 +58,26 @@ namespace Api
 
             /*Documentation*/
 
+
+            services.AddSwaggerGen(options =>
+            {
+
+                options.SwaggerDoc("ApiActivos", new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Title = "Api NovoNStandSpeedWay",
+                    Version = "v1",
+
+                });
+
+
+                //File Comments Documentation
+                var PathFileCommentsDocumentation = Path.Combine(AppContext.BaseDirectory, "ApiDocumentation.xml");
+                options.IncludeXmlComments(PathFileCommentsDocumentation);
+
+            });
+
+
+
             services.AddSwaggerGen(options =>
             {
 
@@ -164,6 +184,40 @@ namespace Api
 
             });
 
+            services.AddSwaggerGen(options =>
+            {
+
+                options.SwaggerDoc("ApiEventos", new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Title = "Api NovoNStandSpeedWay",
+                    Version = "v1",
+
+                });
+
+
+                var PathFileCommentsDocumentation = Path.Combine(AppContext.BaseDirectory, "ApiDocumentation.xml");
+                options.IncludeXmlComments(PathFileCommentsDocumentation);
+
+            });
+
+
+            services.AddSwaggerGen(options =>
+            {
+
+                options.SwaggerDoc("ApiEpcProductosRel", new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Title = "Api NovoNStandSpeedWay",
+                    Version = "v1",
+
+                });
+
+
+                var PathFileCommentsDocumentation = Path.Combine(AppContext.BaseDirectory, "ApiDocumentation.xml");
+                options.IncludeXmlComments(PathFileCommentsDocumentation);
+
+            });
+
+
             /*End Documentation*/
 
 
@@ -201,12 +255,16 @@ namespace Api
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
+                options.SwaggerEndpoint("/swagger/ApiActivos/swagger.json", "Api Activos");
                 options.SwaggerEndpoint("/swagger/ApiRoles/swagger.json", "Api Roles");
                 options.SwaggerEndpoint("/swagger/ApiUsuarios/swagger.json", "Api Usuarios");
                 options.SwaggerEndpoint("/swagger/ApiLectores/swagger.json", "Api Lectores");
                 options.SwaggerEndpoint("/swagger/ApiUbicaciones/swagger.json", "Api Ubicaciones");
                 options.SwaggerEndpoint("/swagger/ApiFormaAdquisicion/swagger.json", "Api Forma Adquisición");
                 options.SwaggerEndpoint("/swagger/ApiCentroDeCostos/swagger.json", "Api Centro De Costos");
+                options.SwaggerEndpoint("/swagger/ApiEventos/swagger.json", "Api Eventos");
+                options.SwaggerEndpoint("/swagger/ApiEpcProductosRel/swagger.json", "Api ApiEpcProductosRel");
+
                 options.RoutePrefix = "";
             });
             /*End Documentation*/

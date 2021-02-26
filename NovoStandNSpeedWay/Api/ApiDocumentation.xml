@@ -4,6 +4,45 @@
         <name>Api</name>
     </assembly>
     <members>
+        <member name="T:Api.Controllers.ActivosController">
+            <summary>
+            Activos Controller
+            </summary>
+        </member>
+        <member name="M:Api.Controllers.ActivosController.Get">
+             <summary>
+            Activos Get
+             </summary>
+             <returns>lista de activos</returns>
+        </member>
+        <member name="M:Api.Controllers.ActivosController.GetById(System.Int32)">
+            <summary>
+            Obtener activo por el Id
+            </summary>
+            <param name="Id"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="M:Api.Controllers.ActivosController.Add(Api.Dtos.Activos.ActivosAddDto)">
+            <summary>
+            Agregar un nuevo activo
+            </summary>
+            <param name="dto"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="M:Api.Controllers.ActivosController.Update(Api.Dtos.Activos.ActivosUpdateDto)">
+            <summary>
+            Actualizar rol
+            </summary>
+            <param name="dto"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="M:Api.Controllers.ActivosController.Delete(System.Int32)">
+            <summary>
+            Eliminar activo por Id
+            </summary>
+            <param name="Id"></param>
+            <returns>StatusCode 200</returns>
+        </member>
         <member name="T:Api.Controllers.CentroDeCostosController">
             <summary>
             Centro De Costos Controller
@@ -39,6 +78,84 @@
         <member name="M:Api.Controllers.CentroDeCostosController.Delete(System.String)">
             <summary>
             Eliminar centro de costos por Id
+            </summary>
+            <param name="Id"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="T:Api.Controllers.EpcProductosRelController">
+            <summary>
+            EpcProductosRel Controller
+            </summary>
+        </member>
+        <member name="M:Api.Controllers.EpcProductosRelController.Get">
+             <summary>
+            EpcProductosRel Get
+             </summary>
+             <returns>lista de epc productos rel</returns>
+        </member>
+        <member name="M:Api.Controllers.EpcProductosRelController.GetById(System.Int32)">
+            <summary>
+            Obtener epc por el Id
+            </summary>
+            <param name="Id"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="M:Api.Controllers.EpcProductosRelController.Add(Api.Dtos.EpcProductosRel.EpcProductosRelAddDto)">
+            <summary>
+            Agregar un nuevo epc producto rel
+            </summary>
+            <param name="dto"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="M:Api.Controllers.EpcProductosRelController.Update(Api.Dtos.EpcProductosRel.EpcProductosRelUpdateDto)">
+            <summary>
+            Actualizar epc 
+            </summary>
+            <param name="dto"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="M:Api.Controllers.EpcProductosRelController.Delete(Api.Dtos.EpcProductosRel.EpcProductosRelDto)">
+            <summary>
+            Eliminar epc por Id
+            </summary>
+            <param name="dto"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="T:Api.Controllers.EventosController">
+            <summary>
+            Eventos Controller
+            </summary>
+        </member>
+        <member name="M:Api.Controllers.EventosController.Get">
+             <summary>
+            Eventos Get
+             </summary>
+             <returns>lista de eventos</returns>
+        </member>
+        <member name="M:Api.Controllers.EventosController.GetById(System.Int32)">
+            <summary>
+            Obtener evento por el Id
+            </summary>
+            <param name="Id"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="M:Api.Controllers.EventosController.Add(Api.Dtos.Eventos.EventosAddDto)">
+            <summary>
+            Agregar un nuevo evento
+            </summary>
+            <param name="dto"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="M:Api.Controllers.EventosController.Update(Api.Dtos.Eventos.EventosUpdateDto)">
+            <summary>
+            Actualizar evento
+            </summary>
+            <param name="dto"></param>
+            <returns>StatusCode 200</returns>
+        </member>
+        <member name="M:Api.Controllers.EventosController.Delete(System.Int32)">
+            <summary>
+            Eliminar evento por Id
             </summary>
             <param name="Id"></param>
             <returns>StatusCode 200</returns>

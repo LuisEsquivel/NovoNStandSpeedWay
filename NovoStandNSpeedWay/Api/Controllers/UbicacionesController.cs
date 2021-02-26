@@ -85,7 +85,8 @@ namespace Api.Controllers
                 }
 
                 var ubicacion = mapper.Map<Ubicacione>(dto);
-                Convert.ToDateTime("1900-01-01");
+                ubicacion.FechaAltaDate = DateTime.Now;
+                ubicacion.FechaModDate = Convert.ToDateTime("1900-01-01");
                 ubicacion.UsuarioIdModInt = 0;
 
             if (!repository.Add(ubicacion))
@@ -126,6 +127,7 @@ namespace Api.Controllers
                 var ubicacion = mapper.Map<Ubicacione>(dto);
                 var update = repository.GetByValues(x => x.UbicacionIdVar == dto.UbicacionIdVar).FirstOrDefault();
                 ubicacion.FechaAltaDate = update.FechaAltaDate;
+                ubicacion.FechaModDate = DateTime.Now;
                 ubicacion.UsuarioIdInt = update.UsuarioIdInt;
 
                 if (!repository.Update(ubicacion, ubicacion.UbicacionIdVar))

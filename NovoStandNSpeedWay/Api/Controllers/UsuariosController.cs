@@ -102,6 +102,7 @@ namespace Api.Controllers
                 }
 
                 var usuario = mapper.Map<Usuario>(dto);
+                usuario.FechaAltaDate = DateTime.Now;
                 usuario.FechaModDate = Convert.ToDateTime ("1900-01-01");
                 usuario.UsuarioIdModInt = 0;
 
@@ -142,6 +143,7 @@ namespace Api.Controllers
 
                 var usuario = mapper.Map<Usuario>(dto);
                 var update = repository.GetByValues(x => x.UsuarioIdInt == dto.UsuarioIdInt).FirstOrDefault();
+                usuario.FechaModDate = DateTime.Now;
                 usuario.FechaAltaDate = update.FechaAltaDate;
                 usuario.UsuarioIdInt = update.UsuarioIdInt;
 

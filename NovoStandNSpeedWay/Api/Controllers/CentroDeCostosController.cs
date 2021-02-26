@@ -103,6 +103,7 @@ namespace Api.Controllers
                 }
 
                 var o = mapper.Map<CentroCosto>(dto);
+                o.FechaAltaDate  = DateTime.Now;
                 o.FechaModDate = Convert.ToDateTime("1900-01-01");
                 o.UsuarioIdModInt = 0;
 
@@ -143,6 +144,7 @@ namespace Api.Controllers
 
                 var o = mapper.Map<CentroCosto>(dto);
                 var update = repository.GetByValues(x => x.CentroCostosIdVar == dto.CentroCostosIdVar).FirstOrDefault();
+                o.FechaModDate = DateTime.Now;
                 o.FechaAltaDate = update.FechaAltaDate;
                 o.UsuarioIdInt = update.UsuarioIdInt;
 

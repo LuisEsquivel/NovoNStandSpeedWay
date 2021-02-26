@@ -102,6 +102,7 @@ namespace Api.Controllers
                 }
 
                 var rol = mapper.Map<Role>(dto);
+                rol.FechaAltaDate = DateTime.Now;
                 rol.FechaModDate  = Convert.ToDateTime("1900-01-01");
                 rol.UsuarioIdModInt = 0;
 
@@ -142,6 +143,7 @@ namespace Api.Controllers
 
                 var rol = mapper.Map<Role>(dto);
                 var update = repository.GetByValues(x => x.RolIdInt == dto.RolIdInt).FirstOrDefault();
+                rol.FechaModDate = DateTime.Now;
                 rol.FechaAltaDate = update.FechaAltaDate;
                 rol.UsuarioIdInt = update.UsuarioIdInt;
 

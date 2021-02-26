@@ -144,9 +144,7 @@ namespace Web.Controllers
 
                         // ADD
                         o.FechaAltaDate = DateTime.Now;
-
-
-
+                        o.UsuarioIdInt = 1;
                         result = apiServices.Save<Role>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.RolesController, "Add", o);
 
                     }

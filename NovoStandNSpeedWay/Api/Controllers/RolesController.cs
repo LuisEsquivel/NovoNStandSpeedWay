@@ -140,8 +140,12 @@ namespace Api.Controllers
 
                 var rol = mapper.Map<Role>(dto);
                 var update = repository.GetByValues(x => x.RolIdInt == dto.RolIdInt).FirstOrDefault();
+                rol.FechaAltaDate = update.FechaAltaDate;
+                rol.UsuarioIdInt = update.UsuarioIdInt;
 
-                if (!repository.Update(rol, rol.RolIdInt))
+
+
+            if (!repository.Update(rol, rol.RolIdInt))
                 {
                     return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal al actualizar el registro: {dto.DescripcionVar}"));
                 }
@@ -149,7 +153,7 @@ namespace Api.Controllers
 
                 return Ok(
                            response.ResponseValues(this.Response.StatusCode,
-                                                   mapper.Map<RolesDto>(repository.GetById(rol))
+                                                   mapper.Map<RolesDto>(repository.GetById(rol.RolIdInt))
                                                  )
                         );
 

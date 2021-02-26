@@ -83,8 +83,8 @@ $(document).ready(function () {
         addImage(e);
     });
 
-    $("#IsActiveBit").change(() => {
-        $("#IsActive").val($("#IsActiveBit").prop("checked"));
+    $("#ActivoBit").change(() => {
+        $("#IsActive").val($("#ActivoBit").prop("checked"));
     }); 
     $("#EsIntegradorBit").change(() => {
         $("#EsIntegrador").val($("#EsIntegradorBit").prop("checked"));
@@ -523,7 +523,7 @@ var GetById = function (url, id) {
         success: function (data) {
             AbrirFormulario(2);
             LlenarFormulario(data);
-            $("#IsActive").val($("#IsActiveBit").prop("checked"));
+            $("#IsActive").val($("#ActivoBit").prop("checked"));
             $("#EsIntegrador").val($("#EsIntegradorBit").prop("checked"));
       
         },

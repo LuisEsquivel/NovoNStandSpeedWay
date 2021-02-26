@@ -8,10 +8,10 @@ namespace Web.Models
     {
         public int RolIdInt { get; set; }
         public string DescripcionVar { get; set; }
-        public DateTime FechaAltaDate { get; set; }
-        public DateTime FechaModDate { get; set; }
+        public DateTime FechaAltaDate { get; set; } = DateTime.Now;
+        public DateTime FechaModDate { get; set; } = Convert.ToDateTime ("1900-01-01");
         public int UsuarioIdInt { get; set; }
-        public int UsuarioIdModInt { get; set; }
+        public int UsuarioIdModInt { get; set; } = 0;
         public bool? ActivoBit { get; set; }
     }
 }

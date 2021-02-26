@@ -143,12 +143,12 @@ namespace Web.Controllers
 
                         }
 
-                        // ADD
-                        o.FechaAltaDate = DateTime.Now;
+                    // ADD
+                    o.UsuarioIdInt = 1;
 
 
 
-                        result = apiServices.Save<Usuario>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.UsuariosController, "Add", o);
+                    result = apiServices.Save<Usuario>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.UsuariosController, "Add", o);
 
                     }
 
@@ -176,8 +176,6 @@ namespace Web.Controllers
                         }
 
 
-                        o.FechaModDate  = DateTime.Now;
-                        o.UsuarioIdModInt = 1;
                         result = apiServices.Save<Usuario>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.UsuariosController, "Update", o);
 
 

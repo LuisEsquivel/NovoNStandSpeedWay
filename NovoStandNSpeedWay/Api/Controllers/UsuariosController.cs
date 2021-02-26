@@ -138,10 +138,12 @@ namespace Api.Controllers
                     return BadRequest(this.response.ResponseValues(StatusCodes.Status406NotAcceptable, null, "El Registro Ya Existe!!"));
                 }
 
-                var producto = mapper.Map<Usuario>(dto);
+                var usuario = mapper.Map<Usuario>(dto);
                 var update = repository.GetByValues(x => x.UsuarioIdInt == dto.UsuarioIdInt).FirstOrDefault();
+                usuario.FechaAltaDate = update.FechaAltaDate;
+                usuario.UsuarioIdInt = update.UsuarioIdInt;
 
-                if (!repository.Update(producto, producto.UsuarioIdInt))
+                if (!repository.Update(usuario , usuario.UsuarioIdInt))
                 {
                     return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal al actualizar el registro: {dto.NombreVar}"));
                 }
@@ -149,7 +151,7 @@ namespace Api.Controllers
 
                 return Ok(
                            response.ResponseValues(this.Response.StatusCode,
-                                                   mapper.Map<UsuarioDto>(repository.GetById(producto))
+                                                   mapper.Map<UsuarioDto>(repository.GetById(usuario.UsuarioIdInt))
                                                  )
                         );
 
@@ -181,11 +183,11 @@ namespace Api.Controllers
 
                 var row = repository.GetById(Id);
 
-                var comoseentero = mapper.Map<Usuario>(row);
+                var usuario  = mapper.Map<Usuario>(row);
 
-                if (!repository.Delete(comoseentero))
+                if (!repository.Delete(usuario))
                 {
-                    return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal al eliminar el registro: {comoseentero.NombreVar}"));
+                    return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal al eliminar el registro: {usuario.NombreVar}"));
 
                 }
 

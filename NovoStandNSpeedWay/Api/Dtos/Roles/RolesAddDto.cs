@@ -9,9 +9,9 @@ namespace Api.Dtos.Roles
     {
         public string DescripcionVar { get; set; }
         public DateTime FechaAltaDate { get; set; }
-        public DateTime FechaModDate { get; set; } = DateTime.Now;
+        public DateTime FechaModDate { get; set; }
         public int UsuarioIdInt { get; set; }
-        public int UsuarioIdModInt { get; set; } = 0;
+        public int UsuarioIdModInt { get; set; }
         public bool? ActivoBit { get; set; }
 
     }

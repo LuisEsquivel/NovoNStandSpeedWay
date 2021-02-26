@@ -66,7 +66,7 @@ namespace Web.Controllers
 
                         x => new
                         {
-                            x.UsuarioIdInt,
+                            x.RolIdInt,
                             x.DescripcionVar,
                             IsActiveBit = x.ActivoBit != false ? "SI" : "NO",
                             FechaAlta = Convert.ToDateTime(x.FechaAltaDate).ToShortDateString()
@@ -97,6 +97,7 @@ namespace Web.Controllers
                         {
                             x.RolIdInt,
                             x.DescripcionVar,
+                            x.ActivoBit ,
                             FechaAlta = Convert.ToDateTime(x.FechaAltaDate).ToShortDateString()
                         }
 
@@ -143,7 +144,6 @@ namespace Web.Controllers
                         }
 
                         // ADD
-                        o.FechaAltaDate = DateTime.Now;
                         o.UsuarioIdInt = 1;
                         result = apiServices.Save<Role>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.RolesController, "Add", o);
 
@@ -157,7 +157,7 @@ namespace Web.Controllers
                                     Where(
                                     x => x.DescripcionVar == o.DescripcionVar
                                     &&
-                                    x.UsuarioIdInt != o.UsuarioIdInt
+                                    x.RolIdInt  != o.RolIdInt
                                     ).FirstOrDefault();
 
                         if (existe != null)
@@ -183,8 +183,6 @@ namespace Web.Controllers
                         //}
 
 
-                        o.FechaModDate = DateTime.Now;
-                        o.UsuarioIdModInt = 1;
                         result = apiServices.Save<Role>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.RolesController, "Update", o);
 
 

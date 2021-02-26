@@ -123,6 +123,8 @@ namespace Api.Controllers
 
                 var ubicacion = mapper.Map<Ubicacione>(dto);
                 var update = repository.GetByValues(x => x.UbicacionIdVar == dto.UbicacionIdVar).FirstOrDefault();
+                ubicacion.FechaAltaDate = update.FechaAltaDate;
+                ubicacion.UsuarioIdInt = update.UsuarioIdInt;
 
                 if (!repository.Update(ubicacion, ubicacion.UbicacionIdVar))
                 {
@@ -132,7 +134,7 @@ namespace Api.Controllers
 
                 return Ok(
                            response.ResponseValues(this.Response.StatusCode,
-                                                   mapper.Map<UbicacionesUpdateDto>(repository.GetById(ubicacion))
+                                                   mapper.Map<UbicacionesUpdateDto>(repository.GetById(ubicacion.UbicacionIdVar))
                                                  )
                         );
 

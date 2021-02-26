@@ -38,7 +38,7 @@
         </member>
         <member name="M:Api.Controllers.FormaAdquisicionController.Delete(System.Int32)">
             <summary>
-            Eliminar rol por Id
+            Eliminar forma de adquisición por Id
             </summary>
             <param name="Id"></param>
             <returns>StatusCode 200</returns>

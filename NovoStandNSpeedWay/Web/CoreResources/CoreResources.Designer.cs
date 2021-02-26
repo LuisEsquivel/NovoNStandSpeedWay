@@ -79,7 +79,7 @@ namespace Web.CoreResources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a http://192.168.100.20:81/.
+        ///   Busca una cadena traducida similar a http://luisesquivel:81/.
         /// </summary>
         internal static string UrlBase {
             get {

@@ -140,6 +140,9 @@ namespace Api.Controllers
 
                 var fa = mapper.Map<FormaAdquisicion>(dto);
                 var update = repository.GetByValues(x => x.FormaAdquisicionIdInt == dto.FormaAdquisicionIdInt).FirstOrDefault();
+                fa.FechaAltaDate = update.FechaAltaDate;
+                fa.UsuarioIdInt = update.UsuarioIdInt;
+
 
                 if (!repository.Update(fa, fa.FormaAdquisicionIdInt))
                 {
@@ -149,7 +152,7 @@ namespace Api.Controllers
 
                 return Ok(
                            response.ResponseValues(this.Response.StatusCode,
-                                                   mapper.Map<FormaAdquisicionUpdateDto>(repository.GetById(fa))
+                                                   mapper.Map<FormaAdquisicionUpdateDto>(repository.GetById(fa.FormaAdquisicionIdInt))
                                                  )
                         );
 

@@ -12,6 +12,7 @@ namespace Api.Dtos.Usuarios
         public int RolIdInt { get; set; }
         public bool EsAdminBit { get; set; }
         public DateTime FechaAltaDate { get; set; }
+        public DateTime FechaModDate { get; set; }
         public int UsuarioRegIdInt { get; set; }
         public bool ActivoBit { get; set; }
 

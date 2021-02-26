@@ -13,6 +13,8 @@ namespace Api.Dtos.Lectores
         public string ModeloVar { get; set; }
         public DateTime FechaAltaDate { get; set; }
         public int UsuarioIdInt { get; set; }
+        public DateTime FechaModDate { get; set; }
+        public int UsuarioIdModInt { get; set; }
 
     }
 }

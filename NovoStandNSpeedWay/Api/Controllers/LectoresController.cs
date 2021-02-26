@@ -140,6 +140,8 @@ namespace Api.Controllers
 
                 var lector = mapper.Map<Lectore>(dto);
                 var update = repository.GetByValues(x => x.LectorIdInt == dto.LectorIdInt).FirstOrDefault();
+                lector.FechaAltaDate = update.FechaAltaDate;
+                lector.UsuarioIdInt = update.UsuarioIdInt;
 
                 if (!repository.Update(lector, lector.LectorIdInt))
                 {
@@ -149,7 +151,7 @@ namespace Api.Controllers
 
                 return Ok(
                            response.ResponseValues(this.Response.StatusCode,
-                                                   mapper.Map<LectoresDto>(repository.GetById(lector))
+                                                   mapper.Map<LectoresDto>(repository.GetById(lector.LectorIdInt))
                                                  )
                         );
 

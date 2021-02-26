@@ -49,12 +49,21 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.4\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.4\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.4\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -120,10 +129,27 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\UsuariosController.cs" />
+    <Compile Include="CoreResources\CoreResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CoreResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Activo.cs" />
+    <Compile Include="Models\CentroCosto.cs" />
+    <Compile Include="Models\EpcProductosRel.cs" />
+    <Compile Include="Models\Evento.cs" />
+    <Compile Include="Models\FormaAdquisicion.cs" />
+    <Compile Include="Models\Lectore.cs" />
+    <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\Ubicacione.cs" />
+    <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ApiServices.cs" />
     <Compile Include="Services\ResponseService.cs" />
@@ -134,13 +160,193 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="DataTables\buttons\css\buttons.bootstrap.css" />
+    <Content Include="DataTables\buttons\css\buttons.bootstrap.min.css" />
+    <Content Include="DataTables\buttons\css\buttons.bootstrap4.css" />
+    <Content Include="DataTables\buttons\css\buttons.bootstrap4.min.css" />
+    <Content Include="DataTables\buttons\css\buttons.dataTables.css" />
+    <Content Include="DataTables\buttons\css\buttons.dataTables.min.css" />
+    <Content Include="DataTables\buttons\css\buttons.foundation.css" />
+    <Content Include="DataTables\buttons\css\buttons.foundation.min.css" />
+    <Content Include="DataTables\buttons\css\buttons.jqueryui.css" />
+    <Content Include="DataTables\buttons\css\buttons.jqueryui.min.css" />
+    <Content Include="DataTables\buttons\css\buttons.semanticui.css" />
+    <Content Include="DataTables\buttons\css\buttons.semanticui.min.css" />
+    <Content Include="DataTables\buttons\js\buttons.bootstrap.js" />
+    <Content Include="DataTables\buttons\js\buttons.bootstrap.min.js" />
+    <Content Include="DataTables\buttons\js\buttons.bootstrap4.js" />
+    <Content Include="DataTables\buttons\js\buttons.bootstrap4.min.js" />
+    <Content Include="DataTables\buttons\js\buttons.colVis.js" />
+    <Content Include="DataTables\buttons\js\buttons.colVis.min.js" />
+    <Content Include="DataTables\buttons\js\buttons.flash.js" />
+    <Content Include="DataTables\buttons\js\buttons.flash.min.js" />
+    <Content Include="DataTables\buttons\js\buttons.foundation.js" />
+    <Content Include="DataTables\buttons\js\buttons.foundation.min.js" />
+    <Content Include="DataTables\buttons\js\buttons.html5.js" />
+    <Content Include="DataTables\buttons\js\buttons.html5.min.js" />
+    <Content Include="DataTables\buttons\js\buttons.jqueryui.js" />
+    <Content Include="DataTables\buttons\js\buttons.jqueryui.min.js" />
+    <Content Include="DataTables\buttons\js\buttons.print.js" />
+    <Content Include="DataTables\buttons\js\buttons.print.min.js" />
+    <Content Include="DataTables\buttons\js\buttons.semanticui.js" />
+    <Content Include="DataTables\buttons\js\buttons.semanticui.min.js" />
+    <Content Include="DataTables\buttons\js\dataTables.buttons.js" />
+    <Content Include="DataTables\buttons\js\dataTables.buttons.min.js" />
+    <Content Include="DataTables\buttons\swf\flashExport.swf" />
+    <Content Include="DataTables\css\addons\datatables-select.min.css" />
+    <Content Include="DataTables\css\addons\datatables.min.css" />
+    <Content Include="DataTables\css\addons\directives.min.css" />
+    <Content Include="DataTables\css\addons\flag.min.css" />
+    <Content Include="DataTables\css\addons\jquery.zmd.hierarchical-display.min.css" />
+    <Content Include="DataTables\css\addons\rating.min.css" />
+    <Content Include="DataTables\css\bootstrap.css" />
+    <Content Include="DataTables\css\bootstrap.min.css" />
+    <Content Include="DataTables\css\mdb.css" />
+    <Content Include="DataTables\css\mdb.lite.css" />
+    <Content Include="DataTables\css\mdb.lite.min.css" />
+    <Content Include="DataTables\css\mdb.min.css" />
+    <Content Include="DataTables\css\modules\animations-extended.min.css" />
+    <Content Include="DataTables\css\style.css" />
+    <Content Include="DataTables\img\mdb-favicon.ico" />
+    <Content Include="DataTables\img\overlays\01.png" />
+    <Content Include="DataTables\img\overlays\02.png" />
+    <Content Include="DataTables\img\overlays\03.png" />
+    <Content Include="DataTables\img\overlays\04.png" />
+    <Content Include="DataTables\img\overlays\05.png" />
+    <Content Include="DataTables\img\overlays\06.png" />
+    <Content Include="DataTables\img\overlays\07.png" />
+    <Content Include="DataTables\img\overlays\08.png" />
+    <Content Include="DataTables\img\overlays\09.png" />
+    <Content Include="DataTables\img\svg\arrow_left.svg" />
+    <Content Include="DataTables\img\svg\arrow_right.svg" />
+    <Content Include="DataTables\JSZip\jszip.js" />
+    <Content Include="DataTables\JSZip\jszip.min.js" />
+    <Content Include="DataTables\js\addons\datatables-select.min.js" />
+    <Content Include="DataTables\js\addons\datatables.min.js" />
+    <Content Include="DataTables\js\addons\directives.min.js" />
+    <Content Include="DataTables\js\addons\flag.min.js" />
+    <Content Include="DataTables\js\addons\imagesloaded.pkgd.min.js" />
+    <Content Include="DataTables\js\addons\jquery.zmd.hierarchical-display.min.js" />
+    <Content Include="DataTables\js\addons\masonry.pkgd.min.js" />
+    <Content Include="DataTables\js\addons\rating.min.js" />
+    <Content Include="DataTables\js\bootstrap.js" />
+    <Content Include="DataTables\js\bootstrap.min.js" />
+    <Content Include="DataTables\js\jquery.js" />
+    <Content Include="DataTables\js\jquery.min.js" />
+    <Content Include="DataTables\js\mdb.js" />
+    <Content Include="DataTables\js\mdb.min.js" />
+    <Content Include="DataTables\js\modules\animations-extended.min.js" />
+    <Content Include="DataTables\js\modules\forms-free.min.js" />
+    <Content Include="DataTables\js\modules\scrolling-navbar.min.js" />
+    <Content Include="DataTables\js\modules\treeview.min.js" />
+    <Content Include="DataTables\js\modules\wow.min.js" />
+    <Content Include="DataTables\js\popper.js" />
+    <Content Include="DataTables\js\popper.min.js" />
+    <Content Include="DataTables\pdfmake\pdfmake.js" />
+    <Content Include="DataTables\pdfmake\pdfmake.min.js" />
+    <Content Include="DataTables\pdfmake\vfs_fonts.js" />
+    <Content Include="DataTables\src\js\free\forms-free.js" />
+    <Content Include="DataTables\src\js\free\scrolling-navbar.js" />
+    <Content Include="DataTables\src\js\free\treeview.js" />
+    <Content Include="DataTables\src\js\free\wow.js" />
+    <Content Include="DataTables\src\js\vendor\addons\datatables-select.js" />
+    <Content Include="DataTables\src\js\vendor\addons\datatables.js" />
+    <Content Include="DataTables\src\js\vendor\addons\imagesloaded.pkgd.min.js" />
+    <Content Include="DataTables\src\js\vendor\addons\jquery.zmd.hierarchical-display.js" />
+    <Content Include="DataTables\src\js\vendor\addons\masonry.pkgd.min.js" />
+    <Content Include="DataTables\src\js\vendor\addons\rating.js" />
+    <Content Include="DataTables\src\js\vendor\free\bs-custom-file-input.js" />
+    <Content Include="DataTables\src\js\vendor\free\chart.js" />
+    <Content Include="DataTables\src\js\vendor\free\chartjs-datalabels.js" />
+    <Content Include="DataTables\src\js\vendor\free\enhanced-modals.js" />
+    <Content Include="DataTables\src\js\vendor\free\jquery.easing.js" />
+    <Content Include="DataTables\src\js\vendor\free\velocity.js" />
+    <Content Include="DataTables\src\js\vendor\free\waves.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="DataTables\buttons\css\common.scss" />
+    <Content Include="DataTables\buttons\css\mixins.scss" />
+    <Content Include="DataTables\css\addons\datatables-select.min.css.map" />
+    <Content Include="DataTables\css\addons\datatables.min.css.map" />
+    <Content Include="DataTables\css\addons\directives.min.css.map" />
+    <Content Include="DataTables\css\addons\flag.min.css.map" />
+    <Content Include="DataTables\css\addons\jquery.zmd.hierarchical-display.min.css.map" />
+    <Content Include="DataTables\css\addons\rating.min.css.map" />
+    <Content Include="DataTables\css\mdb.lite.min.css.map" />
+    <Content Include="DataTables\css\mdb.min.css.map" />
+    <Content Include="DataTables\css\modules\animations-extended.min.css.map" />
+    <Content Include="DataTables\js\addons\datatables-select.min.js.map" />
+    <Content Include="DataTables\js\addons\datatables.min.js.map" />
+    <Content Include="DataTables\js\addons\directives.min.js.map" />
+    <Content Include="DataTables\js\addons\flag.min.js.map" />
+    <Content Include="DataTables\js\addons\imagesloaded.pkgd.min.js.map" />
+    <Content Include="DataTables\js\addons\jquery.zmd.hierarchical-display.min.js.map" />
+    <Content Include="DataTables\js\addons\masonry.pkgd.min.js.map" />
+    <Content Include="DataTables\js\addons\rating.min.js.map" />
+    <Content Include="DataTables\js\mdb.lite.min.js.map" />
+    <Content Include="DataTables\js\mdb.min.js.map" />
+    <Content Include="DataTables\js\modules\animations-extended.min.js.map" />
+    <Content Include="DataTables\js\modules\forms-free.min.js.map" />
+    <Content Include="DataTables\js\modules\scrolling-navbar.min.js.map" />
+    <Content Include="DataTables\js\modules\treeview.min.js.map" />
+    <Content Include="DataTables\js\modules\wow.min.js.map" />
+    <Content Include="DataTables\scss\addons\_datatables-select.scss" />
+    <Content Include="DataTables\scss\addons\_datatables.scss" />
+    <Content Include="DataTables\scss\addons\_directives.scss" />
+    <Content Include="DataTables\scss\addons\_flag.scss" />
+    <Content Include="DataTables\scss\addons\_hierarchical-display.scss" />
+    <Content Include="DataTables\scss\addons\_rating.scss" />
+    <Content Include="DataTables\scss\core\bootstrap\_functions.scss" />
+    <Content Include="DataTables\scss\core\bootstrap\_rfs.scss" />
+    <Content Include="DataTables\scss\core\bootstrap\_variables.scss" />
+    <Content Include="DataTables\scss\core\_colors.scss" />
+    <Content Include="DataTables\scss\core\_global.scss" />
+    <Content Include="DataTables\scss\core\_helpers.scss" />
+    <Content Include="DataTables\scss\core\_masks.scss" />
+    <Content Include="DataTables\scss\core\_mixins.scss" />
+    <Content Include="DataTables\scss\core\_typography.scss" />
+    <Content Include="DataTables\scss\core\_variables.scss" />
+    <Content Include="DataTables\scss\core\_waves.scss" />
+    <Content Include="DataTables\scss\free\modules\animations-extended\animations-extended.scss" />
+    <Content Include="DataTables\scss\free\modules\animations-extended\_module.scss" />
+    <Content Include="DataTables\scss\free\_animations-basic.scss" />
+    <Content Include="DataTables\scss\free\_badges.scss" />
+    <Content Include="DataTables\scss\free\_buttons.scss" />
+    <Content Include="DataTables\scss\free\_cards.scss" />
+    <Content Include="DataTables\scss\free\_carousels.scss" />
+    <Content Include="DataTables\scss\free\_depreciated.scss" />
+    <Content Include="DataTables\scss\free\_dropdowns.scss" />
+    <Content Include="DataTables\scss\free\_footers.scss" />
+    <Content Include="DataTables\scss\free\_forms.scss" />
+    <Content Include="DataTables\scss\free\_input-group.scss" />
+    <Content Include="DataTables\scss\free\_list-group.scss" />
+    <Content Include="DataTables\scss\free\_loader.scss" />
+    <Content Include="DataTables\scss\free\_modals.scss" />
+    <Content Include="DataTables\scss\free\_msc.scss" />
+    <Content Include="DataTables\scss\free\_navbars.scss" />
+    <Content Include="DataTables\scss\free\_pagination.scss" />
+    <Content Include="DataTables\scss\free\_steppers.scss" />
+    <Content Include="DataTables\scss\free\_tables.scss" />
+    <Content Include="DataTables\scss\free\_treeview.scss" />
+    <Content Include="DataTables\scss\mdb-free.scss" />
+    <Content Include="DataTables\scss\mdb-lite-free.scss" />
+    <Content Include="DataTables\scss\_custom-styles.scss" />
+    <Content Include="DataTables\scss\_custom-variables.scss" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\Contacto.js" />
+    <Content Include="Scripts\Generals.js" />
+    <Content Include="Scripts\Jquery Form Steps\css\jquery.steps.css" />
+    <Content Include="Scripts\Jquery Form Steps\css\main.css" />
+    <Content Include="Scripts\Jquery Form Steps\js\jquery.js" />
+    <Content Include="Scripts\Jquery Form Steps\js\jquery.steps.js" />
+    <Content Include="Scripts\Jquery Form Steps\js\jquery.steps.min.js" />
+    <Content Include="Scripts\Jquery Form Steps\js\jquery.validate.js" />
+    <Content Include="Scripts\Jquery Form Steps\js\script.js" />
+    <Content Include="Scripts\Jquery Form Steps\js\sweetalert.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -151,6 +357,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\Roles.js" />
+    <Content Include="Scripts\Usuario.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -165,10 +373,11 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Usuarios\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -182,6 +391,12 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CoreResources\CoreResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CoreResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

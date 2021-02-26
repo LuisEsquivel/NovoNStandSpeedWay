@@ -1,4 +1,4 @@
-﻿namespace Novosys.Services
+﻿namespace Web.Services
 {
     public class ResponseService
     {

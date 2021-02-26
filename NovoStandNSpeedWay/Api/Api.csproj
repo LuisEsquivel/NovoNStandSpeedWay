@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>41654506-298f-413d-acff-38cf72e409fe</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -14,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="ApiDocumentation.xml" />
+    <Resource Include="ApiDocumentation.xml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +32,12 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.0.7" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.0.7" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

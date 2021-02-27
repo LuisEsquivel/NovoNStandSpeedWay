@@ -130,6 +130,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\FormaAdquisicionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LectoresController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
@@ -360,6 +361,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Lectores.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\FormaAdquisicion.js" />
     <Content Include="Scripts\Ubicaciones.js" />
     <Content Include="Scripts\Roles.js" />
     <Content Include="Scripts\Usuario.js" />
@@ -381,6 +383,7 @@
     <Content Include="Views\Usuarios\Index.cshtml" />
     <Content Include="Views\Lectores\Index.cshtml" />
     <Content Include="Views\Ubicaciones\Index.cshtml" />
+    <Content Include="Views\FormaAdquisicion\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

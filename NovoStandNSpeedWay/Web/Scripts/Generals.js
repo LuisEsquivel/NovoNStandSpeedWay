@@ -617,10 +617,10 @@ function LimpiarFormulario() {
 
 function AbrirFormulario(operacion) {
 
-    document.getElementById("BtnAdd").classList.add("mt-3");
-    if ($("#BtnCancelar").length > 0) {
-        document.getElementById("BtnCancelar").classList.add("mb-1");
-    }
+    //document.getElementById("BtnAdd").classList.add("mt-3");
+    //if ($("#BtnCancelar").length > 0) {
+    //    document.getElementById("BtnCancelar").classList.add("mb-1");
+    //}
 
 
     if (operacion == 1) {

@@ -1,15 +1,14 @@
 ﻿
+
+
 //navegadores modernos
 document.addEventListener("DOMContentLoaded", function (event) {
-    window.list("/Usuarios/Listar", ["Id", "Nombre", "Rol", "Activo", "Fecha Alta"], 0, null);
-    $.get("/Usuarios/listarRoles", function (data) {
-        window.llenarCombo(data, document.getElementById("RolIdInt"), true)
-    });
+    window.list("/Lectores/Listar", ["Id", "Descripción", "Dirección", "Modelo", "Fecha Alta"], 0, null);
 });
 
 
 function GetInfoById(id) {
-    window.GetById("/Usuarios/GetById", id);
+    window.GetById("/Lectores/GetById", id);
 }
 
 function ReturnData(url) {
@@ -20,19 +19,19 @@ function ReturnData(url) {
 
 
 function GetTraining(id) {
-    window.list("/Usuarios/List", ["Id", "Nombre", "Rol", "Activo", "Fecha Alta"], 0, null);
+    window.list("/Lectores/List", ["Id", "Nombre", "Rol", "Activo", "Fecha Alta"], 0, null);
 }
 
 
 
 function Add() {
     var form = document.getElementById("form");
-    window.add("/Usuarios/Add", form, ["Id", "Nombre", "Rol", "Activo", "Fecha Alta"])
+    window.add("/Lectores/Add", form, ["Id", "Nombre", "Rol", "Activo", "Fecha Alta"])
 }
 
 
 function ChangeInfoStatus(id) {
-    window.ChangeStatus("/TipoDeSeguimiento/ChangeStatus", id, ["Id", "Nombre", "Rol", "Activo", "Fecha Alta"]);
+    window.ChangeStatus("/Lectores/ChangeStatus", id, ["Id", "Nombre", "Rol", "Activo", "Fecha Alta"]);
 }
 
 

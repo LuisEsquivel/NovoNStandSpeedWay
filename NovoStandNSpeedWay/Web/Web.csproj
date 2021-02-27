@@ -131,6 +131,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LectoresController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\UbicacionesController.cs" />
     <Compile Include="Controllers\UsuariosController.cs" />
@@ -357,6 +358,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Lectores.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\Ubicaciones.js" />
     <Content Include="Scripts\Roles.js" />
@@ -377,6 +379,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
     <Content Include="Views\Usuarios\Index.cshtml" />
+    <Content Include="Views\Lectores\Index.cshtml" />
     <Content Include="Views\Ubicaciones\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

@@ -28,3 +28,9 @@ textarea {
     padding : 0 !important;
     margin : 0 !important;
 } 
+
+
+.modal-title{
+    color: white;
+    font-family : sans-serif;
+}

@@ -123,6 +123,9 @@
   <data name="RolesController" xml:space="preserve">
     <value>roles</value>
   </data>
+  <data name="UbicacionesController" xml:space="preserve">
+    <value>ubicaciones</value>
+  </data>
   <data name="UrlBase" xml:space="preserve">
     <value>http://luisesquivel:81/</value>
   </data>

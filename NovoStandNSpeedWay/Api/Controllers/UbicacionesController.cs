@@ -96,7 +96,7 @@ namespace Api.Controllers
 
                 return Ok(
                              response.ResponseValues(this.Response.StatusCode,
-                                                     mapper.Map<UbicacionesAddDto>(repository.GetById(ubicacion.UbicacionIdVar))
+                                                     mapper.Map<UbicacionesDto>(repository.GetById(ubicacion.UbicacionIdVar))
                                                    )
                           );
             }

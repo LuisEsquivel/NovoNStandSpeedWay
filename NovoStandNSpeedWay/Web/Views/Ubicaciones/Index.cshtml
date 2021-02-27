@@ -1,0 +1,86 @@
+﻿
+
+<script src="~/Scripts/Generals.js"></script>
+<script src="~/Scripts/Jquery Form Steps/js/sweetalert.min.js"></script>
+<script src="~/Scripts/Ubicaciones.js"></script>
+
+
+@model IEnumerable<Web.Models.Ubicacione>
+
+
+
+<h5 style="display:none;" class="ml-2 mt-2" id="Titulo">Ubicaciones</h5>
+
+
+<div id="container">
+
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title" id="ModalTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="text-white">&times;</span>
+                </button>
+            </div>
+
+
+
+            <form method="post" id="form" class="border border-right-0 border-left-0 border-secondary rounded pb-5">
+
+
+                <div class="modal-body">
+
+
+                    <div class="col-sm-12 text-center" id="DivIsActive">
+                        <input hidden type="text" id="IsActive" name="IsActive" value="true" />
+                        <label for="ActivoBit">
+                            <input type="checkbox" id="ActivoBit" name="ActivoBit" />
+                            <span>Activo</span>
+                        </label>
+                    </div>
+
+
+                    <div class="form-group">
+                        <input class="form-control" id="Accion" name="Accion" hidden value="" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="UbicacionIdVar">Id</label>
+                        <input class="form-control col-12" id="UbicacionIdVar" name="UbicacionIdVar" placeholder="Id" required maxlength="50" />
+                    </div>
+
+
+                    <div class="form-group mb-3">
+                        <label for="DescripcionVar">Descripción</label>
+                        <input type="text" class="form-control col-12" id="DescripcionVar" name="DescripcionVar" placeholder="Descripción" required maxlength="200" />
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <div class="col-sm-12 text-center mt-5">
+                        <button type="submit" class="btn btn-primary" style="margin-bottom:20px !important;" id="BtnAdd" onclick="Add();">Guardar</button>
+                        <button type="submit" class="btn btn-primary" id="BtnUpdate" onclick="Add();">Actualizar</button>
+                        <button type="button" class="btn btn-secondary" id="BtnCancelar" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+

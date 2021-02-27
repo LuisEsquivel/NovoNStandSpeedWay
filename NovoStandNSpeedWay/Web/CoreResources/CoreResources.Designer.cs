@@ -79,6 +79,15 @@ namespace Web.CoreResources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a ubicaciones.
+        /// </summary>
+        internal static string UbicacionesController {
+            get {
+                return ResourceManager.GetString("UbicacionesController", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a http://luisesquivel:81/.
         /// </summary>
         internal static string UrlBase {

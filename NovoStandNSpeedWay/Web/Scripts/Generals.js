@@ -433,6 +433,11 @@ function Table(arrayColumnas, data, columnaAcciones = true) {
             /*Get Id For Filter or Delete(EstadoActivo==false)*/
             if (celda == 0) {
                 id = data[row][cell];
+
+                //verificamos si el id contiene letras y si es así lo ponemos entre comillas
+                const regex = /^[0-9]*$/;
+                if (regex.test(id) == false) { id = '"' + id + '"'; }
+
             }
 
 

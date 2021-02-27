@@ -270,6 +270,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="img\footer\dribbble.svg" />
+    <Content Include="img\footer\facebook.svg" />
+    <Content Include="img\footer\instagram.svg" />
+    <Content Include="img\footer\twitter.svg" />
+    <Content Include="img\footer\whatsapp.svg" />
+    <Content Include="img\footer\youtube.svg" />
+    <Content Include="img\NOVO_logosmall-1.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="DataTables\buttons\css\common.scss" />

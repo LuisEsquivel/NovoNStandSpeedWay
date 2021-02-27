@@ -61,6 +61,15 @@ namespace Web.CoreResources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a activos.
+        /// </summary>
+        internal static string ActivosController {
+            get {
+                return ResourceManager.GetString("ActivosController", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a formaadquisicion.
         /// </summary>
         internal static string FormaAdquisicionController {

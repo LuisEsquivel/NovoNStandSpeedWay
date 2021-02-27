@@ -130,6 +130,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ActivosController.cs" />
     <Compile Include="Controllers\FormaAdquisicionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LectoresController.cs" />
@@ -341,6 +342,7 @@
     <Content Include="DataTables\scss\_custom-variables.scss" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\Contacto.js" />
+    <Content Include="Scripts\Activos.js" />
     <Content Include="Scripts\Generals.js" />
     <Content Include="Scripts\Jquery Form Steps\css\jquery.steps.css" />
     <Content Include="Scripts\Jquery Form Steps\css\main.css" />
@@ -384,6 +386,7 @@
     <Content Include="Views\Lectores\Index.cshtml" />
     <Content Include="Views\Ubicaciones\Index.cshtml" />
     <Content Include="Views\FormaAdquisicion\Index.cshtml" />
+    <Content Include="Views\Activos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

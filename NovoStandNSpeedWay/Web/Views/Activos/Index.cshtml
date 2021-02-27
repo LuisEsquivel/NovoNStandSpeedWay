@@ -2,14 +2,14 @@
 
 <script src="~/Scripts/Generals.js"></script>
 <script src="~/Scripts/Jquery Form Steps/js/sweetalert.min.js"></script>
-<script src="~/Scripts/FormaAdquisicion.js"></script>
+<script src="~/Scripts/Activos.js"></script>
 
 
-@model IEnumerable<Web.Models.FormaAdquisicion>
+@model IEnumerable<Web.Models.Activo >
 
 
 
-<h5 style="display:none;" class="ml-2 mt-2" id="Titulo">Forma De Adquisición</h5>
+<h5 style="display:none;" class="ml-2 mt-2" id="Titulo">Activos</h5>
 
 
 <div id="container">
@@ -38,18 +38,9 @@
                 <div class="modal-body">
 
 
-                    <div class="col-sm-12 text-center" id="DivIsActive">
-                        <input hidden type="text" id="IsActive" name="IsActive" value="true" />
-                        <label for="ActivoBit">
-                            <input type="checkbox" id="ActivoBit" name="ActivoBit" />
-                            <span>Activo</span>
-                        </label>
-                    </div>
-
-
                     <div class="form-group">
-                        <label for="FormaAdquisicionIdInt">Id</label>
-                        <input class="form-control col-12" id="FormaAdquisicionIdInt" name="FormaAdquisicionIdInt" placeholder="Id"  readonly/>
+                        <label for="UbicacionIdVar">Id</label>
+                        <input class="form-control col-12" id="ActivoIdInt" name="ActivoIdInt" placeholder="Id" required maxlength="50" />
                     </div>
 
 

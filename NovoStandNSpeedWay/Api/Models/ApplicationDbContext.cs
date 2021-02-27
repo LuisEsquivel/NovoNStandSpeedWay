@@ -230,11 +230,11 @@ namespace Api.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Activos_FormaAdquisicion");
 
-                entity.HasOne(d => d.UbicacionIdVarNavigation)
-                    .WithMany(p => p.Activos)
-                    .HasForeignKey(d => d.UbicacionIdVar)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Activos_Ubicaciones");
+                //entity.HasOne(d => d.UbicacionIdVarNavigation)
+                //    .WithMany(p => p.Activos)
+                //    .HasForeignKey(d => d.UbicacionIdVar)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_Activos_Ubicaciones");
             });
 
             modelBuilder.Entity<CentroCosto>(entity =>

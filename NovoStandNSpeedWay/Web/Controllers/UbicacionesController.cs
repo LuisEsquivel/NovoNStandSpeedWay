@@ -128,14 +128,14 @@ namespace Web.Controllers
 
                     var existe = services.Get<Ubicacione>("ubicaciones").
                                  Where(
-                                 x => x.DescripcionVar == o.DescripcionVar
+                                 x => x.UbicacionIdVar  == o.UbicacionIdVar
                                  ).FirstOrDefault();
 
                     if (existe != null)
                     {
                         var message = "Ya Existe un registro con estos campos: "
                                      + Environment.NewLine
-                                     + nameof(existe.DescripcionVar).ToString()
+                                     + "Id"
                                      + Environment.NewLine
                                      + "Verifique";
 
@@ -164,7 +164,7 @@ namespace Web.Controllers
                     {
                         var message = "Ya Existe un registro con estos campos: "
                                      + Environment.NewLine
-                                     + nameof(existe.DescripcionVar).ToString()
+                                     + "Id"
                                      + Environment.NewLine
                                      + "Verifique";
 

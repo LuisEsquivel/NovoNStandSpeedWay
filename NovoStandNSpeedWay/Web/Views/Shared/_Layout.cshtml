@@ -8,6 +8,7 @@
 
 
     <!--Bootstrap CSS-->
+    <link rel="stylesheet" href="~/Content/Site.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 
@@ -47,55 +48,212 @@
 <body>
 
 
-    <nav class="navbar navbar-expand-md navbar-light bg-light fixed" id="nav">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <a class="navbar-brand" href="/Home/Index"> <img  src="~/img/NOVO_logosmall-1.png"  class="img-fluid"/> </a>
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/Home/Index">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Catálogos
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/Roles/index">Roles</a>
-                        <a class="dropdown-item" href="/Usuarios/Index">Usuarios</a>
-                        <a class="dropdown-item" href="/Lectores/Index">Lectores</a>
-                        <a class="dropdown-item" href="/Ubicaciones/Index">Ubicaciones</a>
-                        <a class="dropdown-item" href="/FormaAdquisicion/Index">Forma De Adquisición</a>
-                        <a class="dropdown-item" href="/Activos/Index">Activos</a>
-                    </div>
-                </li>
-     
-            </ul>
-          
+    <nav class="navbar navbar-expand-md navbar-light fixed sticky-top" id="nav" style="    background: #000529; /* Old browsers */
+    background-image: -moz-linear-gradient(left, #000529 1%, #002055 24%, #005db5 67%, #0074d9 100%); /* FF3.6-15 */
+    background-image: -webkit-linear-gradient(left, #000529 1%,#002055 24%,#005db5 67%,#0074d9 100%); /* Chrome10-25,Safari5.1-6 */
+    background-image: linear-gradient(to right, #000529 1%,#002055 24%,#005db5 67%,#0074d9 100%); opacity: 0.8;">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <a class="navbar-brand" href="/Home/Index"> <img src="~/img/NOVO_logosmall-1.png" class="img-fluid" /> </a>
+                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+
+
+                    @using Web.Controllers;
+                    @{
+                        var url = HttpContext.Current.Request.Url.AbsolutePath.ToString();
+
+
+                        if (url == "/Home/Index" || url == "/")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link  activar" href="/Home/Index">Home <span class="sr-only">(current)</span></a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item ">
+                                <a class="nav-link text-white" href="/Home/Index">Home <span class="sr-only">(current)</span></a>
+                            </li>
+                        }
+
+                        if (url == "/Activos/Index")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link activar" href="/Activos/Index">Activos</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item ">
+                                <a class="nav-link text-white" href="/Activos/Index">Activos</a>
+                            </li>
+                        }
+
+
+
+
+
+
+                            <li class="nav-item dropdown">
+
+                                @if (url != "/Home/Index"        &&
+                                     url != "/Activos/Index"     &&
+                                     url != "/Registrarse/Index" &&
+                                     url != "/Login/Index"       &&
+                                     url != "/"                   
+                                    )
+                                {
+                                    <a class="nav-link dropdown-toggle activar" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Catálogos
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Catálogos
+                                    </a>
+                                }
+
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                                        @{
+                                            if (url == "/Roles/index")
+                                            {
+                                                <a class="dropdown-item activar" href="/Roles/index">Roles</a>
+                                            }
+                                            else
+                                            {
+                                                <a class="dropdown-item" href="/Roles/index">Roles</a>
+                                            }
+
+
+
+                                            if (url == "/Usuarios/Index")
+                                            {
+                                                <a class="dropdown-item activar" href="/Usuarios/Index">Usuarios</a>
+                                            }
+                                            else
+                                            {
+                                                <a class="dropdown-item" href="/Usuarios/Index">Usuarios</a>
+                                            }
+
+
+                                            if (url == "/Lectores/Index")
+                                            {
+                                                <a class="dropdown-item activar" href="/Lectores/Index">Lectores</a>
+                                            }
+                                            else
+                                            {
+                                                <a class="dropdown-item" href="/Lectores/Index">Lectores</a>
+                                            }
+
+
+                                            if (url == "/FormaAdquisicion/Index")
+                                            {
+                                                <a class="dropdown-item activar" href="/FormaAdquisicion/Index">Forma Adquisicion</a>
+                                            }
+                                            else
+                                            {
+                                                <a class="dropdown-item" href="/FormaAdquisicion/Index">Forma Adquisicion</a>
+                                            }
+
+
+
+                                            if (url == "/CentroDeCostos/Index")
+                                            {
+                                                <a class="dropdown-item activar" href="/CentroDeCostos/Index">Centro de Costos</a>
+                                            }
+                                            else
+                                            {
+                                                <a class="dropdown-item" href="/CentroDeCostos/Index">Centro de Costos</a>
+                                            }
+
+                                            if (url == "/Ubicaciones/Index")
+                                            {
+                                                <a class="dropdown-item activar" href="/Ubicaciones/Index">Ubicaciones</a>
+                                            }
+                                            else
+                                            {
+                                                <a class="dropdown-item" href="/Ubicaciones/Index">Ubicaciones</a>
+                                            }
+
+                                        }
+
+
+                                    </div>
+                            </li>
+
+
+                        var hc = new HomeController();
+                        if (System.Web.HttpContext.Current.Request[hc.CockieName] != null)
+                        {
+                            <li>
+                                <a class="nav-item nav-link text-white" href="/Login/Logout"> Salir </a>
+                            </li>
+                        }
+
+
+
+                    }
+
+
+
+                </ul>
+
+            </div>
         </div>
     </nav>
 
 
-
-    <div class="container body-content" id="footer">
         @RenderBody()
-        <hr />
-        <hr />
-        <footer class="mt-5 footer">
-            <div class="container text-center">
+
+        <footer class="footer bg-secondary" id="footer">
+
+            <div class="text-center">
                 <a href="/Home/Index"><img src="/img/NOVO_logosmall-1.png" class="logo-brand mt-5 img-fluid"></a>
+
+                @{
+
+                    if (System.Web.HttpContext.Current.Request[hc.CockieName] == null)
+                    {
+
+                        <ul class="list-unstyled list-inline text-center py-2">
+                            <li class="list-inline-item">
+                                @{
+                                    if (Session["Registrarse"] == null)
+                                    {
+                                        <a href="/Registrarse/Index" class="btn btn-danger btn-rounded">Registrarse</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="/Login/Index" class="btn btn-primary btn-rounded">Iniciar Sesión</a>
+                                    }
+                                }
+                            </li>
+                        </ul>
+
+                        <hr>
+                    }
+
+                }
+
+
                 <p class="mt-3 pFooter h6">Todos los Derechos Reservados @DateTime.Now.Year   NovoNSpeedWay TI</p>
                 <ul>
-                    <li class="mb-5 list-inline-item"><a href="https://www.facebook.com/Novosysmx" target="_blank"><img src="/img/footer/facebook.svg" class="img-fluid"></a></li>
-                    <li class="mb-5 list-inline-item"><a href="https://www.instagram.com/novosysrfid/" target="_blank"><img src="/img/footer/instagram.svg" class="img-fluid"></a></li>
-                    <li class="mb-5 list-inline-item"><a href="https://api.whatsapp.com/send?phone=528120402468&text=Hola" target="_blank"><img src="/img/footer/whatsapp.svg" class="img-fluid"></a></li>
-                    <li class="mb-5 list-inline-item"><a href="https://www.youtube.com/channel/UCYVaR-qeV_OqvzI1WEtaA6w" target="_blank"><img src="/img/footer/youtube.svg" class="img-fluid"></a></li>
-                    <li class="mb-5 list-inline-item"><a href="https://www.novosys.com.mx/" target="_blank"><img src="/img/footer/dribbble.svg" class="img-fluid"></a></li>
+                    <li class="list-inline-item"><a href="https://www.facebook.com/Novosysmx" target="_blank"><img src="/img/footer/facebook.svg" class="img-fluid"></a></li>
+                    <li class="list-inline-item"><a href="https://www.instagram.com/novosysrfid/" target="_blank"><img src="/img/footer/instagram.svg" class="img-fluid"></a></li>
+                    <li class="list-inline-item"><a href="https://api.whatsapp.com/send?phone=528120402468&text=Hola" target="_blank"><img src="/img/footer/whatsapp.svg" class="img-fluid"></a></li>
+                    <li class="list-inline-item"><a href="https://www.youtube.com/channel/UCYVaR-qeV_OqvzI1WEtaA6w" target="_blank"><img src="/img/footer/youtube.svg" class="img-fluid"></a></li>
+                    <li class="list-inline-item"><a href="https://www.novosys.com.mx/" target="_blank"><img src="/img/footer/dribbble.svg" class="img-fluid"></a></li>
                 </ul>
             </div>
+
+            <br />
         </footer>
-    </div>
+   
 
 </body>
 </html>

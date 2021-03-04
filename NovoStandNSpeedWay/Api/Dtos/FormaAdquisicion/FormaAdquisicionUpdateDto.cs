@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 
-#nullable disable
+using System;
 
 namespace Api.Dtos.FormaAdquisicion
 {

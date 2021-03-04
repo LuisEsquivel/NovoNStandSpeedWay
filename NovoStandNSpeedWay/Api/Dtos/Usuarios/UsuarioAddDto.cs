@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
+
+using System;
 
 namespace Api.Dtos.Usuarios
 {
@@ -14,6 +13,9 @@ namespace Api.Dtos.Usuarios
         public DateTime FechaAltaDate { get; set; }
         public int UsuarioRegIdInt { get; set; }
         public bool ActivoBit { get; set; }
+        public string UsuarioVar { get; set; }
+        public string  Password { get; set; }
+
 
     }
 }

@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Web.Auth;
 using Web.Models;
 using Web.Services;
 
 namespace Web.Controllers
 {
 
-        public class RolesController : Controller
+    [Authentication]
+    public class RolesController : Controller
         {
             public ApiServices apiServices;
             public Services.Services services;
@@ -144,7 +146,7 @@ namespace Web.Controllers
                         }
 
                         // ADD
-                        o.UsuarioIdInt = 1;
+                        o.UsuarioIdInt = hc.UserId();
                         result = apiServices.Save<Role>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.RolesController, "Add", o);
 
                     }
@@ -173,16 +175,7 @@ namespace Web.Controllers
                         }
 
 
-                        //var NombreUsuario = "";
-                        //if (hc.UserId() > 0)
-                        //{
-                        //    NombreUsuario = services.Get<Usuario>("usuario")
-                        //                                         .Where
-                        //                                         (x => x.UsuarioIdInt == hc.UserId()
-                        //                                         ).FirstOrDefault().NombreVar;
-                        //}
-
-
+                        o.UsuarioIdModInt = hc.UserId();
                         result = apiServices.Save<Role>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.RolesController, "Update", o);
 
 

@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Web.Auth;
 using Web.Models;
 using Web.Services;
 
 namespace Web.Controllers
 {
+    [Authentication]
     public class UsuariosController : Controller
     {
         public ApiServices apiServices;
@@ -69,16 +71,18 @@ namespace Web.Controllers
 
                 list = (from u in usuarios
                         join r in roles on u.RolIdInt equals r.RolIdInt
+                        into usu
+                        from us in usu.DefaultIfEmpty()
                         select new
                         {
                             u.UsuarioIdInt,
                             u.NombreVar,
-                            r.DescripcionVar,
+                            DescripcionVar =  us?.DescripcionVar ?? "--SELECCIONE--" ,
                             IsActiveBit = u.ActivoBit != false ? "SI" : "NO",
                             FechaAlta = Convert.ToDateTime(u.FechaAltaDate).ToShortDateString()
                         }).ToList();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }
@@ -104,7 +108,9 @@ namespace Web.Controllers
                          u.NombreVar,
                          u.RolIdInt,
                          u.ActivoBit, 
-                         u.EsAdminBit
+                         u.EsAdminBit,
+                         u.Password,
+                         u.UsuarioVar
                      }).ToList();
             }
             catch (Exception)
@@ -149,6 +155,7 @@ namespace Web.Controllers
                     }
 
                     // ADD
+                    o.UsuarioRegIdInt = hc.UserId();
                     result = apiServices.Save<Usuario>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.UsuariosController, "Add", o);
 
                 }
@@ -176,7 +183,7 @@ namespace Web.Controllers
 
                     }
 
-
+                    o.UsuarioIdModInt = hc.UserId();
                     result = apiServices.Save<Usuario>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.UsuariosController, "Update", o);
 
 

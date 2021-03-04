@@ -1,5 +1,9 @@
 ﻿
-<link href="~/Content/Usuarios.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Usuarios";
+}
+
+
 <script src="~/Scripts/Generals.js"></script>
 <script src="~/Scripts/Jquery Form Steps/js/sweetalert.min.js"></script>
 <script src="~/Scripts/Usuario.js"></script>
@@ -14,9 +18,10 @@
     }
 </style>
 
-<div class="usuario" />
 
-<h5 style="display:none;" class="ml-2 mt-2" id="Titulo">Usuarios</h5>
+<div>
+    <h5 style="display:none;" class="ml-2" id="Titulo">Usuarios</h5>
+</div>
 
 
 <div id="container">
@@ -67,6 +72,20 @@
                         <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 mt-3">
                             <label for="NombreVar">Nombre</label>
                             <input type="text" class="form-control" id="NombreVar" name="NombreVar" placeholder="Nombre" required maxlength="100" />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 mt-3">
+                            <label>Email</label>
+                            <input type="email" class="form-control" id="UsuarioVar" name="UsuarioVar" placeholder="Correo Electrónico" required maxlength="100" />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 mt-3">
+                            <label>Contraseña</label>
+                            <input type="password" class="form-control" id="Password" name="Password" placeholder="Contraseña" required maxlength="50" />
                         </div>
                     </div>
 

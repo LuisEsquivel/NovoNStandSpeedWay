@@ -1,15 +1,19 @@
 ﻿
+@{
+    ViewBag.Title = "Activos";
+}
 
+<link rel="stylesheet" type="text/css" href="~/Content/Activos.css" />
 <script src="~/Scripts/Generals.js"></script>
 <script src="~/Scripts/Jquery Form Steps/js/sweetalert.min.js"></script>
 <script src="~/Scripts/Activos.js"></script>
 
 
-@model IEnumerable<Web.Models.Activo >
+@model IEnumerable<Web.Models.Activo>
 
 
 
-<h5 style="display:none;" class="ml-2 mt-2" id="Titulo">Activos</h5>
+<h5 style="display:none;" class="ml-2" id="Titulo">Activo</h5>
 
 
 <div id="container">
@@ -19,9 +23,10 @@
 
 
 
-<!-- Modal -->
-<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+@*Modal*@
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="false">
+
+    <div class="modal-dialog modal-dialog-centered modal-full" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary">
                 <h5 class="modal-title" id="ModalTitle">Modal title</h5>
@@ -38,15 +43,231 @@
                 <div class="modal-body">
 
 
-                    <div class="form-group">
-                        <label for="UbicacionIdVar">Id</label>
-                        <input class="form-control col-12" id="ActivoIdInt" name="ActivoIdInt" placeholder="Id" required maxlength="50" />
+                    <div class="row border pt-2 pb-2">
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label for="ActivoIdInt">Id</label>
+                            <input class="form-control" id="ActivoIdInt" name="ActivoIdInt" placeholder="Id" readonly maxlength="50" />
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Fecha Adquisición</label>
+                            <input type="date" class="form-control" id="FechaAdquisicionDate" name="FechaAdquisicionDate" placeholder="Fecha Adquisición" required maxlength="200" />
+                        </div>
+
+
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <label for="DescripcionVar">Descripción</label>
+                            <input type="text" class="form-control" id="DescripcionVar" name="DescripcionVar" placeholder="Descripción" required maxlength="500" />
+                        </div>
                     </div>
 
 
-                    <div class="form-group mb-3">
-                        <label for="DescripcionVar">Descripción</label>
-                        <input type="text" class="form-control col-12" id="DescripcionVar" name="DescripcionVar" placeholder="Descripción" required maxlength="200" />
+                    <div class="row mt-2">
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Ubicación</label>
+                            <select class="form-control" id="UbicacionIdVar" name="UbicacionIdVar" required></select>
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Centro De Costos</label>
+                            <select class="form-control" id="CentroCostosIdVar" name="CentroCostosIdVar" required></select>
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Forma De Adquisición</label>
+                            <select class="form-control" id="FormaAdquisicionIdInt" name="FormaAdquisicionIdInt" required></select>
+                        </div>
+
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Edificio</label>
+                            <input type="text" class="form-control" id="EdificioVar" name="EdificioVar" placeholder="Edificio" required maxlength="50" />
+                        </div>
+
+                    </div>
+
+
+
+
+                    <div class="row mt-2">
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Barcode</label>
+                            <input type="text" class="form-control" id="BarcodeVar" name="BarcodeVar" placeholder="Barcode" required maxlength="50" />
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>No. Serie</label>
+                            <input type="text" class="form-control" id="NoSerieVar" name="NoSerieVar" placeholder="Número De Serie" required maxlength="50" />
+                        </div>
+
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Identidicador Activo</label>
+                            <input type="text" class="form-control" id="IdentificadorActivoVar" name="IdentificadorActivoVar" placeholder="Identificador De Activo" maxlength="50" value=" " />
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Documento</label>
+                            <input type="text" class="form-control" id="DocumentoVar" name="DocumentoVar" placeholder="Documento" maxlength="100" value=" " />
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="row mt-2">
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Marca</label>
+                            <input type="text" class="form-control" id="MarcaVar" name="MarcaVar" placeholder="Marca" required maxlength="200" />
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Modelo</label>
+                            <input type="text" class="form-control" id="ModeloVar" name="ModeloVar" placeholder="Modelo" required maxlength="200" />
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Piso</label>
+                            <input type="text" class="form-control" id="PisoVar" name="PisoVar" placeholder="Piso" required maxlength="50" />
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Epc</label>
+                            <input type="text" class="form-control" id="EpcVar" name="EpcVar" placeholder="Epc" required maxlength="50" />
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="row mt-2">
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Dep Acumulada</label>
+                            <input type="number" step="0.01" class="form-control" id="DepAcumuladaVar" name="DepAcumuladaVar" placeholder="Dep Acumulada" required />
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Valor En Libros</label>
+                            <input type="number" step="0.01" class="form-control" id="ValorenLibrosVar" name="ValorenLibrosVar" placeholder="Valor En Libros" required />
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Costo</label>
+                            <input type="number" step="0.01" class="form-control" id="CostoDec" name="CostoDec" placeholder="Costo" required />
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Estado De Activo</label>
+                            <input type="text" class="form-control" id="EstadoActivoVar" name="EstadoActivoVar" placeholder="Estado De Activo" required maxlength="50" />
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="row mt-2">
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Adicional 1</label>
+                            <input type="text" class="form-control" id="AdicionalVar" name="AdicionalVar" placeholder="Adicional" maxlength="200" value=" " />
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Adicional 2</label>
+                            <input type="text" class="form-control" id="Adicional2Var" name="Adicional2Var" placeholder="Adicional 2" maxlength="200" value=" " />
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Adicional 3</label>
+                            <input type="text" class="form-control" id="Adicional3Var" name="Adicional3Var" placeholder="Adicional 3" maxlength="200" value=" " />
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Adicional 4</label>
+                            <input type="text" class="form-control" id="Adicional4Var" name="Adicional4Var" placeholder="Adicional 4" maxlength="200" value=" " />
+                        </div>
+
+                    </div>
+
+
+                    <div class="row mt-2">
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Adicional 5</label>
+                            <input type="text" class="form-control" id="Adicional5Var" name="Adicional5Var" placeholder="Adicional 5" maxlength="200" value=" " />
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Adicional 6</label>
+                            <input type="text" class="form-control" id="Adicional6Var" name="Adicional6Var" placeholder="Adicional 6" maxlength="200" value=" " />
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Adicional 7</label>
+                            <input type="text" class="form-control" id="Adicional7Var" name="Adicional7Var" placeholder="Adicional 7" maxlength="200" value=" " />
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Adicional 8</label>
+                            <input type="text" class="form-control" id="Adicional8Var" name="Adicional8Var" placeholder="Adicional 8" maxlength="200" value=" " />
+                        </div>
+
+                    </div>
+
+
+                    <div class="row mt-2">
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Adicional 9</label>
+                            <input type="text" class="form-control" id="Adicional9Var" name="Adicional9Var" placeholder="Adicional 9" maxlength="200" value=" " />
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Adicional 10</label>
+                            <input type="text" class="form-control" id="Adicional10Var" name="Adicional10Var" placeholder="Adicional 10" maxlength="200" value=" " />
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Adicional 11</label>
+                            <input type="number" step="0.01" class="form-control" id="Adicional11Dec" name="Adicional11Dec" placeholder="Adicional 11" value="0" />
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Adicional 12</label>
+                            <input type="number" step="0.01" class="form-control" id="Adicional12Dec" name="Adicional12Dec" placeholder="Adicional 12" value="0" />
+                        </div>
+
+                    </div>
+
+
+                    <div class="row mt-2">
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Adicional 13</label>
+                            <input type="number" step="0.01" class="form-control" id="Adicional13Dec" name="Adicional13Dec" placeholder="Adicional 13" value="0" />
+                        </div>
+
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Adicional 14</label>
+                            <input type="number" step="0.01" class="form-control" id="Adicional14Dec" name="Adicional14Dec" placeholder="Adicional 14" value="0" />
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Adicional 15</label>
+                            <input type="date" class="form-control" id="Adicional15Date" name="Adicional15Date" placeholder="Adicional 15" value="1900-01-01" />
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <label>Adicional 16</label>
+                            <input type="date" class="form-control" id="Adicional16Date" name="Adicional16Date" placeholder="Adicional 16" value="1900-01-01" />
+                        </div>
+
                     </div>
 
                 </div>
@@ -69,5 +290,4 @@
 
 
 </div>
-
 

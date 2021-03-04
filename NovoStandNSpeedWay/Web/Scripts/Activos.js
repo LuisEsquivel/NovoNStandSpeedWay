@@ -1,6 +1,20 @@
 ﻿
 document.addEventListener("DOMContentLoaded", function (event) {
-    window.list("/Activos/List", ["Id", "Descripción", "Activo", "Fecha Alta"], 0, null);
+
+    $.get("/Home/DropDownUbicacion", function (data) {
+        window.llenarCombo(data, document.getElementById("UbicacionIdVar"), true)
+    });
+
+    $.get("/Home/DropDownCentroDeCostos", function (data) {
+        window.llenarCombo(data, document.getElementById("CentroCostosIdVar"), true)
+    });
+
+    $.get("/Home/DropDownFormaAdquisicion", function (data) {
+        window.llenarCombo(data, document.getElementById("FormaAdquisicionIdInt"), true)
+    });
+
+    window.list("/Activos/List", ["Id", "Descripción", "Estado Activo", "Fecha Adquisición"], 0, null);
+
 });
 
 
@@ -17,14 +31,14 @@ function ReturnData(url) {
 
 
 function GetTraining(id) {
-    window.list("/Activos/List", ["Id", "Descripción", "Activo", "Fecha Alta"], 0, null);
+    window.list("/Activos/List", ["Id", "Descripción", "Estado Activo", "Fecha Adquisición"], 0, null);
 }
 
 
 
 async function Add() {
     var form = document.getElementById("form");
-    await window.add("/Activos/Add", form, ["Id", "Descripción", "Activo", "Fecha Alta"])
+    await window.add("/Activos/Add", form, ["Id", "Descripción", "Estado Activo", "Fecha Adquisición"])
 }
 
 

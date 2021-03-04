@@ -2,12 +2,6 @@
 
 using Api.Dtos.Usuarios;
 using AutoMapper;
-using Api.Models;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Api.Dtos.Roles;
 using Api.Dtos.Lectores;
 using Api.Dtos.FormaAdquisicion;
@@ -16,6 +10,7 @@ using Api.Dtos.CentroDeCostos;
 using Api.Dtos.Activos;
 using Api.Dtos.Eventos;
 using Api.Dtos.EpcProductosRel;
+using Api.Models;
 
 namespace Api.AutoMapper
 {

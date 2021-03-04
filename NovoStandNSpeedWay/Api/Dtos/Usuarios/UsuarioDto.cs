@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 
-#nullable disable
+using System;
 
 namespace Api.Dtos.Usuarios
 {
@@ -16,5 +15,7 @@ namespace Api.Dtos.Usuarios
         public int UsuarioRegIdInt { get; set; }
         public int UsuarioIdModInt { get; set; }
         public bool ActivoBit { get; set; }
+        public string UsuarioVar { get; set; }
+
     }
 }

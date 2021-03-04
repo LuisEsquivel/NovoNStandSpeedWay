@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Api.Dtos.Eventos;
 using Api.Helpers;
@@ -48,12 +49,15 @@ namespace Api.Controllers
             {
 
                 var list = repository.GetAll();
-
                 var listDto = new List<EventosDto>();
+                var ByteConverter = new UnicodeEncoding();
 
                 foreach (var row in list)
                 {
-                    listDto.Add(mapper.Map<EventosDto>(row));
+
+                row.TimeStampString = ByteConverter.GetString(row.Timestamp);
+                  
+                listDto.Add(mapper.Map<EventosDto>(row));
                 }
 
                 return Ok(response.ResponseValues(this.Response.StatusCode, listDto));
@@ -69,10 +73,11 @@ namespace Api.Controllers
             /// <returns>StatusCode 200</returns>
             [HttpGet("GetById/{Id:int}")]
             [ProducesResponseType(StatusCodes.Status200OK)]
-            public IActionResult GetById(int Id)
+            public IActionResult GetById(Int64 Id)
             {
                 var row = this.repository.GetById(Id);
                 var listDto = new List<EventosDto>();
+                row.TimeStampString = System.Text.UTF8Encoding.UTF8.GetString(row.Timestamp);
                 listDto.Add(mapper.Map<EventosDto>(row));
                 return Ok(this.response.ResponseValues(this.Response.StatusCode, listDto));
             }
@@ -98,15 +103,14 @@ namespace Api.Controllers
                 }
 
 
-                if (repository.Exist(x => x.EpcVar == dto.EpcVar))
-                {
-                    return BadRequest(this.response.ResponseValues(StatusCodes.Status406NotAcceptable, null, "El registro Ya Existe!!"));
-                }
+        
+            var o = mapper.Map<Evento>(dto);
+            Byte[] time = Encoding.UTF8.GetBytes(dto.TimestampString.ToString());
+            o.Timestamp = time;
+             
 
-                var o = mapper.Map<Evento>(dto);
 
-
-                if (!repository.Add(o))
+            if (!repository.Add(o))
                 {
                     return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal guardar el registro: {dto.EpcVar}"));
                 }
@@ -141,11 +145,13 @@ namespace Api.Controllers
                     return BadRequest(this.response.ResponseValues(StatusCodes.Status406NotAcceptable, null, "El Registro Ya Existe!!"));
                 }
 
-                var o = mapper.Map<Evento>(dto);
-                var update = repository.GetByValues(x => x.EventoIdInt == dto.EventoIdInt).FirstOrDefault();
-          
 
-                if (!repository.Update(o, o.EventoIdInt))
+                    var o = mapper.Map<Evento>(dto);
+                    Byte[] time = Encoding.UTF8.GetBytes(dto.TimestampString.ToString());
+                    o.Timestamp = time;
+
+
+            if (!repository.Update(o, o.EventoIdInt))
                 {
                     return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal al actualizar el registro: {dto.EpcVar}"));
                 }
@@ -186,8 +192,9 @@ namespace Api.Controllers
                 var row = repository.GetById(Id);
 
                 var o = mapper.Map<Evento>(row);
+               
 
-                if (!repository.Delete(o))
+            if (!repository.Delete(o))
                 {
                     return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal al eliminar el registro: {o.EpcVar}"));
 

@@ -120,6 +120,9 @@
   <data name="ActivosController" xml:space="preserve">
     <value>activos</value>
   </data>
+  <data name="CentroDeCostosController" xml:space="preserve">
+    <value>centrodecostos</value>
+  </data>
   <data name="FormaAdquisicionController" xml:space="preserve">
     <value>formaadquisicion</value>
   </data>

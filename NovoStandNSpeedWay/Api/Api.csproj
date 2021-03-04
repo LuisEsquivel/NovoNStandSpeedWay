@@ -15,6 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="ApiDocumentation.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="ApiDocumentation.xml" />
   </ItemGroup>
 

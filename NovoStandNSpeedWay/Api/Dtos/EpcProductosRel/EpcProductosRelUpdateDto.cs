@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-#nullable disable
-
+﻿
 namespace Api.Dtos.EpcProductosRel
 {
     public partial class EpcProductosRelUpdateDto

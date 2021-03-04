@@ -49,12 +49,14 @@ var formSearch = "<form method='POST' id='formSearched' class='row container-flu
 
 function TableDesign(idTable) {
 
+  
+    document.getElementById("footer").classList.remove("fixed-bottom");
+
     $("#" + idTable + "_length").addClass("text-primary form-inline");
     $("#" + idTable + "_filter").addClass("text-primary");
     $("#" + idTable + "_info").addClass("text-primary");
     $("#" + idTable + "_paginate").addClass("text-primary");
     $(".form-control-sm").addClass("text-primary");
-
 
     var groupColumn = 1;
 
@@ -72,6 +74,19 @@ function TableDesign(idTable) {
 
 }
 
+
+
+function centrar(id) {
+    var nav = document.getElementById("nav");
+    var footer = document.getElementById("footer");
+    footer.classList.add("fixed-bottom");
+    var height = nav.clientHeight + footer.clientHeight;
+    var objeto = document.getElementById(id);
+    var centrar = window.innerHeight - height;
+    objeto.style.paddingTop = 0;
+    objeto.style.cssText = "padding-top:" + (centrar - (centrar -1)) + "px !important";
+    objeto.innerHTML += "<br/> <br/> <br/>";
+}
 
 
 $(document).ready(function () {
@@ -96,14 +111,13 @@ $(document).ready(function () {
         modal.style.cssText = "background-color:transparent !important; width:100% !important; overflow-y:hidden; max-height:100% !important;";
     }
 
-    var nav = document.getElementById("nav");
-    var footer = document.getElementById("footer");
-    var height = nav.clientHeight + footer.clientHeight -20+ "px";
+
     if ($("#frmLogin").length > 0) {
-        document.getElementById("frmLogin").style.cssText= "height:calc(100vh - " + height + ")";
+        centrar("frmLogin");
     }
+
     if ($("#frmRegister").length > 0) {
-        document.getElementById("frmRegister").style.cssText = "height:calc(100vh - " + height + ")";
+        centrar("frmRegister");
     }
 
 
@@ -146,13 +160,13 @@ $(document).ready(function () {
     }
 
 
-
     //$.get("/Home/UsuarioLogeado", function (data) {
     //    if (data.length > 0) {
     //        document.getElementById("userLogeado").innerHTML =data;
     //    }
 
     //})
+
  
 });
 
@@ -299,11 +313,8 @@ var add = async function (urlAdd, form, arrayColumnas) {
 var list = function (url, arrayColumnas, id = 0, ClasificacionID = 0, columnaAcciones = true) {
 
     var container = document.getElementById("container");
-    var nav = document.getElementById("nav");
-    var footer = document.getElementById("footer");
-    var height = nav.clientHeight + footer.clientHeight + 31 + "px";
-    container.style.cssText = "height:calc(100vh - " + height + ")";
     container.innerHTML = spinner;
+    centrar("container");
 
     var data = {
         "id": id,
@@ -349,7 +360,7 @@ function Table(arrayColumnas, data, columnaAcciones = true) {
     var container = document.getElementById("container");;
     container.classList.add("container");
     var contenido = "";
-    
+
     var keys = Object.keys(data[0]);
 
     contenido += "<div class='justify-content-start mb-5  form-inline'>";
@@ -376,8 +387,8 @@ function Table(arrayColumnas, data, columnaAcciones = true) {
 
 
     idTable = "Table" + $("#Titulo").text().replace(/\s+/g, "");
-    contenido += "<table class='table mb-0' id='" + idTable + "' >";
-    contenido += "<thead class='bg-dark text-white' style='width:100%'>";
+    contenido += "<table class='table' id='" + idTable + "' >";
+    contenido += "<thead class='bg-dark text-white vh100'>";
     contenido += "<tr>";
 
     for (i = 0; i < arrayColumnas.length; i++) {
@@ -407,7 +418,7 @@ function Table(arrayColumnas, data, columnaAcciones = true) {
     contenido += "<tbody>";
     for (row = 0; row < data.length; row++) {
 
-        contenido += "<tr id='trsGen'>";
+        contenido += "<tr>";
 
         for (celda = 0; celda < keys.length; celda++) {
 
@@ -423,7 +434,7 @@ function Table(arrayColumnas, data, columnaAcciones = true) {
 
 
             if ( !cell.includes("Imagen") && !cell.includes("Pdf") && !cell.includes("Video") ) {
-                contenido += "<td class='mt-4'>";
+                contenido += "<td>";
                 contenido += data[row][cell];
                 contenido += "</td>";
             }
@@ -808,7 +819,7 @@ var Register = async function () {
         let result = await response.json();
 
         if (result == 1) {
-            window.location.href = "/Login/Index";   
+            window.location.href = "/Registrarse/VerificarCuenta";   
         } else {
 
             if (JSON.stringify(result.message).includes("Ya Existe")) {
@@ -818,6 +829,34 @@ var Register = async function () {
             swal("¡Algo salió mal al registrarse!", "Verifique", "warning");
         }
 
+    }
+
+}
+
+
+
+var ValidarCuenta = async function () {
+
+    var frm = document.getElementById("frmVerificarCuenta");
+
+    frm.onsubmit = async (e) => {
+
+        e.preventDefault();
+
+        let response = await fetch("/Registrarse/ValidarCuenta", {
+            method: 'POST',
+            processData: false,
+            contentType: false,
+            body: new FormData(frm)
+        });
+
+        let result = await response.json();
+
+        if (result == 1) {
+            window.location.href = "/Login/Index";
+        } else {
+            swal("¡Revisa el código de verificación y vuelve a intentarlo!", "Verifique", "warning");
+        }
 
     }
 

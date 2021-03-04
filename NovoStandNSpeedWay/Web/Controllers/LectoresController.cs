@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Web.Auth;
 using Web.Models;
 using Web.Services;
 
 namespace Web.Controllers
 {
+    [Authentication]
     public class LectoresController : Controller
     {
         public ApiServices apiServices;
         public Services.Services services;
+        public HomeController hc;
 
         public LectoresController()
         {
             apiServices = new ApiServices();
             services = new Services.Services();
+            hc = new HomeController();
         }
 
         // GET: Lectores
@@ -44,7 +48,7 @@ namespace Web.Controllers
                             FechaAlta = Convert.ToDateTime(l.FechaAltaDate).ToShortDateString()
                         }).ToList();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }
@@ -71,7 +75,7 @@ namespace Web.Controllers
                             FechaAlta = Convert.ToDateTime(l.FechaAltaDate).ToShortDateString()
                         }).ToList();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }
@@ -138,7 +142,7 @@ namespace Web.Controllers
 
                     }
 
-                    o.UsuarioIdInt = 1;
+                    o.UsuarioIdInt = hc.UserId(); ;
 
                     // ADD
                     result = apiServices.Save<Lectore>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.LectoresController, "Add", o);
@@ -166,7 +170,7 @@ namespace Web.Controllers
 
                     }
 
-                    o.UsuarioIdModInt = 1;
+                    o.UsuarioIdModInt = hc.UserId();
                     result = apiServices.Save<Lectore>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.LectoresController, "Update", o);
 
 

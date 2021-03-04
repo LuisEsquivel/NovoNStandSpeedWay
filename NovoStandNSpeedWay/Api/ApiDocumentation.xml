@@ -132,7 +132,7 @@
              </summary>
              <returns>lista de eventos</returns>
         </member>
-        <member name="M:Api.Controllers.EventosController.GetById(System.Int32)">
+        <member name="M:Api.Controllers.EventosController.GetById(System.Int64)">
             <summary>
             Obtener evento por el Id
             </summary>
@@ -313,6 +313,13 @@
             <summary>
             Usuarios Controller
             </summary>
+        </member>
+        <member name="M:Api.Controllers.UsuariosController.Login(Api.Dtos.Usuarios.UsuarioAuthDto)">
+            <summary>
+            Login con Usuario y Password
+            </summary>
+            <param name="dto"></param>
+            <returns>StatusCode 200</returns>
         </member>
         <member name="M:Api.Controllers.UsuariosController.Get">
              <summary>

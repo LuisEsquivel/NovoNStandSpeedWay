@@ -70,6 +70,15 @@ namespace Web.CoreResources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a centrodecostos.
+        /// </summary>
+        internal static string CentroDeCostosController {
+            get {
+                return ResourceManager.GetString("CentroDeCostosController", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a formaadquisicion.
         /// </summary>
         internal static string FormaAdquisicionController {

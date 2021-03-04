@@ -1,0 +1,37 @@
+﻿
+<script src="~/Scripts/Jquery Form Steps/js/sweetalert.min.js"></script>
+
+
+<br />
+<br />
+<br />
+
+<div class="row justify-content-center">
+
+    <h4>Verificar Cuenta</h4>
+
+    <form id="frmVerificarCuenta" class="col-md-5 col-lg-3 container" method="POST">
+
+        <div class="row pt-2 pb-2" style="border:2px lightgray solid; border-radius:5px;">
+
+            @using Web.Controllers;
+            @{var hc = new HomeController();
+                var email = System.Web.HttpContext.Current.Request.Cookies.Get(hc.CockieName);
+            }
+
+            <div class="form-group col-sm-12">
+                <label>Introduce el código de verificación que enviamos al correo @email </label>
+                <input class="form-control" id="UsuarioVar" type="text" name="UsuarioVar" hidden value="@email">
+                <input class="form-control" id="CodigoVerificacionVar" type="text" name="CodigoVerificacionVar" required placeholder="Código De Verificación">
+            </div>
+
+            <input type="submit" value="Validar" class="btn btn-primary container mt-3" style="width:50%;" onclick="ValidarCuenta();" />
+
+        </div>
+
+
+    </form>
+
+
+</div>
+

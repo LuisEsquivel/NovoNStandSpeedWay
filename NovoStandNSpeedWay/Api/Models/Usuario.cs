@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-#nullable disable
-
 namespace Api.Models
 {
     public partial class Usuario
@@ -16,5 +14,8 @@ namespace Api.Models
         public int UsuarioRegIdInt { get; set; }
         public int UsuarioIdModInt { get; set; }
         public bool ActivoBit { get; set; }
+        public string UsuarioVar { get; set; }
+        public byte[] PasswordEncryptByte { get; set; }
+        public byte[] PasswordKeyByte { get; set; }
     }
 }

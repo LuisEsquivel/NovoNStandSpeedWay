@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Api.Dtos.Usuarios;
 using Api.Helpers;
 using Api.Interface;
 using Api.Models;
 using Api.Repository;
+using ApiPlafonesWeb.Helpers;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace Api.Controllers
 {
@@ -23,24 +24,58 @@ namespace Api.Controllers
     public class UsuariosController : Controller
     {
 
-        private IGenericRepository<Usuario> repository;
+            private IGenericRepository<Usuario> repository;
             private IMapper mapper;
             private Response response;
-
+            private Generals generals;
 
             public UsuariosController(ApplicationDbContext context, IMapper _mapper)
             {
                 this.mapper = _mapper;
                 this.repository = new GenericRepository<Usuario>(context);
                 this.response = new Response();
+                this.generals = new Generals();
             }
 
 
-            /// <summary>
-            ///Usuarios Get
-            /// </summary>
-            /// <returns>lista de usuarios</returns>
-            [HttpGet("get")]
+
+        /// <summary>
+        /// Login con Usuario y Password
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns>StatusCode 200</returns>
+        [HttpPost("login")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult Login([FromBody]  UsuarioAuthDto dto)
+        {
+            if (dto == null)
+            {
+                return Unauthorized();
+            }
+
+            var user = repository.GetByValues(x => x.UsuarioVar == dto.UsuarioVar).FirstOrDefault();
+
+            if (!ValidatePassword(dto.Password, user.PasswordEncryptByte , user.PasswordKeyByte))
+            {
+                return Unauthorized();
+            }
+
+
+            return Ok(response.ResponseValues(this.Response.StatusCode, user));
+
+        }
+
+
+
+
+
+        /// <summary>
+        ///Usuarios Get
+        /// </summary>
+        /// <returns>lista de usuarios</returns>
+        [HttpGet("get")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             public IActionResult Get()
             {
@@ -96,17 +131,30 @@ namespace Api.Controllers
                 }
 
 
-                if (repository.Exist(x => x.NombreVar == dto.NombreVar))
+                if (repository.Exist(x => x.UsuarioVar  == dto.UsuarioVar))
                 {
                     return BadRequest(this.response.ResponseValues(StatusCodes.Status406NotAcceptable, null, "El registro Ya Existe!!"));
+                }
+
+                var random = new Random();
+                var CodigoVerificacion = random.Next(0, 999999).ToString();
+
+                if (generals.SendEmailSMTP(dto.UsuarioVar, CodigoVerificacion) == false)
+                {
+                 return BadRequest(this.response.ResponseValues(StatusCodes.Status406NotAcceptable, null, "problema con el correo"));
                 }
 
                 var usuario = mapper.Map<Usuario>(dto);
                 usuario.FechaAltaDate = DateTime.Now;
                 usuario.FechaModDate = Convert.ToDateTime ("1900-01-01");
                 usuario.UsuarioIdModInt = 0;
+                byte[] passwordEncrypt, passwordKey;
+                EncryptPassword(dto.Password, out passwordEncrypt, out passwordKey);
+                usuario.PasswordEncryptByte = passwordEncrypt;
+                usuario.PasswordKeyByte = passwordKey;
 
-                if (!repository.Add(usuario))
+
+            if (!repository.Add(usuario))
                 {
                     return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal guardar el registro: {dto.NombreVar}"));
                 }
@@ -136,7 +184,7 @@ namespace Api.Controllers
                     return BadRequest(StatusCodes.Status406NotAcceptable);
                 }
 
-                if (repository.Exist(x => x.NombreVar == dto.NombreVar && x.UsuarioIdInt != dto.UsuarioIdInt))
+                if (repository.Exist(x => x.UsuarioVar == dto.UsuarioVar && x.UsuarioIdInt != dto.UsuarioIdInt))
                 {
                     return BadRequest(this.response.ResponseValues(StatusCodes.Status406NotAcceptable, null, "El Registro Ya Existe!!"));
                 }
@@ -146,8 +194,12 @@ namespace Api.Controllers
                 usuario.FechaModDate = DateTime.Now;
                 usuario.FechaAltaDate = update.FechaAltaDate;
                 usuario.UsuarioIdInt = update.UsuarioIdInt;
+                byte[] passwordEncrypt, passwordKey;
+                EncryptPassword(dto.Password, out passwordEncrypt, out passwordKey);
+                usuario.PasswordEncryptByte  = passwordEncrypt;
+                usuario.PasswordKeyByte = passwordKey;
 
-                if (!repository.Update(usuario , usuario.UsuarioIdInt))
+            if (!repository.Update(usuario , usuario.UsuarioIdInt))
                 {
                     return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal al actualizar el registro: {dto.NombreVar}"));
                 }
@@ -199,7 +251,49 @@ namespace Api.Controllers
                 return Ok(response.ResponseValues(this.Response.StatusCode));
             }
 
+
+
+        //Encrypt Password
+        private void EncryptPassword(string password, out byte[] passwordEncrypt, out byte[] passwordKey)
+        {
+
+
+            using (var hmac = new System.Security.Cryptography.HMACSHA512())
+            {
+
+                passwordKey = hmac.Key;
+                passwordEncrypt = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+
+            }
+
         }
+
+
+
+        //validate password
+        private bool ValidatePassword(string password, byte[] passwordEncrypt, byte[] passwordKey)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512(passwordKey))
+            {
+
+                var mypasswordEncrypt = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+
+
+                for (int i = 0; i < mypasswordEncrypt.Length; i++)
+                {
+                    if (mypasswordEncrypt[i] != passwordEncrypt[i]) { return false; }
+                }
+
+            }
+
+            return true;
+        }
+
+
+
+
+
+    }
 
 
     }

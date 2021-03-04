@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Web.Auth;
 using Web.Models;
 using Web.Services;
 
 namespace Web.Controllers
 {
+
+    [Authentication]
     public class UbicacionesController : Controller
     {
         public ApiServices apiServices;
@@ -117,8 +120,7 @@ namespace Web.Controllers
         {
             o.ActivoBit = IsActive != null ? Convert.ToBoolean(IsActive) : false;
             Ubicacione result = null;
-
-
+            
 
             try
             {
@@ -144,7 +146,7 @@ namespace Web.Controllers
                     }
 
                     // ADD
-                    o.UsuarioIdInt = 1;
+                    o.UsuarioIdInt = hc.UserId();
                     result = apiServices.Save<Ubicacione>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.UbicacionesController, "Add", o);
 
                 }
@@ -173,16 +175,7 @@ namespace Web.Controllers
                     }
 
 
-                    //var NombreUsuario = "";
-                    //if (hc.UserId() > 0)
-                    //{
-                    //    NombreUsuario = services.Get<Usuario>("usuario")
-                    //                                         .Where
-                    //                                         (x => x.UsuarioIdInt == hc.UserId()
-                    //                                         ).FirstOrDefault().NombreVar;
-                    //}
-
-
+                    o.UsuarioIdModInt = hc.UserId();
                     result = apiServices.Save<Ubicacione>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.UbicacionesController, "Update", o);
 
 

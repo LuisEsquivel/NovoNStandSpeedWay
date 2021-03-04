@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 
 namespace Web.Models
@@ -11,9 +10,13 @@ namespace Web.Models
         public int RolIdInt { get; set; }
         public bool EsAdminBit { get; set; }
         public DateTime FechaAltaDate { get; set; }
-        public DateTime FechaModDate { get; set; } 
+        public DateTime FechaModDate { get; set; }
         public int UsuarioRegIdInt { get; set; }
-        public int UsuarioIdModInt { get; set; } 
+        public int UsuarioIdModInt { get; set; }
         public bool ActivoBit { get; set; }
+        public string UsuarioVar { get; set; }
+        public byte[] PasswordEncryptByte { get; set; }
+        public byte[] PasswordKeyByte { get; set; }
+        public string Password { get; set; }
     }
 }

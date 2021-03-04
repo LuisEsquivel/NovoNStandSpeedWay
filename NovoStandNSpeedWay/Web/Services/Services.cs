@@ -73,10 +73,10 @@ namespace Web.Services
 
         public object Login<T>(T model)
         {
+
             object objeto = null;
 
-
-            var url = CoreResources.CoreResources.UrlBase + CoreResources.CoreResources.Prefix + "/usuario/login";
+            var url = CoreResources.CoreResources.UrlBase + CoreResources.CoreResources.Prefix + "/usuarios/login";
 
             try
             {
@@ -93,7 +93,8 @@ namespace Web.Services
                     {
                         string readTask = responseTask.Content.ReadAsStringAsync().Result;
                         JObject jsonn = JObject.Parse(readTask.ToString());
-                        objeto = jsonn.Value<object>("token").ToString();
+                        objeto = JsonConvert.DeserializeObject<T>(jsonn["model"].ToString());
+
                     }
                     else
                     {

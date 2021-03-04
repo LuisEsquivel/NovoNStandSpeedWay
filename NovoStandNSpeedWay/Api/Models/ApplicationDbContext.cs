@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-#nullable disable
 
 namespace Api.Models
 {
@@ -230,11 +229,11 @@ namespace Api.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Activos_FormaAdquisicion");
 
-                //entity.HasOne(d => d.UbicacionIdVarNavigation)
-                //    .WithMany(p => p.Activos)
-                //    .HasForeignKey(d => d.UbicacionIdVar)
-                //    .OnDelete(DeleteBehavior.ClientSetNull)
-                //    .HasConstraintName("FK_Activos_Ubicaciones");
+                entity.HasOne(d => d.UbicacionIdVarNavigation)
+                    .WithMany(p => p.Activos)
+                    .HasForeignKey(d => d.UbicacionIdVar)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Activos_Ubicaciones");
             });
 
             modelBuilder.Entity<CentroCosto>(entity =>
@@ -302,13 +301,35 @@ namespace Api.Models
                     .IsUnicode(false)
                     .HasColumnName("epc_var");
 
+                entity.Property(e => e.FastIdInt).HasColumnName("fastID_int");
+
                 entity.Property(e => e.FechaDate)
                     .HasColumnType("datetime")
                     .HasColumnName("fecha_date");
 
                 entity.Property(e => e.LectorIdInt).HasColumnName("lectorID_int");
 
+                entity.Property(e => e.PeakInt).HasColumnName("peak_int");
+
                 entity.Property(e => e.PuertoInt).HasColumnName("puerto_int");
+
+                entity.Property(e => e.TidVar)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("tid_var");
+
+                entity.Property(e => e.Timestamp)
+                    .IsRequired()
+                    .IsRowVersion()
+                    .IsConcurrencyToken()
+                    .HasColumnName("timestamp");
+
+                entity.Property(e => e.UserMemoryVar)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("userMemory_var");
             });
 
             modelBuilder.Entity<FormaAdquisicion>(entity =>
@@ -459,11 +480,20 @@ namespace Api.Models
                     .IsUnicode(false)
                     .HasColumnName("nombre_var");
 
+                entity.Property(e => e.PasswordEncryptByte).HasColumnName("password_encrypt_byte");
+
+                entity.Property(e => e.PasswordKeyByte).HasColumnName("password_key_byte");
+
                 entity.Property(e => e.RolIdInt).HasColumnName("rolID_int");
 
                 entity.Property(e => e.UsuarioIdModInt).HasColumnName("usuarioID_mod_int");
 
                 entity.Property(e => e.UsuarioRegIdInt).HasColumnName("usuarioRegID_int");
+
+                entity.Property(e => e.UsuarioVar)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("usuario_var");
             });
 
             OnModelCreatingPartial(modelBuilder);

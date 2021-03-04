@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Web.Auth;
 using Web.Models;
 using Web.Services;
 
 namespace Web.Controllers
 {
+
+    [Authentication]
     public class ActivosController : Controller
     {
 
@@ -41,7 +44,8 @@ namespace Web.Controllers
                         {
                             x.ActivoIdInt ,
                             x.DescripcionVar,
-                            FechaAlta = Convert.ToDateTime(x.FechaAdquisicionDate).ToShortDateString()
+                            x.EstadoActivoVar,
+                            FechaAdquisicion = Convert.ToDateTime(x.FechaAdquisicionDate).ToShortDateString()
                         }
 
                         ).ToList();
@@ -65,9 +69,10 @@ namespace Web.Controllers
 
                         x => new
                         {
-                            x.UbicacionIdVar,
+                            x.ActivoIdInt,
                             x.DescripcionVar,
-                            FechaAlta = Convert.ToDateTime(x.FechaAdquisicionDate).ToShortDateString()
+                            x.EstadoActivoVar,
+                            FechaAdquisicion = Convert.ToDateTime(x.FechaAdquisicionDate).ToShortDateString()
                         }
 
                         ).ToList();
@@ -89,29 +94,62 @@ namespace Web.Controllers
 
                 try
                 {
-                    o = services.Get<Activo>("activos").Select(
+                o = services.Get<Activo>("activos").Select
 
-                        x => new
-                        {
-                            x.ActivoIdInt,
-                            x.DescripcionVar,
-                            FechaAlta = Convert.ToDateTime(x.FechaAdquisicionDate).ToShortDateString()
-                        }
-
-                        ).Where(x => x.ActivoIdInt  == id).ToList();
+                (
+                     x => new
+                     {
+                         x.ActivoIdInt,
+                         x.CentroCostosIdVar,
+                         x.EdificioVar,
+                         x.NoSerieVar,
+                         x.BarcodeVar,
+                         x.UbicacionIdVar,
+                         x.EstadoActivoVar,
+                         x.FormaAdquisicionIdInt,
+                         FechaAdquisicionDate = x.FechaAdquisicionDate.ToString("yyyy-MM-dd"),
+                         x.DocumentoVar,
+                         x.CostoDec,
+                         x.EpcVar,
+                         x.DescripcionVar,
+                         x.IdentificadorActivoVar,
+                         x.MarcaVar,
+                         x.ModeloVar,
+                         x.PisoVar,
+                         x.DepAcumuladaVar,
+                         x.ValorenLibrosVar,
+                         x.AdicionalVar,
+                         x.Adicional2Var,
+                         x.Adicional3Var,
+                         x.Adicional4Var,
+                         x.Adicional5Var,
+                         x.Adicional6Var,
+                         x.Adicional7Var,
+                         x.Adicional8Var,
+                         x.Adicional9Var,
+                         x.Adicional10Var,
+                         x.Adicional11Dec,
+                         x.Adicional12Dec,
+                         x.Adicional13Dec,
+                         x.Adicional14Dec,
+                         Adicional15Date = x.Adicional15Date.ToString("yyyy-MM-dd"),
+                         Adicional16Date = x.Adicional16Date.ToString("yyyy-MM-dd"),
+                     }
+                    ).ToList().Where(a => a.ActivoIdInt  == id);
                 }
                 catch (Exception)
                 {
                     return null;
                 }
 
+                
                 return Json(o, JsonRequestBehavior.AllowGet);
             }
 
 
-
+            
             [HttpPost]
-            public JsonResult Add(Activo o, string IsActive, string Accion)
+            public JsonResult Add(Activo o, string IsActive)
             {
               
                 Activo result = null;
@@ -119,7 +157,7 @@ namespace Web.Controllers
                 try
                 {
                     //nuevo
-                    if (Accion == null || Accion == "")
+                    if (o.ActivoIdInt == 0)
                     {
 
                         var existe = services.Get<Activo>("activos").
@@ -168,16 +206,7 @@ namespace Web.Controllers
                         }
 
 
-                        //var NombreUsuario = "";
-                        //if (hc.UserId() > 0)
-                        //{
-                        //    NombreUsuario = services.Get<Usuario>("usuario")
-                        //                                         .Where
-                        //                                         (x => x.UsuarioIdInt == hc.UserId()
-                        //                                         ).FirstOrDefault().NombreVar;
-                        //}
-
-
+      
                         result = apiServices.Save<Activo>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.ActivosController, "Update", o);
 
 

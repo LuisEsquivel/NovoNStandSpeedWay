@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-
 
 namespace Web.Models
 {
@@ -42,8 +40,5 @@ namespace Web.Models
         public DateTime Adicional15Date { get; set; }
         public DateTime Adicional16Date { get; set; }
 
-        public virtual CentroCosto CentroCostosIdVarNavigation { get; set; }
-        public virtual FormaAdquisicion FormaAdquisicionIdIntNavigation { get; set; }
-        public virtual Ubicacione UbicacionIdVarNavigation { get; set; }
     }
 }

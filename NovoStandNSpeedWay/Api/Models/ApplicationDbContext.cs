@@ -27,6 +27,7 @@ namespace Api.Models
         public virtual DbSet<Usuario> Usuarios { get; set; }
 
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "Modern_Spanish_CI_AS");
@@ -463,6 +464,13 @@ namespace Api.Models
                 entity.Property(e => e.UsuarioIdInt).HasColumnName("usuarioID_int");
 
                 entity.Property(e => e.ActivoBit).HasColumnName("activo_bit");
+
+                entity.Property(e => e.CodigoDeVerificacionVar)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("codigoDeVerificacion_var");
+
+                entity.Property(e => e.CuentaVerificadaBit).HasColumnName("cuentaVerificada_bit");
 
                 entity.Property(e => e.EsAdminBit).HasColumnName("esAdmin_bit");
 

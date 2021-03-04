@@ -13,5 +13,6 @@ namespace Api.Dtos.CentroDeCostos
         public int UsuarioIdInt { get; set; }
         public bool? ActivoBit { get; set; }
 
+
     }
 }

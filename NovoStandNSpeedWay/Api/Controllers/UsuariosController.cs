@@ -6,7 +6,6 @@ using Api.Helpers;
 using Api.Interface;
 using Api.Models;
 using Api.Repository;
-using ApiPlafonesWeb.Helpers;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,14 +26,12 @@ namespace Api.Controllers
             private IGenericRepository<Usuario> repository;
             private IMapper mapper;
             private Response response;
-            private Generals generals;
 
             public UsuariosController(ApplicationDbContext context, IMapper _mapper)
             {
                 this.mapper = _mapper;
                 this.repository = new GenericRepository<Usuario>(context);
                 this.response = new Response();
-                this.generals = new Generals();
             }
 
 
@@ -136,13 +133,6 @@ namespace Api.Controllers
                     return BadRequest(this.response.ResponseValues(StatusCodes.Status406NotAcceptable, null, "El registro Ya Existe!!"));
                 }
 
-                var random = new Random();
-                var CodigoVerificacion = random.Next(0, 999999).ToString();
-
-                if (generals.SendEmailSMTP(dto.UsuarioVar, CodigoVerificacion) == false)
-                {
-                 return BadRequest(this.response.ResponseValues(StatusCodes.Status406NotAcceptable, null, "problema con el correo"));
-                }
 
                 var usuario = mapper.Map<Usuario>(dto);
                 usuario.FechaAltaDate = DateTime.Now;
@@ -152,6 +142,7 @@ namespace Api.Controllers
                 EncryptPassword(dto.Password, out passwordEncrypt, out passwordKey);
                 usuario.PasswordEncryptByte = passwordEncrypt;
                 usuario.PasswordKeyByte = passwordKey;
+                usuario.CuentaVerificadaBit = false;
 
 
             if (!repository.Add(usuario))
@@ -215,12 +206,53 @@ namespace Api.Controllers
 
 
 
-            /// <summary>
-            /// Eliminar usuario por Id
-            /// </summary>
-            /// <param name="Id"></param>
-            /// <returns>StatusCode 200</returns>
-            [HttpDelete("Delete/{Id:int}")]
+        /// <summary>
+        /// Validar cuenta del usuario
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns>StatusCode 200</returns>
+        [HttpPut("ValidateAccount")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult ValidateAccount([FromBody] UsuarioValidateAccountDto dto)
+        {
+            if (dto == null)
+            {
+                return BadRequest(StatusCodes.Status406NotAcceptable);
+            }
+
+            if (repository.Exist(x => x.UsuarioVar == dto.UsuarioVar && x.UsuarioIdInt != dto.UsuarioIdInt))
+            {
+                return BadRequest(this.response.ResponseValues(StatusCodes.Status406NotAcceptable, null, "El Registro Ya Existe!!"));
+            }
+
+            var usuario = this.repository.GetById(dto.UsuarioIdInt);
+            usuario.CuentaVerificadaBit = dto.CuentaVerificadaBit;
+   
+            if (!repository.Update(usuario, usuario.UsuarioIdInt))
+            {
+                return BadRequest(this.response.ResponseValues(StatusCodes.Status500InternalServerError, null, $"Algo salió mal al actualizar el registro: {usuario.NombreVar}"));
+            }
+
+
+            return Ok(
+                       response.ResponseValues(this.Response.StatusCode,
+                                               mapper.Map<UsuarioDto>(repository.GetById(usuario.UsuarioIdInt))
+                                             )
+                    );
+
+        }
+
+
+
+
+        /// <summary>
+        /// Eliminar usuario por Id
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns>StatusCode 200</returns>
+        [HttpDelete("Delete/{Id:int}")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status404NotFound)]
             [ProducesResponseType(StatusCodes.Status500InternalServerError)]

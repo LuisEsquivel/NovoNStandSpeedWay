@@ -64,8 +64,28 @@ namespace Web.Controllers
         }
 
 
+        //crete cookie for add value in browser
+        public void CreateCookie(string value)
+        {
 
-        
+            if (System.Web.HttpContext.Current.Request.Cookies[CockieName] != null)
+            {
+               if(System.Web.HttpContext.Current.Request.Cookies[CockieName].Value.ToString().Trim().Length > 0){
+                    var c = new HttpCookie(CockieName);
+                    c.Expires = DateTime.Now.AddDays(-1);
+                    System.Web.HttpContext.Current.Response.Cookies.Add(c); ;
+                }
+                
+            }
+
+
+            HttpCookie cookie = new HttpCookie(CockieName);
+            cookie.Value = value;
+            cookie.Expires = DateTime.Now.AddMonths(1);
+            cookie.HttpOnly = true;
+            System.Web.HttpContext.Current.Response.Cookies.Add(cookie);
+        }
+
 
         #region DROPDOWNS
 

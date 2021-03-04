@@ -114,13 +114,27 @@ $(document).ready(function () {
 
     if ($("#frmLogin").length > 0) {
         centrar("frmLogin");
+        document.getElementById("footer").classList.remove("fixed-bottom");
     }
 
     if ($("#frmRegister").length > 0) {
         centrar("frmRegister");
+        document.getElementById("footer").classList.remove("fixed-bottom");
+    }
+
+    if ($("#frmOlvideContraseña").length > 0) {
+        centrar("frmOlvideContraseña");
+        document.getElementById("footer").classList.remove("fixed-bottom");
     }
 
 
+
+    if ($("#frmVerificarCuenta").length > 0) {
+        centrar("frmVerificarCuenta");
+        document.getElementById("footer").classList.remove("fixed-bottom");
+    }
+
+    
 
     if ($("#ChkFiltros").length > 0) {
 
@@ -771,9 +785,13 @@ jQuery(document).ready(function () {
 
 var Login = async function () {
 
+    var container = document.getElementById("container");
+    container.innerHTML = spinner;
+
+
     var frm = document.getElementById("frmLogin");
 
-        frm.onsubmit = async (e) => {
+    frm.onsubmit = async (e) => {
 
         e.preventDefault();
 
@@ -784,17 +802,17 @@ var Login = async function () {
             body: new FormData(frm)
         });
 
-            let result = await response.json();
+        let result = await response.json();
 
-            if (result == 1) {
-                window.location.href = "/Home/Index";
-             } else {
-                swal("¡Usuario o Contraseña Incorrectos!", "Verifique", "warning");
-              }
-
+        if (result == 0) {
+            swal("¡Usuario o Contraseña Incorrectos!", "Verifique", "warning");
+        } else {
+            window.location.href = result;
+        }
 
     }
 
+    $("#container").empty();
 }
 
 
@@ -802,6 +820,10 @@ var Login = async function () {
 
 
 var Register = async function () {
+
+    var container = document.getElementById("container");
+    container.innerHTML = spinner;
+
 
     var frm = document.getElementById("frmRegister");
 
@@ -831,11 +853,16 @@ var Register = async function () {
 
     }
 
+    $("#container").empty();
+
 }
 
 
 
 var ValidarCuenta = async function () {
+
+    var container = document.getElementById("container");
+    container.innerHTML = spinner;
 
     var frm = document.getElementById("frmVerificarCuenta");
 
@@ -853,12 +880,100 @@ var ValidarCuenta = async function () {
         let result = await response.json();
 
         if (result == 1) {
-            window.location.href = "/Login/Index";
+
+            swal("Cuenta Verificada")
+                .then(() => {
+                    window.location.href = "/Home/Index";
+                });
+            s
         } else {
             swal("¡Revisa el código de verificación y vuelve a intentarlo!", "Verifique", "warning");
         }
 
     }
+
+    $("#container").empty();
+
+}
+
+
+
+
+
+var EnviarCodigoDeVerificacion = async function () {
+
+    var container = document.getElementById("container");
+    container.innerHTML = spinner;
+
+    var frm = document.getElementById("frmOlvideContraseña");
+
+    frm.onsubmit = async (e) => {
+
+        e.preventDefault();
+
+        let response = await fetch("/Registrarse/EnviarCodigoDeVerificacion", {
+            method: 'POST',
+            processData: false,
+            contentType: false,
+            body: new FormData(frm)
+        });
+
+        let result = await response.json();
+
+        if (result == 1) {
+            window.location.href = "/Registrarse/ActualizarContraseña";
+        } else {
+            swal(result, "Verifique", "warning");
+        }
+
+    }
+
+    $("#container").empty();
+
+}
+
+
+
+
+var UpdatePassword = async function () {
+
+    var container = document.getElementById("container");
+    container.innerHTML = spinner;
+
+    var frm = document.getElementById("frmUpdatePassord");
+
+    frm.onsubmit = async (e) => {
+
+        e.preventDefault();
+
+        let response = await fetch("/Registrarse/UpdatePassword", {
+            method: 'POST',
+            processData: false,
+            contentType: false,
+            body: new FormData(frm)
+        });
+
+        let result = await response.json();
+
+        if (result == 1) {
+
+            swal("Tu Contraseña Se Actualizó Con Exito")
+                .then(() => {
+                    window.location.href = "/Home/Index";
+                });
+          
+        } else if (result == 0) {
+            swal("Las Contraseñas No Coinciden", "Verifique", "warning");
+        } else if (result == -1) {
+            swal("Algo salió mal... Intentalo Más Tarde", "Verifique", "warning");
+        } else if (result == 2)
+        {
+            swal("El Código de verificación no es correcto", "Verifique", "warning");
+        }
+
+    }
+
+    $("#container").empty();
 
 }
 

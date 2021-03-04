@@ -116,7 +116,8 @@
 
                 HttpResponseMessage responseTask;
                 
-                if(Action == "Add"){  responseTask = Client.PostAsync(uri, data).Result;  } else { responseTask = Client.PutAsync(uri, data).Result; }
+
+                if (Action == "Add"){  responseTask = Client.PostAsync(uri, data).Result;  } else { responseTask = Client.PutAsync(uri, data).Result; }
              
 
                 if (responseTask.IsSuccessStatusCode)

@@ -16,6 +16,8 @@ namespace Api.Dtos.Usuarios
         public int UsuarioIdModInt { get; set; }
         public bool ActivoBit { get; set; }
         public string UsuarioVar { get; set; }
+        public bool? CuentaVerificadaBit { get; set; }
+        public string CodigoDeVerificacionVar { get; set; }
 
     }
 }

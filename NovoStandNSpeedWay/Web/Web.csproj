@@ -146,6 +146,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Generals.cs" />
     <Compile Include="Models\Activo.cs" />
     <Compile Include="Models\CentroCosto.cs" />
     <Compile Include="Models\EpcProductosRel.cs" />
@@ -404,6 +405,7 @@
     <Content Include="Views\Registrarse\Index.cshtml" />
     <Content Include="Views\Registrarse\VerificarCuenta.cshtml" />
     <Content Include="Views\Registrarse\OlvideContraseña.cshtml" />
+    <Content Include="Views\Registrarse\ActualizarContraseña.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

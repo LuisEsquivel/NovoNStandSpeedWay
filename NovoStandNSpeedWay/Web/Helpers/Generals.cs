@@ -1,16 +1,14 @@
 ﻿
 
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
-namespace ApiPlafonesWeb.Helpers
+namespace Web.Helpers
 {
-    public class Generals : ControllerBase
+    public class Generals
     {
 
 
@@ -19,7 +17,7 @@ namespace ApiPlafonesWeb.Helpers
         {
 
             MailMessage mail = new MailMessage();
-            SmtpClient SmtpServer = new SmtpClient();
+            SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
 
             try
             {
@@ -28,7 +26,7 @@ namespace ApiPlafonesWeb.Helpers
 
                 Body += @"<center><div style=""background-color:#F5F5F5;""><br/><img src=""https://novosys.com.mx/Img/NOVO_logosmall-1.png"" width=""320"" height=""150""></div></center>";
 
-                Body += @"<center>TU CÓDIGO DE VERIFICACION ES<center/>";
+                Body += @"<center>TU CÓDIGO DE VERIFICACIÓN ES<center/>";
 
                 Body += @"<br></br>";
 

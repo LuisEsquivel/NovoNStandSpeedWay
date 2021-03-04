@@ -17,5 +17,7 @@ namespace Api.Models
         public string UsuarioVar { get; set; }
         public byte[] PasswordEncryptByte { get; set; }
         public byte[] PasswordKeyByte { get; set; }
+        public bool? CuentaVerificadaBit { get; set; }
+        public string CodigoDeVerificacionVar { get; set; }
     }
 }

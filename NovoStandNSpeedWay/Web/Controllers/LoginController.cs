@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using Web.Controllers;
+using Web.Helpers;
 using Web.Models;
 using Web.Services;
 
@@ -19,12 +20,15 @@ namespace NovoLeadsWeb.Controllers
         public ApiServices apiServices;
         public HomeController hc;
         public Services services;
+        public Generals generals;
+
 
         public LoginController()
         {
             apiServices = new ApiServices();
             hc = new HomeController();
             services = new Services();
+            generals = new Generals();
         }
         // GET: Login
 
@@ -67,28 +71,43 @@ namespace NovoLeadsWeb.Controllers
             if (res != null)
             {
                 user = (Usuario)res;
-                var value = user.UsuarioIdInt.ToString();
-
+  
                 if (user.ActivoBit)
                 {
-                HttpCookie cookie = new HttpCookie(hc.CockieName);
-                cookie.Value = value;
-                cookie.Expires = DateTime.Now.AddMonths(1);
-                cookie.HttpOnly = true;
-                System.Web.HttpContext.Current.Response.Cookies.Add(cookie);
 
-                return Json(1);
+                    //account not verified
+                    if (user.CuentaVerificadaBit == false)
+                    {
+
+                        //send email code verification
+                        var random = new Random();
+                        user.CodigoDeVerificacionVar = random.Next(0, 999999).ToString();
+                        if (generals.SendEmailSMTP(user.UsuarioVar, user.CodigoDeVerificacionVar))
+                        {
+                            hc.CreateCookie(user.UsuarioVar);
+                            return Json("/Registrarse/VerificarCuenta");
+                        }
+                    }
+
+
+                    var value = user.UsuarioIdInt.ToString();
+                    hc.CreateCookie(value);
+                    return Json("/Home/Index");
+
                 }
 
-            }
-
-
-            return Json(0);
-        }
+                      
+             }
 
 
 
+                   return Json(0);
+
+           }
 
 
-    }
+          
+     }
+
+    
 }

@@ -995,3 +995,67 @@ function llenarCombo(data, control, primerElemento) {
 
     control.innerHTML = contenido;
 }
+
+
+
+//Google Signing
+async function GoogleSignIn(googleUser) {
+
+
+    if (Register == false) { return; }
+
+    var profile = await googleUser.getBasicProfile();
+
+    return SignInGoogle(profile);
+
+    Register = false;
+
+}
+
+
+async function SignInGoogle(profile) {
+
+
+    var parameters = {
+        "NombreVar": await profile.getName(),
+        "UsuarioVar": await profile.getEmail(),
+        "Password": "GoogleAccount",
+        "GoogleAccount": true
+    }
+
+
+  
+    $.ajax({
+        method: "POST",
+        url: "/Registrarse/Add",
+        data: parameters, /*parámetros enviados al controlador*/
+        dataType: "json",
+
+        success: await function (result) {
+
+            if (result == 1) {
+                swal("Bienvenido " + profile.getName() + " :)")
+                    .then(() => {
+                        window.location.href = "/Home/Index";
+                    });
+
+            } else {
+                swal("Algo salió mal al Iniciar Sesión", "", "warning");
+
+            }
+
+        },
+        error: await function () {
+            swal("Algo salió mal al Iniciar Sesión", "", "warning");
+        }
+    });
+
+
+}
+
+
+
+var Register = false;
+function Registrar() {
+    Register = true;
+}

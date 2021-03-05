@@ -122,10 +122,46 @@ namespace NovoLeadsWeb.Controllers
 
 
 
-        public JsonResult Add(Usuario o, string IsActive)
+        public JsonResult Add(Usuario o, string IsActive, bool GoogleAccount)
         {
             o.ActivoBit = IsActive != null ? Convert.ToBoolean(IsActive) : false;
             Usuario result = null;
+
+          
+            // es cuenta de google
+            if (GoogleAccount)
+            {
+
+                result = services.Get<Usuario>("usuarios").Where(x => x.UsuarioVar == o.UsuarioVar).FirstOrDefault();
+                
+                if(result == null)
+                {
+
+                    o.ActivoBit = true;
+                    
+                    //agregamos el email a la BD
+                    result = apiServices.Save<Usuario>(CoreResources.UrlBase, CoreResources.Prefix, CoreResources.UsuariosController, "Add", o);
+
+
+                    //validamos la cuenta
+                    o.UsuarioIdInt = result.UsuarioIdInt;
+                    o.CuentaVerificadaBit = true;
+                    result = apiServices.Save<Usuario>(CoreResources.UrlBase, CoreResources.Prefix, CoreResources.UsuariosController, "ValidateAccount", o);
+
+                }
+
+
+                if (result != null)
+                {
+                    hc.CreateCookie(result.UsuarioIdInt.ToString());
+                    return Json(1);
+                }
+               
+
+                return Json(0);
+            }
+
+
 
             try
             {

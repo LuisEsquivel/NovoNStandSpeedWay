@@ -7,11 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api\Api.csproj", "{D775F42B-7ED0-4B10-8E5A-7AC7869640CC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataBase", "DataBase", "{1569ADA5-6D8A-4624-93B1-850A72DFBA8F}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\..\..\..\DATABASES\BACKUPS\NovoNStandSpeedWay.bak = ..\..\..\..\..\DATABASES\BACKUPS\NovoNStandSpeedWay.bak
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

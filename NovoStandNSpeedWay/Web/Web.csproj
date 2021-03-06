@@ -394,6 +394,7 @@
     <Content Include="Scripts\FormaAdquisicion.js" />
     <Content Include="Scripts\Ubicaciones.js" />
     <Content Include="Scripts\Roles.js" />
+    <Content Include="Scripts\MiPerfil.js" />
     <Content Include="Scripts\Usuario.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -421,6 +422,7 @@
     <Content Include="Views\Registrarse\VerificarCuenta.cshtml" />
     <Content Include="Views\Registrarse\OlvideContraseña.cshtml" />
     <Content Include="Views\Registrarse\ActualizarContraseña.cshtml" />
+    <Content Include="Views\Usuarios\MiPerfil.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

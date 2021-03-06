@@ -97,70 +97,62 @@
 
 
 
-                            <li class="nav-item dropdown">
+                        <li class="nav-item dropdown">
 
-                                @if (url != "/Home/Index"        &&
-                                     url != "/Activos/Index"     &&
-                                     url != "/Registrarse/Index" &&
-                                     url != "/Login/Index"       &&
-                                     url != "/"                   
-                                    )
+                            @if (url != "/Home/Index" &&
+                                 url != "/Activos/Index" &&
+                                 url != "/Registrarse/Index" &&
+                                 url != "/Login/Index" &&
+                                 url != "/"
+                                )
+                            {
+                                <a class="nav-link dropdown-toggle activar" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Catálogos
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Catálogos
+                                </a>
+                            }
+
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+
+                            @using Web.Models;
+                            @using Newtonsoft.Json;
+                            @{
+                                var hc = new HomeController();
+                                var user = new List<Usuario>();
+
+                                if (System.Web.HttpContext.Current.Request[hc.CockieName] != null)
                                 {
-                                    <a class="nav-link dropdown-toggle activar" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Catálogos
-                                    </a>
-                                }
-                                else
-                                {
-                                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Catálogos
-                                    </a>
-                                }
 
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    UsuariosController u = new UsuariosController();
+                                    var result = u.Get();
 
-
-                                @using Web.Models;
-                                @using Newtonsoft.Json;
-                                @{
-                                    var hc = new HomeController();
-
-
-                                    List<Usuario> user = null;
-
-                                    if (System.Web.HttpContext.Current.Request[hc.CockieName] != null)
+                                    if (result != null)
                                     {
-
-                                        UsuariosController u = new UsuariosController();
-                                        var result = u.Get();
-
-                                        if (result != null)
-                                        {
-                                            var json = JsonConvert.SerializeObject(result);
-                                            user = JsonConvert.DeserializeObject<List<Usuario>>(json.ToString());
-                                            string userID = null;
-                                            userID = System.Web.HttpContext.Current.Request.Cookies[hc.CockieName].Value.ToString();
-                                            user = user.Where(x => x.UsuarioIdInt.ToString() == userID).ToList();
-                                        }
-
+                                        var userID = System.Web.HttpContext.Current.Request.Cookies[hc.CockieName].Value.ToString();
+                                        user = u.DeserializarLista<Usuario>().Where(x => x.UsuarioIdInt.ToString() == userID).ToList();
                                     }
 
+                                }
 
 
-                                    if (user != null && user.Count > 0 && user.FirstOrDefault().EsAdminBit == true)
+
+                                if (user != null && user.Count > 0 && user.FirstOrDefault().EsAdminBit == true)
+                                {
+
+                                    if (url == "/Roles/index")
                                     {
-
-                                        if (url == "/Roles/index")
-                                        {
-                                            <a class="dropdown-item activar" href="/Roles/index">Roles</a>
-                                        }
-                                        else
-                                        {
-                                            <a class="dropdown-item" href="/Roles/index">Roles</a>
-                                        }
-
+                                        <a class="dropdown-item activar" href="/Roles/index">Roles</a>
                                     }
-
+                                    else
+                                    {
+                                        <a class="dropdown-item" href="/Roles/index">Roles</a>
+                                    }
 
 
                                     if (url == "/Usuarios/Index")
@@ -172,56 +164,68 @@
                                         <a class="dropdown-item" href="/Usuarios/Index">Usuarios</a>
                                     }
 
-
-                                    if (url == "/Lectores/Index")
-                                    {
-                                        <a class="dropdown-item activar" href="/Lectores/Index">Lectores</a>
-                                    }
-                                    else
-                                    {
-                                        <a class="dropdown-item" href="/Lectores/Index">Lectores</a>
-                                    }
-
-
-                                    if (url == "/FormaAdquisicion/Index")
-                                    {
-                                        <a class="dropdown-item activar" href="/FormaAdquisicion/Index">Forma Adquisicion</a>
-                                    }
-                                    else
-                                    {
-                                        <a class="dropdown-item" href="/FormaAdquisicion/Index">Forma Adquisicion</a>
-                                    }
-
-
-
-                                    if (url == "/CentroDeCostos/Index")
-                                    {
-                                        <a class="dropdown-item activar" href="/CentroDeCostos/Index">Centro de Costos</a>
-                                    }
-                                    else
-                                    {
-                                        <a class="dropdown-item" href="/CentroDeCostos/Index">Centro de Costos</a>
-                                    }
-
-                                    if (url == "/Ubicaciones/Index")
-                                    {
-                                        <a class="dropdown-item activar" href="/Ubicaciones/Index">Ubicaciones</a>
-                                    }
-                                    else
-                                    {
-                                        <a class="dropdown-item" href="/Ubicaciones/Index">Ubicaciones</a>
-                                    }
-
                                 }
 
 
-                            </div>
+
+
+
+
+                                if (url == "/Lectores/Index")
+                                {
+                                    <a class="dropdown-item activar" href="/Lectores/Index">Lectores</a>
+                                }
+                                else
+                                {
+                                    <a class="dropdown-item" href="/Lectores/Index">Lectores</a>
+                                }
+
+
+                                if (url == "/FormaAdquisicion/Index")
+                                {
+                                    <a class="dropdown-item activar" href="/FormaAdquisicion/Index">Forma Adquisicion</a>
+                                }
+                                else
+                                {
+                                    <a class="dropdown-item" href="/FormaAdquisicion/Index">Forma Adquisicion</a>
+                                }
+
+
+
+                                if (url == "/CentroDeCostos/Index")
+                                {
+                                    <a class="dropdown-item activar" href="/CentroDeCostos/Index">Centro de Costos</a>
+                                }
+                                else
+                                {
+                                    <a class="dropdown-item" href="/CentroDeCostos/Index">Centro de Costos</a>
+                                }
+
+                                if (url == "/Ubicaciones/Index")
+                                {
+                                    <a class="dropdown-item activar" href="/Ubicaciones/Index">Ubicaciones</a>
+                                }
+                                else
+                                {
+                                    <a class="dropdown-item" href="/Ubicaciones/Index">Ubicaciones</a>
+                                }
+
+                            }
+
+
+                        </div>
+                        </li>
+
+
+
+                        if (System.Web.HttpContext.Current.Request[hc.CockieName] != null)
+                        {
+
+                             <li>
+                                <a class="nav-item nav-link text-white" href="/Usuarios/MiPerfil" > Mi Perfil </a>
                             </li>
 
 
-                       
-                        if (System.Web.HttpContext.Current.Request[hc.CockieName] != null)
-                        {
                             <li>
                                 <a class="nav-item nav-link text-white" href="/Login/Logout"> Salir </a>
                             </li>

@@ -1,4 +1,5 @@
 ﻿
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,34 @@ namespace Web.Controllers
             return View();
         }
 
+        public ActionResult MiPerfil()
+        {
+            return View();
+        }
+
+
+        public JsonResult ListaMiPerfil()
+        {
+            var MyUser = DeserializarLista<Usuario>().Where(x => x.UsuarioIdInt.ToString() == System.Web.HttpContext.Current.Request.Cookies[hc.CockieName].Value.ToString()).ToList();
+            return Json(MyUser, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public List<T> DeserializarLista<T>()
+        {
+
+            List<T> lista = null;
+
+            var result = Get();
+            var json = JsonConvert.SerializeObject(result);
+            lista = JsonConvert.DeserializeObject<List<T>>(json.ToString());
+
+            return lista;
+
+        }
+
+  
+
 
         public object Get()
         {
@@ -48,6 +77,7 @@ namespace Web.Controllers
                      {
                          u.UsuarioIdInt,
                          u.NombreVar,
+                         u.UsuarioVar,
                          DescripcionVar = us?.DescripcionVar ?? "--SELECCIONE--",
                          IsActiveBit = u.ActivoBit != false ? "SI" : "NO",
                          FechaAlta = Convert.ToDateTime(u.FechaAltaDate).ToShortDateString(),
@@ -89,6 +119,7 @@ namespace Web.Controllers
                         {
                             u.UsuarioIdInt,
                             u.NombreVar,
+                            u.UsuarioVar,
                             DescripcionVar =  us?.DescripcionVar ?? "--SELECCIONE--" ,
                             IsActiveBit = u.ActivoBit != false ? "SI" : "NO",
                             FechaAlta = Convert.ToDateTime(u.FechaAltaDate).ToShortDateString()

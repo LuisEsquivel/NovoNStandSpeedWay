@@ -122,7 +122,7 @@ namespace NovoLeadsWeb.Controllers
 
 
 
-        public JsonResult Add(Usuario o, string IsActive, bool GoogleAccount)
+        public JsonResult Add(Usuario o, string IsActive = "true", bool GoogleAccount = false)
         {
             o.ActivoBit = IsActive != null ? Convert.ToBoolean(IsActive) : false;
             Usuario result = null;

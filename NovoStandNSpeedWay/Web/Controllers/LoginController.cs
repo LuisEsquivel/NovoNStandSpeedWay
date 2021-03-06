@@ -95,7 +95,7 @@ namespace NovoLeadsWeb.Controllers
 
                     var value = user.UsuarioIdInt.ToString();
                     hc.CreateCookie(value);
-                    return Json("/Home/Index");
+                    return Json(user.NombreVar);
 
                 }
 

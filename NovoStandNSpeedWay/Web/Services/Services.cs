@@ -18,7 +18,7 @@ namespace Web.Services
 
 
 
-        public List<T> Get<T>(string entity, string MetaTagProducto = "")
+        public  List<T> Get<T>(string entity, string MetaTagProducto = "")
         {
             List<T> objeto = null;
 
@@ -49,8 +49,6 @@ namespace Web.Services
 
                         objeto = null;
 
-
-                        ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
                     }
                 }
 

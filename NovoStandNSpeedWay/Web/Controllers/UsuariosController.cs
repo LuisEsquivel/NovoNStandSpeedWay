@@ -41,15 +41,18 @@ namespace Web.Controllers
                 var roles = services.Get<Role>("roles");
 
                 o = (from u in usuarios
-                        join r in roles on u.RolIdInt equals r.RolIdInt
-                        select new
-                        {
-                            u.UsuarioIdInt,
-                            u.NombreVar,
-                            r.DescripcionVar,
-                            IsActiveBit = u.ActivoBit != false ? "SI" : "NO",
-                            FechaAlta = Convert.ToDateTime(u.FechaAltaDate).ToShortDateString()
-                        }).ToList();
+                     join r in roles on u.RolIdInt equals r.RolIdInt
+                     into usu
+                     from us in usu.DefaultIfEmpty()
+                     select new
+                     {
+                         u.UsuarioIdInt,
+                         u.NombreVar,
+                         DescripcionVar = us?.DescripcionVar ?? "--SELECCIONE--",
+                         IsActiveBit = u.ActivoBit != false ? "SI" : "NO",
+                         FechaAlta = Convert.ToDateTime(u.FechaAltaDate).ToShortDateString(),
+                         u.EsAdminBit
+                     }).ToList();
             }
             catch (Exception)
             {
@@ -66,7 +69,16 @@ namespace Web.Controllers
 
             try
             {
+
+                var user = services.Get<Usuario>("usuarios").Where(x => x.UsuarioIdInt.ToString() == System.Web.HttpContext.Current.Request.Cookies[hc.CockieName].Value.ToString());
+
                 var usuarios = services.Get<Usuario>("usuarios");
+
+                if (user.FirstOrDefault().EsAdminBit == false)
+                {
+                    usuarios = usuarios.Where(x => x.UsuarioIdInt == user.FirstOrDefault().UsuarioIdInt).ToList();
+                }
+
                 var roles = services.Get<Role>("roles");
 
                 list = (from u in usuarios
@@ -81,7 +93,9 @@ namespace Web.Controllers
                             IsActiveBit = u.ActivoBit != false ? "SI" : "NO",
                             FechaAlta = Convert.ToDateTime(u.FechaAltaDate).ToShortDateString()
                         }).ToList();
+
             }
+
             catch (Exception)
             {
                 return null;

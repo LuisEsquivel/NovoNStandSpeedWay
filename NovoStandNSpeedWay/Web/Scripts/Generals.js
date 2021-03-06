@@ -85,7 +85,6 @@ function centrar(id) {
     var centrar = window.innerHeight - height;
     objeto.style.paddingTop = 0;
     objeto.style.cssText = "padding-top:" + (centrar - (centrar -1)) + "px !important";
-    objeto.innerHTML += "<br/> <br/> <br/>";
 }
 
 
@@ -274,7 +273,7 @@ jQuery(document).ready(function () {
 
 
 
-var add = async function (urlAdd, form, arrayColumnas) {
+var add = async function (urlAdd, form, arrayColumnas, BtnAddUser = false) {
 
 
     form.onsubmit = async (e) => {
@@ -313,7 +312,7 @@ var add = async function (urlAdd, form, arrayColumnas) {
                 swal(InformaciónAlmacenada, "", "success");
                 LimpiarFormulario();
                 CerrarFormulario();
-                Table(arrayColumnas, result.message);
+                Table(arrayColumnas, result.message, true, BtnAddUser);
             }
         });
 
@@ -324,7 +323,7 @@ var add = async function (urlAdd, form, arrayColumnas) {
 }
 
 
-var list = function (url, arrayColumnas, id = 0, ClasificacionID = 0, columnaAcciones = true) {
+var list = function (url, arrayColumnas, id = 0, ClasificacionID = 0, columnaAcciones = true, BtnAddUser = true) {
 
     var container = document.getElementById("container");
     container.innerHTML = spinner;
@@ -350,7 +349,7 @@ var list = function (url, arrayColumnas, id = 0, ClasificacionID = 0, columnaAcc
                 $("#container").empty();
                 container.innerHTML = sinInfo;
             } else {
-                Table(arrayColumnas, data, columnaAcciones);    
+                Table(arrayColumnas, data, columnaAcciones, BtnAddUser);    
             }
 
 
@@ -369,7 +368,7 @@ var list = function (url, arrayColumnas, id = 0, ClasificacionID = 0, columnaAcc
 
 
 
-function Table(arrayColumnas, data, columnaAcciones = true) {
+function Table(arrayColumnas, data, columnaAcciones = true, BtnAddUser = true) {
 
     var container = document.getElementById("container");;
     container.classList.add("container");
@@ -378,7 +377,10 @@ function Table(arrayColumnas, data, columnaAcciones = true) {
     var keys = Object.keys(data[0]);
 
     contenido += "<div class='justify-content-start mb-5  form-inline'>";
-    contenido += "<button type='button' value='NUEVO' class='btn btn-success' onclick='AbrirFormulario(1);'> <i class='fa fa-user-plus'> NUEVO</i></button>";
+
+    if (BtnAddUser) {
+     contenido += "<button type='button' value='NUEVO' class='btn btn-success' onclick='AbrirFormulario(1);'> <i class='fa fa-user-plus'> NUEVO</i></button>";
+    }
 
     if (keys.includes("CapacitacionID")) {
         contenido += "<input type='button' value='REGRESAR' class='btn btn-secondary ml-2' onclick='ShowClassification();'/>";
@@ -794,6 +796,7 @@ var Login = async function () {
     frm.onsubmit = async (e) => {
 
         e.preventDefault();
+      
 
         let response = await fetch("/Login/Access", {
             method: 'POST',
@@ -807,7 +810,20 @@ var Login = async function () {
         if (result == 0) {
             swal("¡Usuario o Contraseña Incorrectos!", "Verifique", "warning");
         } else {
-            window.location.href = result;
+
+       
+            if (result == "/Registrarse/VerificarCuenta") {
+                window.location.href = result;
+            } else {
+
+                swal("Bienvenido " + result + " :)")
+                    .then(() => {
+                        window.location.href = "/Home/Index";
+                        return;
+                    });
+            }
+
+          
         }
 
     }
@@ -1002,13 +1018,13 @@ function llenarCombo(data, control, primerElemento) {
 async function GoogleSignIn(googleUser) {
 
 
-    if (Register == false) { return; }
+    if (Registers == false) { return; }
 
     var profile = await googleUser.getBasicProfile();
 
     return SignInGoogle(profile);
 
-    Register = false;
+    Registers = false;
 
 }
 
@@ -1055,7 +1071,7 @@ async function SignInGoogle(profile) {
 
 
 
-var Register = false;
+var Registers = false;
 function Registrar() {
-    Register = true;
+    Registers = true;
 }

@@ -1,7 +1,7 @@
 ﻿
 //navegadores modernos
 document.addEventListener("DOMContentLoaded", function (event) {
-    window.list("/Usuarios/Listar", ["Id", "Nombre", "Rol", "Activo", "Fecha Alta"], 0, null);
+    window.list("/Usuarios/Listar", ["Id", "Nombre", "Rol", "Activo", "Fecha Alta"], 0, 0, true, false);
     $.get("/Usuarios/listarRoles", function (data) {
         window.llenarCombo(data, document.getElementById("RolIdInt"), true)
     });
@@ -20,14 +20,14 @@ function ReturnData(url) {
 
 
 function GetTraining(id) {
-    window.list("/Usuarios/List", ["Id", "Nombre", "Rol", "Activo", "Fecha Alta"], 0, null);
+    window.list("/Usuarios/List", ["Id", "Nombre", "Rol", "Activo", "Fecha Alta"], 0, 0, true, true);
 }
 
 
 
 function Add() {
     var form = document.getElementById("form");
-    window.add("/Usuarios/Add", form, ["Id", "Nombre", "Rol", "Activo", "Fecha Alta"])
+    window.add("/Usuarios/Add", form, ["Id", "Nombre", "Rol", "Activo", "Fecha Alta"], false)
 }
 
 

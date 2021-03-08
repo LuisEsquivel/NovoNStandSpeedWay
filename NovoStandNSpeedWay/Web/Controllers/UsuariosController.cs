@@ -247,6 +247,7 @@ namespace Web.Controllers
                         var u = services.Get<UsuarioAddOrUpdate>("usuarios").Where(x => x.UsuarioIdInt == o.UsuarioIdInt).FirstOrDefault();
                         u.RolIdInt = o.RolIdInt;
                         u.UsuarioIdModInt = UserId();
+                        o.UsuarioVar = u.UsuarioVar;
                         result = apiServices.Save<UsuarioAddOrUpdate>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.UsuariosController, "Update", u);
                     }
 
@@ -256,6 +257,7 @@ namespace Web.Controllers
                         var u = services.Get<UsuarioAddOrUpdate>("usuarios").Where(x => x.UsuarioIdInt == o.UsuarioIdInt).FirstOrDefault();
                         o.RolIdInt = u.RolIdInt;
                         o.UsuarioIdModInt = UserId();
+                        o.UsuarioVar = u.UsuarioVar;
                         result = apiServices.Save<UsuarioAddOrUpdate>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.UsuariosController, "Update", o);
                     }
 

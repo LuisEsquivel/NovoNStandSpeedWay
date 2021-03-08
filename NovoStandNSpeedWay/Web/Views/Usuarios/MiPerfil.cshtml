@@ -51,21 +51,35 @@
                         <input class="form-control" id="UsuarioIdInt" name="UsuarioIdInt" placeholder="Id" readonly />
                     </div>
 
-                    <div class="col-sm-12 text-center" id="DivIsActive">
-                        <input hidden type="text" id="IsActive" name="IsActive" value="true" />
-                        <label for="ActivoBit">
-                            <input type="checkbox" id="ActivoBit" name="ActivoBit" />
-                            <span>Activo</span>
-                        </label>
-                    </div>
+                    @using Web.Controllers;
+                    @{
+                        var u = new UsuariosController();
+                        if (u.IsAdmin())
+                        {
 
-                    <div class="col-sm-12 text-center">
+                            <div class="col-sm-12 text-center" id="DivIsActive">
+                                <label for="ActivoBit">
+                                    <input type="checkbox" id="ActivoBit" name="ActivoBit" />
+                                    <span>Activo</span>
+                                </label>
+                            </div>
+
+
+
+                            <div class="col-sm-12 text-center">
+                                <label for="EsAdminBit">
+                                    <input type="checkbox" id="EsAdminBit" name="EsAdminBit" />
+                                    <span>Admin</span>
+                                </label>
+                            </div>
+                        }
+
+
+                        <input hidden type="text" id="IsActive" name="IsActive" value="true" />
                         <input hidden type="text" id="EsAdmin" name="EsAdmin" value="false" />
-                        <label for="EsAdminBit">
-                            <input type="checkbox" id="EsAdminBit" name="EsAdminBit" />
-                            <span>Admin</span>
-                        </label>
-                    </div>
+
+                    }
+
 
 
                     <div class="form-row">
@@ -82,19 +96,22 @@
                         </div>
                     </div>
 
-                    <div class="form-row">
-                        <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 mt-3">
-                            <label>Contraseña</label>
-                            <input type="password" class="form-control" id="Password" name="Password" placeholder="Contraseña" required maxlength="50" />
-                        </div>
-                    </div>
+ 
 
-                    <div class="form-row">
-                        <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 mt-3">
-                            <label>Rol</label>
-                            <select class="form-control" id="RolIdInt" name="RolIdInt"></select>
-                        </div>
-                    </div>
+                    @{
+                        if (u.IsAdmin())
+                        {
+                            <div class="form-row">
+                                <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 mt-3">
+                                    <label>Rol</label>
+                                    <select class="form-control" id="RolIdInt" name="RolIdInt" required></select>
+                                </div>
+                            </div>
+                        }
+
+
+                    }
+
 
 
                 </div>

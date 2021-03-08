@@ -3,7 +3,7 @@
 
 namespace Web.Models
 {
-    public partial class Usuario
+    public partial class UsuarioAddOrUpdate
     {
         public int UsuarioIdInt { get; set; }
         public string NombreVar { get; set; }
@@ -21,10 +21,5 @@ namespace Web.Models
         public bool? CuentaVerificadaBit { get; set; }
         public string CodigoDeVerificacionVar { get; set; }
 
-        public string DescripcionVar { get; set; }
-
-        public string FechaAlta { get; set; }
-
-        public string IsActiveBit { get; set; }
     }
 }

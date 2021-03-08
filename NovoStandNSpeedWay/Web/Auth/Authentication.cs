@@ -13,11 +13,13 @@ namespace Web.Auth
     {
 
         public HomeController hc;
+        public UsuariosController u;
         public Services.Services services;
         public Authentication()
         {
             hc = new HomeController();
             services = new Services.Services();
+            u = new UsuariosController();
         }
 
         public override void OnAuthorization(AuthorizationContext filterContext)
@@ -30,7 +32,7 @@ namespace Web.Auth
             else
             {
            
-                var UsuarioIdInt = System.Web.HttpContext.Current.Request.Cookies.Get(hc.CockieName).Value.ToString();
+                var UsuarioIdInt = u.CookieValue(hc.CockieName);
 
                 var usuario = services.Get<Usuario>("usuarios").Where(x => x.UsuarioIdInt.ToString() == UsuarioIdInt).FirstOrDefault();
 

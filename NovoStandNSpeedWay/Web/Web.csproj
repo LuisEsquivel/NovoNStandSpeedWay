@@ -170,6 +170,7 @@
     <Compile Include="Models\Lectore.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Ubicacione.cs" />
+    <Compile Include="Models\UsuarioAddOrUpdate.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ApiServices.cs" />

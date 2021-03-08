@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Web.Auth;
@@ -76,15 +77,16 @@ namespace Web.Controllers
                     System.Web.HttpContext.Current.Response.Cookies.Add(c); ;
                 }
                 
-            }
+        }
 
 
             HttpCookie cookie = new HttpCookie(CockieName);
-            cookie.Value = value;
+            cookie.Value =    value;
             cookie.Expires = DateTime.Now.AddMonths(1);
             cookie.HttpOnly = true;
             System.Web.HttpContext.Current.Response.Cookies.Add(cookie);
         }
+
 
 
         #region DROPDOWNS

@@ -1000,7 +1000,7 @@ function llenarCombo(data, control, primerElemento) {
     var contenido = "";
 
     if (primerElemento == true) {
-        contenido += "<option value=''>---SELECCIONE---</option>"
+        contenido += "<option value='' selected>---SELECCIONE---</option>"
     }
 
     for (var i = 0; i < data.length; i++) {

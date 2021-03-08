@@ -1,7 +1,7 @@
 ﻿
 //navegadores modernos
 document.addEventListener("DOMContentLoaded", function (event) {
-    window.list("/Usuarios/Listar", ["Id", "Nombre", "Cuenta", "Rol", "Activo", "Fecha Alta"], 0, 0, false, false);
+    window.list("/Usuarios/Listar", ["Id", "Nombre", "Cuenta", "Rol", "Activo", "Fecha Alta"], 0, 0, true, false);
     $.get("/Usuarios/listarRoles", function (data) {
         window.llenarCombo(data, document.getElementById("RolIdInt"), true)
     });

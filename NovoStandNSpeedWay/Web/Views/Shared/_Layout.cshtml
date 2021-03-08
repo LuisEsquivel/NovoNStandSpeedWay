@@ -103,6 +103,7 @@
                                  url != "/Activos/Index" &&
                                  url != "/Registrarse/Index" &&
                                  url != "/Login/Index" &&
+                                 url != "/Usuarios/MiPerfil" &&
                                  url != "/"
                                 )
                             {
@@ -117,113 +118,105 @@
                                 </a>
                             }
 
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
 
-                            @using Web.Models;
-                            @using Newtonsoft.Json;
-                            @{
-                                var hc = new HomeController();
-                                var user = new List<Usuario>();
 
-                                if (System.Web.HttpContext.Current.Request[hc.CockieName] != null)
-                                {
+                                @{
 
-                                    UsuariosController u = new UsuariosController();
-                                    var result = u.Get();
-
-                                    if (result != null)
+                                    var hc = new HomeController();
+                                    var u = new UsuariosController();
+                                    if (u.IsAdmin())
                                     {
-                                        var userID = System.Web.HttpContext.Current.Request.Cookies[hc.CockieName].Value.ToString();
-                                        user = u.DeserializarLista<Usuario>().Where(x => x.UsuarioIdInt.ToString() == userID).ToList();
+
+                                        if (url == "/Roles/index")
+                                        {
+                                            <a class="dropdown-item activar" href="/Roles/index">Roles</a>
+                                        }
+                                        else
+                                        {
+                                            <a class="dropdown-item" href="/Roles/index">Roles</a>
+                                        }
+
+
+                                        if (url == "/Usuarios/Index")
+                                        {
+                                            <a class="dropdown-item activar" href="/Usuarios/Index">Usuarios</a>
+                                        }
+                                        else
+                                        {
+                                            <a class="dropdown-item" href="/Usuarios/Index">Usuarios</a>
+                                        }
+
                                     }
 
-                                }
 
 
 
-                                if (user != null && user.Count > 0 && user.FirstOrDefault().EsAdminBit == true)
-                                {
 
-                                    if (url == "/Roles/index")
+
+                                    if (url == "/Lectores/Index")
                                     {
-                                        <a class="dropdown-item activar" href="/Roles/index">Roles</a>
+                                        <a class="dropdown-item activar" href="/Lectores/Index">Lectores</a>
                                     }
                                     else
                                     {
-                                        <a class="dropdown-item" href="/Roles/index">Roles</a>
+                                        <a class="dropdown-item" href="/Lectores/Index">Lectores</a>
                                     }
 
 
-                                    if (url == "/Usuarios/Index")
+                                    if (url == "/FormaAdquisicion/Index")
                                     {
-                                        <a class="dropdown-item activar" href="/Usuarios/Index">Usuarios</a>
+                                        <a class="dropdown-item activar" href="/FormaAdquisicion/Index">Forma Adquisicion</a>
                                     }
                                     else
                                     {
-                                        <a class="dropdown-item" href="/Usuarios/Index">Usuarios</a>
+                                        <a class="dropdown-item" href="/FormaAdquisicion/Index">Forma Adquisicion</a>
+                                    }
+
+
+
+                                    if (url == "/CentroDeCostos/Index")
+                                    {
+                                        <a class="dropdown-item activar" href="/CentroDeCostos/Index">Centro de Costos</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="dropdown-item" href="/CentroDeCostos/Index">Centro de Costos</a>
+                                    }
+
+                                    if (url == "/Ubicaciones/Index")
+                                    {
+                                        <a class="dropdown-item activar" href="/Ubicaciones/Index">Ubicaciones</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="dropdown-item" href="/Ubicaciones/Index">Ubicaciones</a>
                                     }
 
                                 }
 
 
-
-
-
-
-                                if (url == "/Lectores/Index")
-                                {
-                                    <a class="dropdown-item activar" href="/Lectores/Index">Lectores</a>
-                                }
-                                else
-                                {
-                                    <a class="dropdown-item" href="/Lectores/Index">Lectores</a>
-                                }
-
-
-                                if (url == "/FormaAdquisicion/Index")
-                                {
-                                    <a class="dropdown-item activar" href="/FormaAdquisicion/Index">Forma Adquisicion</a>
-                                }
-                                else
-                                {
-                                    <a class="dropdown-item" href="/FormaAdquisicion/Index">Forma Adquisicion</a>
-                                }
-
-
-
-                                if (url == "/CentroDeCostos/Index")
-                                {
-                                    <a class="dropdown-item activar" href="/CentroDeCostos/Index">Centro de Costos</a>
-                                }
-                                else
-                                {
-                                    <a class="dropdown-item" href="/CentroDeCostos/Index">Centro de Costos</a>
-                                }
-
-                                if (url == "/Ubicaciones/Index")
-                                {
-                                    <a class="dropdown-item activar" href="/Ubicaciones/Index">Ubicaciones</a>
-                                }
-                                else
-                                {
-                                    <a class="dropdown-item" href="/Ubicaciones/Index">Ubicaciones</a>
-                                }
-
-                            }
-
-
-                        </div>
+                            </div>
                         </li>
 
 
 
-                        if (System.Web.HttpContext.Current.Request[hc.CockieName] != null)
+                        if (u.CookieValue(hc.CockieName) != null)
                         {
 
-                             <li>
-                                <a class="nav-item nav-link text-white" href="/Usuarios/MiPerfil" > Mi Perfil </a>
-                            </li>
+                            if (url == "/Usuarios/MiPerfil")
+                            {
+                                <li>
+                                    <a class="nav-item nav-link activar" href="/Usuarios/MiPerfil"> Mi Perfil </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a class="nav-item nav-link text-white" href="/Usuarios/MiPerfil"> Mi Perfil </a>
+                                </li>
+                            }
 
 
                             <li>
@@ -253,7 +246,7 @@
 
                 @{
 
-                    if (System.Web.HttpContext.Current.Request[hc.CockieName] == null)
+                    if (u.CookieValue(hc.CockieName) == null)
                     {
 
                         <ul class="list-unstyled list-inline text-center py-2">

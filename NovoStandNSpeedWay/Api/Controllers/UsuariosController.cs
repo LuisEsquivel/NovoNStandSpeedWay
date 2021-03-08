@@ -185,10 +185,8 @@ namespace Api.Controllers
                 usuario.FechaModDate = DateTime.Now;
                 usuario.FechaAltaDate = update.FechaAltaDate;
                 usuario.UsuarioIdInt = update.UsuarioIdInt;
-                byte[] passwordEncrypt, passwordKey;
-                EncryptPassword(dto.Password, out passwordEncrypt, out passwordKey);
-                usuario.PasswordEncryptByte  = passwordEncrypt;
-                usuario.PasswordKeyByte = passwordKey;
+                usuario.PasswordEncryptByte  = update.PasswordEncryptByte;
+                usuario.PasswordKeyByte = usuario.PasswordKeyByte;
 
             if (!repository.Update(usuario , usuario.UsuarioIdInt))
                 {

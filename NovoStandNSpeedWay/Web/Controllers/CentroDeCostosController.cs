@@ -15,14 +15,14 @@ namespace Web.Controllers
     {
         public ApiServices apiServices;
         public Services.Services services;
-        public HomeController hc;
+        public UsuariosController u;
      
 
         public CentroDeCostosController()
         {
             apiServices = new ApiServices();
             services = new Services.Services();
-            hc = new HomeController();
+            u = new UsuariosController();
         }
 
         // GET: CentroCosto
@@ -140,7 +140,7 @@ namespace Web.Controllers
 
                     }
 
-                    o.UsuarioIdInt = hc.UserId();
+                    o.UsuarioIdInt = u.UserId();
 
                     // ADD
                     result = apiServices.Save<CentroCosto>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.CentroDeCostosController, "Add", o);
@@ -168,7 +168,7 @@ namespace Web.Controllers
 
                     }
 
-                    o.UsuarioIdModInt = hc.UserId();
+                    o.UsuarioIdModInt = u.UserId();
                     result = apiServices.Save<CentroCosto>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.CentroDeCostosController, "Update", o);
 
 

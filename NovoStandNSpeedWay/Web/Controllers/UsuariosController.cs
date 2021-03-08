@@ -41,7 +41,7 @@ namespace Web.Controllers
         public JsonResult ListaMiPerfil()
         {
             var MyUser = DeserializarLista<Usuario>()
-                .Where(x => x.UsuarioIdInt.ToString() == System.Web.HttpContext.Current.Request.Cookies[hc.CockieName].Value.ToString())
+                .Where(x => x.UsuarioIdInt == UserId() )
                 .Select(
                    u => new
                    {
@@ -112,7 +112,7 @@ namespace Web.Controllers
             try
             {
 
-                var user = services.Get<Usuario>("usuarios").Where(x => x.UsuarioIdInt.ToString() == System.Web.HttpContext.Current.Request.Cookies[hc.CockieName].Value.ToString());
+                var user = services.Get<Usuario>("usuarios").Where(x => x.UsuarioIdInt == UserId());
 
                 var usuarios = services.Get<Usuario>("usuarios");
 
@@ -212,7 +212,7 @@ namespace Web.Controllers
                     }
 
                     // ADD
-                    o.UsuarioRegIdInt = hc.UserId();
+                    o.UsuarioRegIdInt = UserId();
                     result = apiServices.Save<UsuarioAddOrUpdate>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.UsuariosController, "Add", o);
 
                 }
@@ -246,7 +246,7 @@ namespace Web.Controllers
                     {
                         var u = services.Get<UsuarioAddOrUpdate>("usuarios").Where(x => x.UsuarioIdInt == o.UsuarioIdInt).FirstOrDefault();
                         u.RolIdInt = o.RolIdInt;
-                        u.UsuarioIdModInt = hc.UserId();
+                        u.UsuarioIdModInt = UserId();
                         result = apiServices.Save<UsuarioAddOrUpdate>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.UsuariosController, "Update", u);
                     }
 
@@ -255,7 +255,7 @@ namespace Web.Controllers
                     {
                         var u = services.Get<UsuarioAddOrUpdate>("usuarios").Where(x => x.UsuarioIdInt == o.UsuarioIdInt).FirstOrDefault();
                         o.RolIdInt = u.RolIdInt;
-                        o.UsuarioIdModInt = hc.UserId();
+                        o.UsuarioIdModInt = UserId();
                         result = apiServices.Save<UsuarioAddOrUpdate>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.UsuariosController, "Update", o);
                     }
 
@@ -272,6 +272,12 @@ namespace Web.Controllers
 
 
             return Json(new { message = Get() });
+        }
+
+
+        public int UserId()
+        {
+            return Convert.ToInt32( CookieValue(hc.CockieName) );
         }
 
 
@@ -295,8 +301,8 @@ namespace Web.Controllers
                 }
             }
 
-
-            return value;
+            if (value == null) return null;
+            return hc.Decrypt( value );
         }
 
 

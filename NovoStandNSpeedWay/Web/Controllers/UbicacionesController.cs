@@ -15,13 +15,13 @@ namespace Web.Controllers
     {
         public ApiServices apiServices;
         public Services.Services services;
-        public HomeController hc;
+        public UsuariosController u;
 
         public UbicacionesController()
         {
             apiServices = new ApiServices();
             services = new Services.Services();
-            hc = new HomeController();
+            u = new UsuariosController();
         }
 
 
@@ -146,7 +146,7 @@ namespace Web.Controllers
                     }
 
                     // ADD
-                    o.UsuarioIdInt = hc.UserId();
+                    o.UsuarioIdInt = u.UserId();
                     result = apiServices.Save<Ubicacione>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.UbicacionesController, "Add", o);
 
                 }
@@ -175,7 +175,7 @@ namespace Web.Controllers
                     }
 
 
-                    o.UsuarioIdModInt = hc.UserId();
+                    o.UsuarioIdModInt = u.UserId();
                     result = apiServices.Save<Ubicacione>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.UbicacionesController, "Update", o);
 
 

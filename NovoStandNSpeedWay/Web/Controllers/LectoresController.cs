@@ -14,13 +14,13 @@ namespace Web.Controllers
     {
         public ApiServices apiServices;
         public Services.Services services;
-        public HomeController hc;
+        public UsuariosController u;
 
         public LectoresController()
         {
             apiServices = new ApiServices();
             services = new Services.Services();
-            hc = new HomeController();
+            u = new UsuariosController();
         }
 
         // GET: Lectores
@@ -142,7 +142,7 @@ namespace Web.Controllers
 
                     }
 
-                    o.UsuarioIdInt = hc.UserId(); ;
+                    o.UsuarioIdInt = u.UserId(); ;
 
                     // ADD
                     result = apiServices.Save<Lectore>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.LectoresController, "Add", o);
@@ -170,7 +170,7 @@ namespace Web.Controllers
 
                     }
 
-                    o.UsuarioIdModInt = hc.UserId();
+                    o.UsuarioIdModInt = u.UserId();
                     result = apiServices.Save<Lectore>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.LectoresController, "Update", o);
 
 

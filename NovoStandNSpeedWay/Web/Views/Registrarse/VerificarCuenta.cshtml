@@ -15,9 +15,9 @@
 
         <div class="row pt-2 pb-2" style="border:2px lightgray solid; border-radius:5px;">
 
-            @using Web.Controllers;
-            @{var hc = new HomeController();
-                var email = System.Web.HttpContext.Current.Request.Cookies.Get(hc.CockieName).Value.ToString(); ;
+            @using Web.Helpers;
+            @{var g = new Generals();
+                var email = g.GetCookieValue(g.CockieName);
             }
 
             <div class="form-group col-sm-12">

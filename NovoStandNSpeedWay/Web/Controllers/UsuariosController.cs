@@ -257,7 +257,8 @@ namespace Web.Controllers
                         var u = services.Get<UsuarioAddOrUpdate>("usuarios").Where(x => x.UsuarioIdInt == o.UsuarioIdInt).FirstOrDefault();
                         u.RolIdInt = o.RolIdInt;
                         u.UsuarioIdModInt = g.UserId();
-                        u.NombreVar = o.NombreVar;
+                        if(VengoDeMiPerfil)  u.NombreVar = o.NombreVar;
+                        u.EsAdminBit = o.EsAdminBit;
                         result = apiServices.Save<UsuarioAddOrUpdate>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.UsuariosController, "Update", u);
                     }
 

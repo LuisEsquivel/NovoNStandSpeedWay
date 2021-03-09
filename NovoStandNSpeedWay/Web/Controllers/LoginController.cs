@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using Web.Controllers;
+using Web.CoreResources;
 using Web.Helpers;
 using Web.Models;
 using Web.Services;
@@ -82,9 +83,11 @@ namespace NovoLeadsWeb.Controllers
                         user.CodigoDeVerificacionVar = random.Next(0, 999999).ToString();
                         if (g.SendEmailSMTP(user.UsuarioVar, user.CodigoDeVerificacionVar))
                         {
+                            apiServices.Save<Usuario>(CoreResources.UrlBase, CoreResources.Prefix, CoreResources.UsuariosController, "Update", user);
                             g.CreateCookie(user.UsuarioVar);
                             return Json("/Registrarse/VerificarCuenta");
                         }
+
                     }
 
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Web.Auth;
+using Web.Helpers;
 using Web.Models;
 using Web.Services;
 
@@ -14,13 +15,13 @@ namespace Web.Controllers
     {
         public ApiServices apiServices;
         public Services.Services services;
-        public UsuariosController u;
+        public Generals g;
 
         public LectoresController()
         {
             apiServices = new ApiServices();
             services = new Services.Services();
-            u = new UsuariosController();
+            g = new Generals();
         }
 
         // GET: Lectores
@@ -142,7 +143,7 @@ namespace Web.Controllers
 
                     }
 
-                    o.UsuarioIdInt = u.UserId(); ;
+                    o.UsuarioIdInt = g.UserId(); ;
 
                     // ADD
                     result = apiServices.Save<Lectore>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.LectoresController, "Add", o);
@@ -170,7 +171,7 @@ namespace Web.Controllers
 
                     }
 
-                    o.UsuarioIdModInt = u.UserId();
+                    o.UsuarioIdModInt = g.UserId();
                     result = apiServices.Save<Lectore>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.LectoresController, "Update", o);
 
 

@@ -19,6 +19,11 @@ function ReturnData(url) {
 }
 
 
+function Add() {
+    var form = document.getElementById("form");
+    window.add("/Usuarios/Add", form, ["Id", "Nombre", "Cuenta", "Rol", "Activo", "Fecha Alta"], false)
+}
+
 
 function Modal(url) {
     window.AbrirModal(url);

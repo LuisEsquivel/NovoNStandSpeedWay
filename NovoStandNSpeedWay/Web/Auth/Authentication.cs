@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Web.Controllers;
+using Web.Helpers;
 using Web.Models;
 
 namespace Web.Auth
@@ -13,26 +14,26 @@ namespace Web.Auth
     {
 
         public HomeController hc;
-        public UsuariosController u;
+        public Generals g;
         public Services.Services services;
         public Authentication()
         {
             hc = new HomeController();
             services = new Services.Services();
-            u = new UsuariosController();
+            g = new Generals();
         }
 
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
 
-            if (System.Web.HttpContext.Current.Request.Cookies.Get(hc.CockieName) == null)
+            if (g.GetCookieValue(g.CockieName) == null)
             {
                filterContext.Result = new RedirectResult("~/Login/Index");
             }
             else
             {
            
-                var UsuarioIdInt = u.CookieValue(hc.CockieName);
+                var UsuarioIdInt = g.GetCookieValue(g.CockieName);
 
                 var usuario = services.Get<Usuario>("usuarios").Where(x => x.UsuarioIdInt.ToString() == UsuarioIdInt).FirstOrDefault();
 

@@ -51,10 +51,10 @@
                         <input class="form-control" id="UsuarioIdInt" name="UsuarioIdInt" placeholder="Id" readonly />
                     </div>
 
-                    @using Web.Controllers;
+                    @using Web.Helpers;
                     @{
-                        var u = new UsuariosController();
-                        if (u.IsAdmin())
+                        var g = new Generals();
+                        if (g.IsAdmin())
                         {
 
                             <div class="col-sm-12 text-center" id="DivIsActive">
@@ -75,6 +75,7 @@
                         }
 
 
+                        <input hidden type="text" id="VengoDeMiPerfil" name="VengoDeMiPerfil" value="true" />
                         <input hidden type="text" id="IsActive" name="IsActive" value="true" />
                         <input hidden type="text" id="EsAdmin" name="EsAdmin" value="false" />
 
@@ -90,10 +91,10 @@
                     </div>
 
 
- 
+
 
                     @{
-                        if (u.IsAdmin())
+                        if (g.IsAdmin())
                         {
                             <div class="form-row">
                                 <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 mt-3">

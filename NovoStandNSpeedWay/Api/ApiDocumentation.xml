@@ -348,6 +348,13 @@
             <param name="dto"></param>
             <returns>StatusCode 200</returns>
         </member>
+        <member name="M:Api.Controllers.UsuariosController.ValidateAccount(Api.Dtos.Usuarios.UsuarioValidateAccountDto)">
+            <summary>
+            Validar cuenta del usuario
+            </summary>
+            <param name="dto"></param>
+            <returns>StatusCode 200</returns>
+        </member>
         <member name="M:Api.Controllers.UsuariosController.Delete(System.Int32)">
             <summary>
             Eliminar usuario por Id

@@ -21,26 +21,23 @@ namespace NovoLeadsWeb.Controllers
     {
 
         public ApiServices apiServices;
-        public HomeController hc;
         public Services services;
-        public Generals generals;
+        public Generals g;
 
 
         public LoginController()
         {
             apiServices = new ApiServices();
-            hc = new HomeController();
             services = new Services();
-            generals = new Generals();
+            g = new Generals();
         }
         // GET: Login
 
 
         public ActionResult Index()
         {
-            Session["Registrarse"] = null;
 
-            if (System.Web.HttpContext.Current.Request.Cookies[hc.CockieName] != null )
+            if (g.GetCookieValue(g.CockieName) != null )
             {
                 return Redirect("/Home/Index");
             }
@@ -54,15 +51,13 @@ namespace NovoLeadsWeb.Controllers
 
         public ActionResult Logout()
         {
-            if (System.Web.HttpContext.Current.Request.Cookies[hc.CockieName] != null)
+            if (g.GetCookieValue(g.CockieName) != null)
             {
-                var c = new HttpCookie(hc.CockieName);
+                var c = new HttpCookie(g.CockieName);
                 c.Expires = DateTime.Now.AddDays(-1);
                 Response.Cookies.Add(c); ;
             }
 
-            //Session.Remove("userId");
-            Session.Remove("Registrarse");
             return Redirect("../Login/Index");
         }
 
@@ -85,16 +80,16 @@ namespace NovoLeadsWeb.Controllers
                         //send email code verification
                         var random = new Random();
                         user.CodigoDeVerificacionVar = random.Next(0, 999999).ToString();
-                        if (generals.SendEmailSMTP(user.UsuarioVar, user.CodigoDeVerificacionVar))
+                        if (g.SendEmailSMTP(user.UsuarioVar, user.CodigoDeVerificacionVar))
                         {
-                            hc.CreateCookie(user.UsuarioVar);
+                            g.CreateCookie(user.UsuarioVar);
                             return Json("/Registrarse/VerificarCuenta");
                         }
                     }
 
 
                     var value = user.UsuarioIdInt.ToString();
-                    hc.CreateCookie(value);
+                    g.CreateCookie(value);
                     return Json(user.NombreVar);
 
                 }

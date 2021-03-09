@@ -100,9 +100,16 @@ $(document).ready(function () {
     $("#ActivoBit").change(() => {
         $("#IsActive").val($("#ActivoBit").prop("checked"));
     }); 
+
     $("#EsIntegradorBit").change(() => {
         $("#EsIntegrador").val($("#EsIntegradorBit").prop("checked"));
     }); 
+
+
+    $("#EsAdminBit").change(() => {
+        $("#EsAdmin").val($("#EsAdminBit").prop("checked"));
+    });
+
     
 
     if ($("#Modal").length > 0) {
@@ -557,7 +564,8 @@ var GetById = function (url, id) {
             LlenarFormulario(data);
             $("#IsActive").val($("#ActivoBit").prop("checked"));
             $("#EsIntegrador").val($("#EsIntegradorBit").prop("checked"));
-      
+            $("#EsAdmin").val($("#EsAdminBit").prop("checked"));
+
         },
         error: function () {
             console.log("No se ha podido obtener la información");

@@ -61,7 +61,7 @@
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
 
 
-                    @using Web.Controllers;
+                    @using Web.Helpers;
                     @{
                         var url = HttpContext.Current.Request.Url.AbsolutePath.ToString();
 
@@ -124,9 +124,8 @@
 
                                 @{
 
-                                    var hc = new HomeController();
-                                    var u = new UsuariosController();
-                                    if (u.IsAdmin())
+                                    var g = new Generals();
+                                    if (g.IsAdmin())
                                     {
 
                                         if (url == "/Roles/index")
@@ -202,7 +201,7 @@
 
 
 
-                        if (u.CookieValue(hc.CockieName) != null)
+                        if (g.GetCookieValue(g.CockieName) != null)
                         {
 
                             if (url == "/Usuarios/MiPerfil")
@@ -246,7 +245,7 @@
 
                 @{
 
-                    if (u.CookieValue(hc.CockieName) == null)
+                    if (g.GetCookieValue(g.CockieName) == null)
                     {
 
                         <ul class="list-unstyled list-inline text-center py-2">

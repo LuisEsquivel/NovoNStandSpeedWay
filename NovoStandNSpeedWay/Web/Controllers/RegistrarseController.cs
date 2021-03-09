@@ -19,14 +19,14 @@ namespace NovoLeadsWeb.Controllers
         public ApiServices apiServices;
         public Services services;
         public HomeController hc;
-        public Generals generals;
+        public Generals g;
 
         public RegistrarseController()
         {
             apiServices = new ApiServices();
             services = new Services();
             hc = new HomeController();
-            generals = new Generals();
+            g = new Generals();
         }
 
         // GET: Registrarse
@@ -75,7 +75,7 @@ namespace NovoLeadsWeb.Controllers
                 usuario.CodigoDeVerificacionVar = random.Next(0, 999999).ToString();
                 usuario.Password = "XdXd";
 
-                if(generals.SendEmailSMTP(usuario.UsuarioVar, usuario.CodigoDeVerificacionVar) == false)
+                if(g.SendEmailSMTP(usuario.UsuarioVar, usuario.CodigoDeVerificacionVar) == false)
                 {
                     return Json(0);
                 }
@@ -84,7 +84,7 @@ namespace NovoLeadsWeb.Controllers
 
                 if (result != null)
                 {
-                    hc.CreateCookie(UsuarioVar);
+                    g.CreateCookie(UsuarioVar);
                     return Json(1);
                 }
             }
@@ -102,7 +102,7 @@ namespace NovoLeadsWeb.Controllers
 
             if (o.Password != ConfirmPassword) return Json(0);
 
-            var UsuarioVar = System.Web.HttpContext.Current.Request.Cookies[hc.CockieName].Value.ToString();
+            var UsuarioVar = g.GetCookieValue(g.CockieName);
             var usuario = services.Get<Usuario>("usuarios").Where(x => x.UsuarioVar == UsuarioVar).FirstOrDefault();
             usuario.Password = o.Password;
 
@@ -115,7 +115,7 @@ namespace NovoLeadsWeb.Controllers
 
 
 
-            hc.CreateCookie(result.UsuarioIdInt.ToString());
+            g.CreateCookie(result.UsuarioIdInt.ToString());
             return Json(1);
             
         }
@@ -153,7 +153,7 @@ namespace NovoLeadsWeb.Controllers
 
                 if (result != null)
                 {
-                    hc.CreateCookie(result.UsuarioIdInt.ToString());
+                    g.CreateCookie(result.UsuarioIdInt.ToString());
                     return Json(1);
                 }
                
@@ -191,7 +191,7 @@ namespace NovoLeadsWeb.Controllers
                     var random = new Random();
                     o.CodigoDeVerificacionVar = random.Next(0, 999999).ToString();
 
-                    if (generals.SendEmailSMTP(o.UsuarioVar, o.CodigoDeVerificacionVar) == false)
+                    if (g.SendEmailSMTP(o.UsuarioVar, o.CodigoDeVerificacionVar) == false)
                     {
                         return Json(0);
                     }
@@ -210,7 +210,7 @@ namespace NovoLeadsWeb.Controllers
 
 
             //for verified account
-            hc.CreateCookie(o.UsuarioVar);
+            g.CreateCookie(o.UsuarioVar);
             return Json(1);
         }
 
@@ -224,7 +224,7 @@ namespace NovoLeadsWeb.Controllers
             try
             {
 
-              var UsuarioVar = System.Web.HttpContext.Current.Request.Cookies.Get(hc.CockieName).Value;
+              var UsuarioVar = g.GetCookieValue(g.CockieName);
               var usuario = services.Get<Usuario>("usuarios").Where(x => x.UsuarioVar == UsuarioVar).FirstOrDefault();
 
                 if (CodigoVerificacionVar == usuario.CodigoDeVerificacionVar)
@@ -234,7 +234,7 @@ namespace NovoLeadsWeb.Controllers
                     result = apiServices.Save<Usuario>(CoreResources.UrlBase, CoreResources.Prefix, CoreResources.UsuariosController, "ValidateAccount", usuario);
 
                     if (result != null) {
-                        hc.CreateCookie(usuario.UsuarioIdInt.ToString());
+                        g.CreateCookie(usuario.UsuarioIdInt.ToString());
                         return Json(1);
                     }
                    

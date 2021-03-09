@@ -7,6 +7,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Web.Auth;
+using Web.Helpers;
 using Web.Models;
 using Web.Services;
 
@@ -18,12 +19,14 @@ namespace Web.Controllers
         public ApiServices apiServices;
         public Services.Services services;
         public HomeController hc;
+        public Generals g;
 
         public UsuariosController()
         {
             apiServices = new ApiServices();
             services = new Services.Services();
             hc = new HomeController();
+            g = new Generals();
         }
 
 
@@ -41,7 +44,7 @@ namespace Web.Controllers
         public JsonResult ListaMiPerfil()
         {
             var MyUser = DeserializarLista<Usuario>()
-                .Where(x => x.UsuarioIdInt == UserId() )
+                .Where(x => x.UsuarioIdInt == g.UserId() )
                 .Select(
                    u => new
                    {
@@ -73,13 +76,20 @@ namespace Web.Controllers
   
 
 
-        public object Get()
+        public object Get(bool VengoDeMiPerfil = false)
         {
             object o;
 
             try
             {
                 var usuarios = services.Get<Usuario>("usuarios");
+
+
+                if (g.IsAdmin() == false || VengoDeMiPerfil)
+                {
+                    usuarios = usuarios.Where(x => x.UsuarioIdInt == g.UserId() ).ToList();
+                }
+
                 var roles = services.Get<Role>("roles");
 
                 o = (from u in usuarios
@@ -112,13 +122,13 @@ namespace Web.Controllers
             try
             {
 
-                var user = services.Get<Usuario>("usuarios").Where(x => x.UsuarioIdInt == UserId());
+                var user = services.Get<Usuario>("usuarios").Where(x => x.UsuarioIdInt == g.UserId());
 
                 var usuarios = services.Get<Usuario>("usuarios");
 
-                if (user.FirstOrDefault().EsAdminBit == false)
+                if (g.IsAdmin() == false)
                 {
-                    usuarios = usuarios.Where(x => x.UsuarioIdInt == user.FirstOrDefault().UsuarioIdInt).ToList();
+                    usuarios = usuarios.Where(x => x.UsuarioIdInt == g.UserId()).ToList();
                 }
 
                 var roles = services.Get<Role>("roles");
@@ -167,7 +177,7 @@ namespace Web.Controllers
                          u.ActivoBit, 
                          u.EsAdminBit,
                          u.Password,
-                         u.UsuarioVar
+                         u.UsuarioVar,
                      }).ToList();
             }
             catch (Exception)
@@ -181,7 +191,7 @@ namespace Web.Controllers
 
 
         [HttpPost]
-        public JsonResult Add(UsuarioAddOrUpdate o, string IsActive, string EsAdmin)
+        public JsonResult Add(UsuarioAddOrUpdate o, string IsActive, string EsAdmin, bool VengoDeMiPerfil = false)
         {
             o.ActivoBit = IsActive != null ? Convert.ToBoolean(IsActive) : false;
             o.EsAdminBit = EsAdmin != null ? Convert.ToBoolean(EsAdmin) : false;
@@ -196,14 +206,14 @@ namespace Web.Controllers
 
                     var existe = services.Get<Usuario>("usuarios").
                                  Where(
-                                 x => x.NombreVar == o.NombreVar
+                                 x => x.UsuarioVar == o.UsuarioVar
                                  ).FirstOrDefault();
 
                     if (existe != null)
                     {
                         var message = "Ya Existe un registro con estos campos: "
                                      + Environment.NewLine
-                                     + nameof(existe.NombreVar).ToString()
+                                     + "Correo Electrónico"
                                      + Environment.NewLine
                                      + "Verifique";
 
@@ -212,7 +222,7 @@ namespace Web.Controllers
                     }
 
                     // ADD
-                    o.UsuarioRegIdInt = UserId();
+                    o.UsuarioRegIdInt = g.UserId();
                     result = apiServices.Save<UsuarioAddOrUpdate>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.UsuariosController, "Add", o);
 
                 }
@@ -223,7 +233,7 @@ namespace Web.Controllers
                     //UPDATE
                     var existe = services.Get<UsuarioAddOrUpdate>("usuarios").
                                 Where(
-                                x => x.NombreVar == o.NombreVar
+                                x => x.UsuarioVar == o.UsuarioVar
                                 &&
                                 x.UsuarioIdInt != o.UsuarioIdInt
                                 ).FirstOrDefault();
@@ -232,7 +242,7 @@ namespace Web.Controllers
                     {
                         var message = "Ya Existe un registro con estos campos: "
                                      + Environment.NewLine
-                                     + nameof(existe.NombreVar).ToString()
+                                     + "Correo Electrónico"
                                      + Environment.NewLine
                                      + "Verifique";
 
@@ -242,21 +252,21 @@ namespace Web.Controllers
 
 
 
-                    if (IsAdmin())
+                    if (g.IsAdmin())
                     {
                         var u = services.Get<UsuarioAddOrUpdate>("usuarios").Where(x => x.UsuarioIdInt == o.UsuarioIdInt).FirstOrDefault();
                         u.RolIdInt = o.RolIdInt;
-                        u.UsuarioIdModInt = UserId();
-                        o.UsuarioVar = u.UsuarioVar;
+                        u.UsuarioIdModInt = g.UserId();
+                        u.NombreVar = o.NombreVar;
                         result = apiServices.Save<UsuarioAddOrUpdate>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.UsuariosController, "Update", u);
                     }
 
 
-                    if (IsAdmin() == false)
+                    if (g.IsAdmin() == false)
                     {
                         var u = services.Get<UsuarioAddOrUpdate>("usuarios").Where(x => x.UsuarioIdInt == o.UsuarioIdInt).FirstOrDefault();
                         o.RolIdInt = u.RolIdInt;
-                        o.UsuarioIdModInt = UserId();
+                        o.UsuarioIdModInt = g.UserId();
                         o.UsuarioVar = u.UsuarioVar;
                         result = apiServices.Save<UsuarioAddOrUpdate>(CoreResources.CoreResources.UrlBase, CoreResources.CoreResources.Prefix, CoreResources.CoreResources.UsuariosController, "Update", o);
                     }
@@ -273,40 +283,8 @@ namespace Web.Controllers
             if (result == null) return null;
 
 
-            return Json(new { message = Get() });
+            return Json(new { message = Get(VengoDeMiPerfil) });
         }
-
-
-        public int UserId()
-        {
-            return Convert.ToInt32( CookieValue(hc.CockieName) );
-        }
-
-
-        public bool IsAdmin()
-        {
-            if (CookieValue(hc.CockieName) == null) return false;
-            return services.Get<Usuario>("usuarios").Where(x => x.UsuarioIdInt.ToString() == CookieValue(hc.CockieName)).FirstOrDefault().EsAdminBit;
-        }
-
-
-        public string CookieValue(string CookieName)
-        {
-
-            string value = null;
-
-            if(System.Web.HttpContext.Current.Request.Cookies[CookieName] != null)
-            {
-                if(System.Web.HttpContext.Current.Request.Cookies[CookieName].Value.ToString().Trim().Length > 0)
-                {
-                    value = System.Web.HttpContext.Current.Request.Cookies[CookieName].Value.ToString();
-                }
-            }
-
-            if (value == null) return null;
-            return hc.Decrypt( value );
-        }
-
 
 
         #region DROPDOWN

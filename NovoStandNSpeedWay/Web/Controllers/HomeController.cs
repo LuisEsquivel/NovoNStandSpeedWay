@@ -16,13 +16,9 @@ namespace Web.Controllers
     public class HomeController : Controller
     {
 
-
         public ApiServices apiServices;
         public Services.Services services;
 
-
-        public string CockieName = "UserIdNovoSpeedWay";
-        string key = "ABCDEFGHIJKLMÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz";
 
         public HomeController()
         {
@@ -53,89 +49,7 @@ namespace Web.Controllers
 
 
 
-        //crete cookie for add value in browser
-        public void CreateCookie(string value)
-        {
-
-            if (System.Web.HttpContext.Current.Request.Cookies[CockieName] != null)
-            {
-               if(System.Web.HttpContext.Current.Request.Cookies[CockieName].Value.ToString().Trim().Length > 0){
-                    var c = new HttpCookie(CockieName);
-                    c.Expires = DateTime.Now.AddDays(-1);
-                    System.Web.HttpContext.Current.Response.Cookies.Add(c); 
-                }
-                
-        }
-
-  
-
-            HttpCookie cookie = new HttpCookie(CockieName);
-            cookie.Value = Encrypt(value); 
-            cookie.Expires = DateTime.Now.AddMonths(1);
-            cookie.HttpOnly = true;
-            System.Web.HttpContext.Current.Response.Cookies.Add(cookie);
-        }
-
-
-
-
-        public string Encrypt(string value)
-        {
-
-            byte[] slt = Encoding.UTF8.GetBytes(key);
-            var pdb = new Rfc2898DeriveBytes(key, slt);
-            var keyAceptable = pdb.GetBytes(24);
-
-            //Algoritmo 3DAS
-            var tdes = new TripleDESCryptoServiceProvider();
-
-            tdes.Key = keyAceptable;
-            tdes.Mode = CipherMode.ECB;
-            tdes.Padding = PaddingMode.PKCS7;
-
-            //se empieza con la transformación de la cadena
-            ICryptoTransform cTransform = tdes.CreateEncryptor();
-
-            //arreglo de bytes donde se guarda la cadena cifrada
-            var BytesValue = Encoding.UTF8.GetBytes(value);
-            byte[] ArrayResultado =  cTransform.TransformFinalBlock(BytesValue, 0, BytesValue.Length);
-
-            tdes.Clear();
-
-            //se regresa el resultado en forma de una cadena
-            return Convert.ToBase64String(ArrayResultado, 0, ArrayResultado.Length);
-        }
-
-
-
-
-
-      public string Decrypt(string value)
-        {
-
-            byte[] slt = Encoding.UTF8.GetBytes(key);
-            var pdb = new Rfc2898DeriveBytes(key, slt);
-            var keyAceptable = pdb.GetBytes(24);
-
-            var tdes = new TripleDESCryptoServiceProvider();
-
-            tdes.Key = keyAceptable;
-            tdes.Mode = CipherMode.ECB;
-            tdes.Padding = PaddingMode.PKCS7;
-
-            ICryptoTransform cTransform = tdes.CreateDecryptor();
-
-            var BytesValue = Convert.FromBase64String(value);
-            byte[] resultArray = cTransform.TransformFinalBlock(BytesValue, 0, BytesValue.Length);
-
-            tdes.Clear();
-
-            //se regresa en forma de cadena
-            return Encoding.UTF8.GetString(resultArray);
-        }
-
-
-        #region DROPDOWNS
+        #region DropDowns
 
         public JsonResult DropDownUbicacion()
         {

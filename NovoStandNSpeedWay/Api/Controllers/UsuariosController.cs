@@ -185,8 +185,21 @@ namespace Api.Controllers
                 usuario.FechaModDate = DateTime.Now;
                 usuario.FechaAltaDate = update.FechaAltaDate;
                 usuario.UsuarioIdInt = update.UsuarioIdInt;
-                usuario.PasswordEncryptByte  = update.PasswordEncryptByte;
-                usuario.PasswordKeyByte = usuario.PasswordKeyByte;
+                usuario.PasswordEncryptByte = update.PasswordEncryptByte;
+                usuario.PasswordKeyByte = update.PasswordKeyByte;
+
+
+            if (dto.Password != null)
+            {
+                if(dto.Password.Trim().Length > 0)
+                {
+                    byte[] passwordEncrypt, passwordKey;
+                    EncryptPassword(dto.Password, out passwordEncrypt, out passwordKey);
+                    usuario.PasswordEncryptByte = passwordEncrypt;
+                    usuario.PasswordKeyByte = passwordKey;
+                }
+            }
+                 
 
             if (!repository.Update(usuario , usuario.UsuarioIdInt))
                 {

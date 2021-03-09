@@ -33,12 +33,18 @@ namespace Web.Auth
             else
             {
            
-                var UsuarioIdInt = g.GetCookieValue(g.CockieName);
+                int UsuarioIdInt = 0;
+                int.TryParse(g.GetCookieValue(g.CockieName), out UsuarioIdInt);
 
-                var usuario = services.Get<Usuario>("usuarios").Where(x => x.UsuarioIdInt.ToString() == UsuarioIdInt).FirstOrDefault();
+                if ( UsuarioIdInt > 0 )
+                {
 
-                if (usuario == null) filterContext.Result = new RedirectResult("~/Login/Index");
+                 var usuario = services.Get<Usuario>("usuarios").Where(x => x.UsuarioIdInt == UsuarioIdInt).FirstOrDefault();
 
+                 if (usuario == null) filterContext.Result = new RedirectResult("~/Login/Index");
+
+                }
+           
             }
 
 

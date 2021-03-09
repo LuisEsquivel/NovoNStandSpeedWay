@@ -88,7 +88,15 @@ namespace Web.Helpers
         public bool IsAdmin()
         {
             if (GetCookieValue(CockieName) == null) return false;
-            return services.Get<Usuario>("usuarios").Where(x => x.UsuarioIdInt.ToString() == GetCookieValue(CockieName)).FirstOrDefault().EsAdminBit;
+            int UsuarioIdInt = 0;
+            int.TryParse(GetCookieValue(CockieName), out UsuarioIdInt);
+
+            if (UsuarioIdInt > 0)
+            {
+                return services.Get<Usuario>("usuarios").Where(x => x.UsuarioIdInt.ToString() == GetCookieValue(CockieName)).FirstOrDefault().EsAdminBit;
+            }
+
+            return false;
         }
 
 
